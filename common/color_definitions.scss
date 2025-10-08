@@ -14,10 +14,27 @@
   --d-selected: #293137;
   --d-hover: #2d363d;
 
+  /* Glass + elevation tokens */
+  --glass-bg: rgba(22, 30, 33, 0.66);
+  --glass-bg-strong: rgba(22, 30, 33, 0.82);
+  --glass-blur: 12px;
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
+  --chip-bg: rgba(22, 30, 33, 0.85);
+  --chip-border: rgba(255, 255, 255, 0.06);
+  --chip-hover: rgba(0, 61, 107, 0.20);
+
+  /* Shadows */
+  --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 12px 40px rgba(0, 61, 107, 0.15);
+  --shadow-modal: 0 8px 60px rgba(0, 0, 0, 1);
+  --shadow-dropdown: 0 2px 12px rgba(0, 0, 0, 0.25);
+
   /* Banner */
   --banner-bg-color: #263238;
-  --banner-primary-text: #000;
-  --banner-secondary-text: #FF6C00; /* can be adjusted */
+  --banner-primary-text: #ECEFF1;
+  --banner-secondary-text: #FF6C00; /* orange accent line */
   --banner-link-text: #0f82af;
   /* Replace with your upload URL after install */
   --banner-bg-img: url(#{$banner_image_url});

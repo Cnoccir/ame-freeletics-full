@@ -21,6 +21,44 @@ banner_subtitle_text:
   default: "Everybody is smarter than anybody."
   description: "Banner subtitle tagline"
 
+# HERO customizations
+hero_logo_url:
+  default: ""
+  description: "Optional logo to show inside the hero. If blank, it’s hidden."
+
+hero_motto_text:
+  default: "#NEVER SETTLE"
+  description: "Large uppercase motto shown in the hero"
+
+# Up to 4 category cards in the hero
+hero_card_1_label:
+  default: "General"
+  description: "Card 1 label"
+hero_card_1_url:
+  default: "/c/general/1"
+  description: "Card 1 link"
+
+hero_card_2_label:
+  default: "Staff"
+  description: "Card 2 label"
+hero_card_2_url:
+  default: "/c/staff/3"
+  description: "Card 2 link"
+
+hero_card_3_label:
+  default: "Site Feedback"
+  description: "Card 3 label"
+hero_card_3_url:
+  default: "/c/site-feedback/4"
+  description: "Card 3 link"
+
+hero_card_4_label:
+  default: "Docs"
+  description: "Card 4 label"
+hero_card_4_url:
+  default: "/tags/docs"
+  description: "Card 4 link"
+
 banner_cta_1_text:
   default: "Search Technical Docs"
   description: "Text for primary CTA button"

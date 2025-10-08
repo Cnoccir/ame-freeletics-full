@@ -1,10 +1,33 @@
-<div class="banner-box">
+<div class="banner-box hero">
   <div class="container">
-    <div class="section-header">
-      <h2 class="x-title">{{theme-setting 'banner_title_text'}}</h2>
-      <div class="colored-line"></div>
-      <p>{{theme-setting 'banner_subtitle_text'}}</p>
+    <div class="hero-header">
+      {{#if (theme-setting 'hero_logo_url')}}
+        <img class="hero-logo" src="{{theme-setting 'hero_logo_url'}}" alt="logo" />
+      {{/if}}
+      <div class="hero-site">{{theme-setting 'banner_title_text'}}</div>
     </div>
+
+    <div class="hero-motto">{{theme-setting 'hero_motto_text'}}</div>
+    <div class="section-header">
+      <div class="colored-line"></div>
+      <p class="hero-subtitle">{{theme-setting 'banner_subtitle_text'}}</p>
+    </div>
+
+    <div class="hero-cards" role="navigation" aria-label="Hero category shortcuts">
+      {{#if (theme-setting 'hero_card_1_label')}}
+        <a class="hero-card" href="{{theme-setting 'hero_card_1_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_1_label'}}</span></a>
+      {{/if}}
+      {{#if (theme-setting 'hero_card_2_label')}}
+        <a class="hero-card" href="{{theme-setting 'hero_card_2_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_2_label'}}</span></a>
+      {{/if}}
+      {{#if (theme-setting 'hero_card_3_label')}}
+        <a class="hero-card" href="{{theme-setting 'hero_card_3_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_3_label'}}</span></a>
+      {{/if}}
+      {{#if (theme-setting 'hero_card_4_label')}}
+        <a class="hero-card" href="{{theme-setting 'hero_card_4_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_4_label'}}</span></a>
+      {{/if}}
+    </div>
+
     <div class="cta-buttons">
       <a class="btn btn-primary" href="{{theme-setting 'banner_cta_1_url'}}">
         <span class="d-button-label">{{theme-setting 'banner_cta_1_text'}}</span>
