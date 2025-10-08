@@ -6,6 +6,15 @@
 
 <div class="banner-box hero">
   <div class="container">
+    <div class="hero-nav" role="navigation" aria-label="Hero navigation">
+      <a class="crumb" href="/c">{{theme-setting 'hero_nav_title_text'}}</a>
+      <span class="sep">›</span>
+      <a class="tab" href="/categories">subcategories</a>
+      <a class="tab" href="/tags">tags</a>
+      <a class="tab active" href="/latest">Latest</a>
+      <a class="tab" href="/top">Top</a>
+    </div>
+
     <div class="hero-header">
       {{#if (theme-setting 'hero_logo_url')}}
         <img class="hero-logo" src="{{theme-setting 'hero_logo_url'}}" alt="logo" />

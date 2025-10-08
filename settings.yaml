@@ -30,6 +30,10 @@ hero_motto_text:
   default: "#NEVER SETTLE"
   description: "Large uppercase motto shown in the hero"
 
+hero_nav_title_text:
+  default: "Training Communities"
+  description: "Breadcrumb title shown in the hero nav row"
+
 # Up to 4 category cards in the hero
 hero_card_1_label:
   default: "General"

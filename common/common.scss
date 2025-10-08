@@ -76,7 +76,12 @@ body.categories-index .search-banner,
 .navigation-categories h1,
 .navigation-categories .list-controls .search-container,
 .navigation-categories .list-controls .search-widget,
-.categories-index .list-controls .search-container { display: none !important; }
+.categories-index .list-controls .search-container,
+/* Hide entire controls + any welcome headers on categories pages */
+.navigation-categories .list-controls,
+.categories-index .list-controls,
+.navigation-categories #main-outlet [class*="welcome"],
+.categories-index #main-outlet [class*="welcome"] { display: none !important; }
 
 /* Banner */
 #main>div { display: flex; flex-direction: column; }
@@ -89,20 +94,27 @@ body.navigation-categories .banner-box, body.categories-index .banner-box { disp
 
 /* Motto strip above hero panel */
 .motto-strip { width: 1110px; max-width: calc(100% - 16px); margin: 14px auto 0; text-align: center; }
-.motto-strip .hero-motto { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; opacity: 0.95; }
+.motto-strip .hero-motto { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: #fff; opacity: 0.95; }
 
 /* Hero structure */
+.hero .hero-nav { display:flex; align-items:center; justify-content:flex-start; gap:10px; width:min(1000px,100%); margin: 0 auto 8px; color:#cfe6ff; }
+.hero .hero-nav .crumb { font-weight: 600; color:#cfe6ff; text-decoration:none; }
+.hero .hero-nav .sep { color:#6c7b86; opacity:0.8; }
+.hero .hero-nav .tab { color:#9fb4c3; padding:8px 12px; border-radius:6px; text-decoration:none; transition:background .15s ease, color .15s ease; }
+.hero .hero-nav .tab:hover { background: rgba(255,255,255,0.06); color:#eaf4ff; }
+.hero .hero-nav .tab.active { color:#ffffff; border-bottom: 2px solid var(--banner-secondary-text); }
 .hero .hero-header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 4px; }
 .hero .hero-logo { height: 32px; width: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4)); }
 .hero .hero-site { font-size: clamp(18px, 2.2vw, 22px); font-weight: 700; letter-spacing: 0.5px; color: var(--banner-primary-text); text-transform: none; }
 .hero .section-header .colored-line { margin: 10px auto; width: 140px; height: 2px; background: var(--banner-secondary-text); }
 
 /* Hero cards */
-.hero .hero-cards { display: grid; grid-template-columns: repeat(2, minmax(220px, 1fr)); gap: 14px; width: min(840px, 100%); margin: 14px auto 8px; }
-@media (min-width: 900px) { .hero .hero-cards { grid-template-columns: repeat(4, 1fr); } }
-.hero .hero-card { display: flex; align-items: center; gap: 10px; justify-content: flex-start; background: var(--chip-bg); border: 1px solid var(--chip-border); border-radius: var(--radius-1); padding: 10px 16px; color: #d8e6f5; text-align: left; text-decoration: none; box-shadow: 0 6px 16px rgba(0,0,0,0.35); transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease, background .2s ease; }
+.hero .hero-cards { display: grid; grid-template-columns: 1fr; gap: 14px; width: min(1000px, 100%); margin: 14px auto 8px; }
+@media (min-width: 700px) { .hero .hero-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .hero .hero-cards { grid-template-columns: repeat(3, 1fr); } }
+.hero .hero-card { display: flex; align-items: center; gap: 10px; justify-content: flex-start; background: var(--chip-bg); border: 1px solid var(--chip-border); border-left: 3px solid var(--quaternary); border-radius: var(--radius-1); padding: 12px 18px; color: #d8e6f5; text-align: left; text-decoration: none; box-shadow: 0 6px 16px rgba(0,0,0,0.35); transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease, background .2s ease; }
 .hero .hero-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-1px); border-color: rgba(255,255,255,0.12); background: linear-gradient(0deg, var(--chip-hover), var(--chip-hover)), var(--chip-bg); }
-.hero .hero-card .dot { width: 8px; height: 8px; border-radius: 2px; background: var(--quaternary); box-shadow: 0 0 0 1px rgba(0,0,0,0.2) inset; flex: 0 0 auto; }
+.hero .hero-card .dot { width: 10px; height: 10px; border-radius: 2px; background: var(--quaternary); box-shadow: 0 0 0 1px rgba(0,0,0,0.2) inset; flex: 0 0 auto; }
 .hero .hero-card .label { font-weight: 600; letter-spacing: 0.15px; color: #d8e6f5; }
 
 /* Subcategory / tag chips grid */
