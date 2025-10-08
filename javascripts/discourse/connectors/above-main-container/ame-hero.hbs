@@ -1,44 +1,41 @@
-<div class="motto-strip">
-  <div class="container">
-    <div class="hero-motto">{{theme-setting 'hero_motto_text'}}</div>
+{{! Rotating Quote - Large, above the panel }}
+<div id="ame-quote-slot" class="ame-quote-container">
+  <div class="ame-rotating-quote">
+    <span class="q-text"></span>
   </div>
 </div>
 
-<div class="banner-box hero">
-  <div class="container">
-    <div class="hero-nav" role="navigation" aria-label="Hero navigation">
-      <a class="crumb" href="/c">{{theme-setting 'hero_nav_title_text'}}</a>
-      <span class="sep">›</span>
-      <a class="tab" href="/categories">subcategories</a>
-      <a class="tab" href="/tags">tags</a>
-      <a class="tab active" href="/latest">Latest</a>
-      <a class="tab" href="/top">Top</a>
+{{! Main Hero Panel - Freeletics style }}
+<div class="ame-hero-panel">
+  <div class="ame-hero-panel__inner">
+    
+    {{! Navigation breadcrumb row }}
+    <div class="ame-hero-nav">
+      <a class="ame-hero-nav__link" href="/categories">subcategories</a>
+      <a class="ame-hero-nav__link" href="/tags">tags</a>
+      <a class="ame-hero-nav__link ame-hero-nav__link--active" href="/latest">Latest</a>
+      <a class="ame-hero-nav__link" href="/top">Top</a>
     </div>
 
-    <div class="hero-header">
-      {{#if (theme-setting 'hero_logo_url')}}
-        <img class="hero-logo" src="{{theme-setting 'hero_logo_url'}}" alt="logo" />
-      {{/if}}
-      <div class="hero-site">{{theme-setting 'banner_title_text'}}</div>
+    {{! Category tiles grid }}
+    <div class="ame-hero__tiles">
+      <a class="ame-card" href="/tags/knowledge-base">
+        <span class="ame-card__title">Knowledge Base</span>
+        <span class="ame-card__sub">Vendor Manuals, Specs & Docs</span>
+      </a>
+      <a class="ame-card" href="/c">
+        <span class="ame-card__title">Tech Community</span>
+        <span class="ame-card__sub">Ask Questions & Share Expertise</span>
+      </a>
+      <a class="ame-card" href="/tags/how-to">
+        <span class="ame-card__title">How-To & Troubleshooting</span>
+        <span class="ame-card__sub">Guides, Tutorials & Fixes</span>
+      </a>
+      <a class="ame-card" href="/search?q=category%3Aai-assistant">
+        <span class="ame-card__title">AI Assistant (AME-Bot)</span>
+        <span class="ame-card__sub">Get Instant Answers</span>
+      </a>
     </div>
 
-    <div class="section-header">
-      <div class="colored-line"></div>
-    </div>
-
-    <div class="hero-cards" role="navigation" aria-label="Hero category shortcuts">
-      {{#if (theme-setting 'hero_card_1_label')}}
-        <a class="hero-card" href="{{theme-setting 'hero_card_1_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_1_label'}}</span></a>
-      {{/if}}
-      {{#if (theme-setting 'hero_card_2_label')}}
-        <a class="hero-card" href="{{theme-setting 'hero_card_2_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_2_label'}}</span></a>
-      {{/if}}
-      {{#if (theme-setting 'hero_card_3_label')}}
-        <a class="hero-card" href="{{theme-setting 'hero_card_3_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_3_label'}}</span></a>
-      {{/if}}
-      {{#if (theme-setting 'hero_card_4_label')}}
-        <a class="hero-card" href="{{theme-setting 'hero_card_4_url'}}"><span class="dot"></span><span class="label">{{theme-setting 'hero_card_4_label'}}</span></a>
-      {{/if}}
-    </div>
   </div>
 </div>
