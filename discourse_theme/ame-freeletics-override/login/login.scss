@@ -1,0 +1,14 @@
+/* Login page layout: left 60% overlay view, right 40% login card */
+body[class*="static-login"] #main-outlet {
+  display: grid; grid-template-columns: 60% 40%; min-height: 100vh; align-items: center;
+}
+body[class*="static-login"] .login-modal, body[class*="static-login"] .login-box {
+  grid-column: 2; margin: 0 6vw 0 0; background: rgba(16,28,40,.65);
+  border: 1px solid rgba(120,200,255,.14); border-radius: 12px; backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); padding: 24px 28px;
+}
+body[class*="static-login"] .login-modal .modal-inner-container { background: transparent; }
+@media (max-width: 900px) {
+  body[class*="static-login"] #main-outlet { grid-template-columns: 1fr; }
+  body[class*="static-login"] .login-modal, body[class*="static-login"] .login-box { grid-column: 1; margin: 12px; }
+}

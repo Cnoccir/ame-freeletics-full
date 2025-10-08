@@ -1,0 +1,8 @@
+{
+  "name": "AME Freeletics Override",
+  "about_url": "https://example.com",
+  "license_url": "https://opensource.org/licenses/MIT",
+  "component": true,
+  "authors": ["Agent Mode"],
+  "theme_version": "0.2.0"
+}
