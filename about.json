@@ -10,8 +10,7 @@
     "font_aktiv_md": "assets/aktivgrotesk-md.woff2",
     "font_aktiv_bd": "assets/aktivgrotesk-bd.woff2",
     "font_aktiv_ex": "assets/AktivGroteskEx_Rg.woff2",
-    "tech_overlay": "assets/tech-overlay.svg",
-    "brand_header_js": "javascripts/discourse/initializers/ame-brand-header.js"
+    "tech_overlay": "assets/tech-overlay.svg"
   },
   "color_schemes": {
     "AME Dark": {
