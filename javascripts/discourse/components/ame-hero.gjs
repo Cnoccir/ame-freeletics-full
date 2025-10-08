@@ -1,7 +1,10 @@
-import Component from '@glimmer/component';
+import Component from "@glimmer/component";
+import { inject as service } from "@ember/service";
 
 export default class AmeHero extends Component {
-    get showBrandHeader() {
-        return this.args.showBrandHeader;
-    }
+  @service router;
+
+  get showBrandHeader() {
+    return this.router.currentRouteName === "discovery.categories";
+  }
 }
