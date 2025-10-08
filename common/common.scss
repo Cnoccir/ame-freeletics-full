@@ -21,6 +21,28 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Subtle tech overlay to add life without distracting from content */
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  /* layered grid + particles + tint */
+  background:
+    /* dotted grid */
+    radial-gradient(circle at 1px 1px, rgba(0, 120, 212, 0.14) 0 1px, transparent 1.2px) 0 0/22px 22px,
+    /* faint circuit lines */
+    linear-gradient(120deg, rgba(0, 61, 107, 0.18), rgba(0, 0, 0, 0.18)),
+    /* top glow */
+    radial-gradient(600px 220px at 70% -80px, rgba(0, 170, 255, 0.22), transparent 60%),
+    radial-gradient(400px 200px at 10% -100px, rgba(0, 61, 107, 0.18), transparent 60%);
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+/* ensure page chrome sits above overlay */
+body, #main-outlet, .d-header, .sidebar-wrapper, #footer { position: relative; z-index: 1; }
+
 /* ========== TYPOGRAPHY ========== */
 h1, h2, h3 {
   font-family: var(--heading-font-family);
@@ -155,27 +177,60 @@ img.avatar[title="system"] {
   margin-bottom: 24px;
 }
 
-/* ========== HIDE DEFAULT ELEMENTS ========== */
-/* Hide search banner, welcome messages, and list controls on categories page */
+/* ========== HIDE DEFAULT ELEMENTS (AGGRESSIVE) ========== */
+/* Hide ALL welcome messages, search banners, and default content */
+
+/* Welcome messages - multiple selectors to ensure hiding */
+body.categories-index .welcome-wrapper,
+body.navigation-categories .welcome-wrapper,
+body.categories-index #main-outlet > .welcome,
+body.navigation-categories #main-outlet > .welcome,
+body.categories-index #main-outlet .welcome,
+body.navigation-categories #main-outlet .welcome,
+.categories-index .welcome-cta,
+.navigation-categories .welcome-cta,
+/* generic catch‑alls for variants we may not know */
+body.categories-index #main-outlet [class*="welcome"],
+body.navigation-categories #main-outlet [class*="welcome"],
+body.categories-index #main-outlet [id*="welcome"],
+body.navigation-categories #main-outlet [id*="welcome"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Search banner and controls */
 .navigation-categories .search-banner,
 body.categories-index .search-banner,
 .navigation-categories h1,
 .navigation-categories .list-controls,
 .categories-index .list-controls,
-.navigation-categories #main-outlet > .welcome,
-.categories-index #main-outlet > .welcome,
-.navigation-categories .welcome-wrapper,
-.categories-index .welcome-wrapper,
 .navigation-categories .search-container,
-.categories-index .search-container { display: none !important; }
+.categories-index .search-container,
+/* additional catch‑alls */
+body.categories-index #main-outlet [class*="search-banner"],
+body.navigation-categories #main-outlet [class*="search-banner"],
+body.categories-index #main-outlet [id*="search-banner"],
+body.navigation-categories #main-outlet [id*="search-banner"] {
+  display: none !important;
+  visibility: hidden !important;
+}
 
-/* Hide the default category list on categories page - we show custom hero instead */
+/* Hide default category list */
 body.navigation-categories .category-list,
 body.categories-index .category-list,
 body.navigation-categories .subcategory-list,
 body.categories-index .subcategory-list,
-body.navigation-categories #list-area .contents,
-body.categories-index #list-area .contents { display: none !important; }
+body.navigation-categories #list-area > .contents,
+body.categories-index #list-area > .contents,
+body.categories-index .category-list-item,
+body.navigation-categories .category-list-item {
+  display: none !important;
+  visibility: hidden !important;
+}
 
 /* ========== ROTATING QUOTE SECTION ========== */
 /* Show only on categories/homepage */
@@ -439,6 +494,15 @@ body.categories-index .ame-hero-panel { display: block; }
   height: 18px;
   width: 18px;
   fill: #fff;
+}
+
+/* Remove Discourse branding completely */
+#discourse-created-by,
+.powered-by-discourse,
+#footer a[href*="discourse.org"],
+.d-header .title a[href*="discourse.org"] {
+  display: none !important;
+  visibility: hidden !important;
 }
 
 /* ========== MOBILE RESPONSIVE ========== */
