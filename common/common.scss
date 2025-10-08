@@ -65,9 +65,8 @@ h1, h2, h3 {
 }
 
 /* Replace default text logo with branded image/link when enabled */
-@if $enable_brand_header == true {
-  .d-header .title a#site-logo,
-  .d-header .title a#site-text-logo {
+@if $enable_brand_header {
+  .d-header .title a {
     display: inline-block;
     width: 140px;
     height: 34px;
@@ -80,20 +79,17 @@ h1, h2, h3 {
     margin-left: 8px;
   }
   /* Hide any default image/text logos that may be present */
-  .d-header .title a#site-logo img,
-  .d-header .title a#site-text-logo span,
-  .d-header .title a[href*="discourse"] { display: none !important; }
+  .d-header .title a img,
+  .d-header .title a span { display: none !important; }
 }
 
 /* Add label after logo - EXACT Freeletics positioning */
-.d-header .title a#site-logo,
-.d-header .title a#site-text-logo {
+.d-header .title a {
   position: relative;
   top: 6px; /* vertical align tweak */
 }
 
-.d-header .title a#site-logo::after,
-.d-header .title a#site-text-logo::after {
+.d-header .title a::after {
   content: "#{$header_label_text}";
   position: absolute;
   left: calc(100% + 9px);
@@ -129,7 +125,7 @@ h1, h2, h3 {
 #main-outlet {
   flex: 1;
   box-sizing: border-box;
-  background: rgba(22, 30, 33, .6); /* EXACT Freeletics value */
+  background: rgba(22, 30, 33, .70); /* slightly stronger for readability */
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   padding-left: 16px;
@@ -262,14 +258,9 @@ body.navigation-categories .category-list-item {
 }
 
 /* ========== ROTATING QUOTE SECTION ========== */
-/* Show only on categories/homepage */
-body.navigation-categories .ame-quote-container,
-body.categories-index .ame-quote-container {
-  display: block;
-}
-
+/* Show only on categories (connector ensures route) */
 .ame-quote-container {
-  display: none;
+  display: block;
   width: 1110px;
   max-width: calc(100% - 16px);
   margin: 10px auto 12px;
@@ -299,15 +290,12 @@ body.categories-index .ame-quote-container {
 }
 
 /* ========== HERO PANEL (Main glass container) ========== */
-body.navigation-categories .ame-hero-panel,
-body.categories-index .ame-hero-panel { display: block; }
-
 .ame-hero-panel {
-  display: none;
+  display: block;
   width: 1110px;
   max-width: calc(100% - 16px);
   margin: 0 auto 20px;
-  background: rgba(22, 30, 33, 0.75);
+  background: rgba(22, 30, 33, 0.78);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-radius: 8px;
@@ -316,6 +304,17 @@ body.categories-index .ame-hero-panel { display: block; }
 }
 
 .ame-hero-panel__inner { padding: 24px 32px 32px; }
+
+/* Anthem / large motto */
+.ame-anthem {
+  font-size: clamp(26px, 4.2vw, 40px);
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 4px 18px rgba(0,0,0,.55), 0 0 18px rgba(2,119,189,.5);
+  margin: 4px 0 18px;
+}
 
 /* ========== HERO NAVIGATION ========== */
 .ame-hero-nav {
@@ -456,6 +455,99 @@ body.categories-index .ame-hero-panel { display: block; }
 /* ========== FOOTER (Freeletics style) ========== */
 #footer {
   background-color: #161616;
+}
+
+/* ========== LOGIN / AUTH (Glassmorphism) ========== */
+/* Backdrop dim for modals */
+.d-modal {
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+/* Generic modal container polish */
+.d-modal .modal-inner-container {
+  border-radius: 12px;
+  box-shadow: var(--shadow-modal);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Two‑panel hero layout when the login modal is open */
+.login-modal .modal-inner-container {
+  position: relative;
+  width: min(960px, calc(100% - 32px));
+  padding: 24px 24px 24px 520px; /* reserve left hero area */
+  background: rgba(22, 30, 33, 0.78);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Left hero panel */
+.login-modal .modal-inner-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 520px;
+background-image:
+    radial-gradient(500px 180px at 70% -60px, rgba(2, 119, 189, 0.35), transparent 65%),
+    linear-gradient(180deg, rgba(12, 22, 28, 0.65), rgba(12, 22, 28, 0.25)),
+    url(#{if($login_background_image_url != "", $login_background_image_url, $background_image_url)});
+  background-size: cover;
+  background-position: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Form area: headings, inputs, help */
+.login-modal .modal-inner-container .modal-header,
+.login-modal .modal-inner-container .modal-body,
+.login-modal .modal-inner-container .modal-footer,
+.login-modal .modal-inner-container .d-modal__header,
+.login-modal .modal-inner-container .d-modal__body,
+.login-modal .modal-inner-container .d-modal__footer {
+  max-width: 420px;
+  margin-left: auto;
+}
+
+/* Inputs */
+.login-modal input[type="text"],
+.login-modal input[type="email"],
+.login-modal input[type="password"],
+.login-modal .form-kit__control-input,
+.login-modal .form-kit__control-password-wrapper {
+  background: rgba(20, 25, 28, 0.9) !important;
+  border: 1px solid var(--primary-400) !important;
+  color: var(--primary) !important;
+  box-shadow: 0 0 0 0 rgba(2, 119, 189, 0);
+}
+.login-modal input:focus,
+.login-modal .form-kit__control-input:focus,
+.login-modal .form-kit__control-password-wrapper.is-focused {
+  border-color: var(--tertiary) !important;
+  outline: 2px solid var(--tertiary) !important;
+  outline-offset: -2px;
+  box-shadow: 0 0 0 2px rgba(2, 119, 189, 0.25);
+}
+
+/* Primary button */
+.login-modal .btn.btn-primary {
+  background-color: var(--tertiary);
+  color: #fff;
+  border: 0;
+}
+.login-modal .btn.btn-primary:hover { background-color: #1d6df3; }
+
+/* Secondary actions and tabs */
+.login-modal .nav-pills > li a { border-radius: 20px; }
+.login-modal .nav-pills > li a.active { color: #fff; background: rgba(255, 255, 255, 0.12); }
+
+/* Mobile: fall back to single column */
+@media (max-width: 900px) {
+  .login-modal .modal-inner-container {
+    padding: 20px;
+    width: calc(100% - 24px);
+  }
+  .login-modal .modal-inner-container::before { display: none; }
 }
 
 #footer * {

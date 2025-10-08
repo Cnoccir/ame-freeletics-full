@@ -39,6 +39,11 @@ quotes_enabled:
   default: true
   description: "Displays rotating quotes bar under the header on the Categories page."
 
+# Login modal hero image (optional override)
+login_background_image_url:
+  default: ""
+  description: "Optional background image URL for the left hero panel in the login modal. If blank, uses background_image_url."
+
 # HERO customizations
 hero_logo_url:
   default: ""
