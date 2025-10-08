@@ -1,0 +1,46 @@
+# Theme settings for AME Freeletics Full
+# You can override these in the Discourse admin UI after installing the theme
+
+background_image_url:
+  default: "/uploads/default/original/1X/Background-Lgin-Landing.png"
+  description: "URL to the full-screen background image"
+
+header_label_text:
+  default: "TechAssist"
+  description: "Text label displayed after the site title in the header"
+
+banner_image_url:
+  default: "/uploads/default/original/1X/Background-Lgin-Landing.png"
+  description: "Background image URL for the homepage banner"
+
+banner_title_text:
+  default: "AME TechAssist"
+  description: "Banner title heading"
+
+banner_subtitle_text:
+  default: "Everybody is smarter than anybody."
+  description: "Banner subtitle tagline"
+
+banner_cta_1_text:
+  default: "Search Technical Docs"
+  description: "Text for primary CTA button"
+
+banner_cta_1_url:
+  default: "/search"
+  description: "URL for primary CTA button"
+
+banner_cta_2_text:
+  default: "Ask Technical Question"
+  description: "Text for secondary CTA button"
+
+banner_cta_2_url:
+  default: "/new-topic"
+  description: "URL for secondary CTA button"
+
+accent_primary:
+  default: "#003d6b"
+  description: "Primary AME blue"
+
+accent_secondary:
+  default: "#0078d4"
+  description: "Accent AME blue"

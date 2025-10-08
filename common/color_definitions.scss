@@ -1,0 +1,24 @@
+/* AME Freeletics: color variables and banner defaults */
+:root {
+  /* Dark base */
+  --primary: #ECEFF1;              /* text */
+  --secondary: #263238;            /* background */
+  --tertiary: #003d6b;             /* AME blue */
+  --quaternary: #0078d4;           /* AME accent */
+  --header_background: #263238;
+  --header_primary: #ECEFF1;
+  --highlight: #FFB36B;
+  --danger: #FF3333;
+  --success: #00A1A1;
+  --love: #FF3333;
+  --d-selected: #293137;
+  --d-hover: #2d363d;
+
+  /* Banner */
+  --banner-bg-color: #263238;
+  --banner-primary-text: #000;
+  --banner-secondary-text: #FF6C00; /* can be adjusted */
+  --banner-link-text: #0f82af;
+  /* Replace with your upload URL after install */
+  --banner-bg-img: url(#{$banner_image_url});
+}

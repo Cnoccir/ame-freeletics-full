@@ -1,0 +1,26 @@
+{
+  "name": "AME Freeletics Full",
+  "about_url": "https://example.com/ame-techassist",
+  "license_url": "https://opensource.org/licenses/MIT",
+  "theme_version": "0.1.0",
+  "minimum_discourse_version": "3.2.0",
+  "component": false,
+  "assets": {},
+  "color_schemes": {
+    "AME Dark": {
+      "is_dark": true,
+      "colors": {
+        "primary": "ECEFF1",
+        "secondary": "263238",
+        "tertiary": "003d6b",
+        "quaternary": "0078d4",
+        "header_background": "263238",
+        "header_primary": "ECEFF1",
+        "highlight": "FFB36B",
+        "danger": "FF3333",
+        "success": "00A1A1",
+        "love": "FF3333"
+      }
+    }
+  }
+}

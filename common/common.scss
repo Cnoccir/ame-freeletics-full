@@ -1,0 +1,127 @@
+/* ----------------------------------------
+   Common styles: glassmorphism, header, buttons, nav, footer
+   Derived from Freeletics CSS (theme 11) and guide
+   ---------------------------------------- */
+
+/* Background image (replace after upload) */
+html {
+  background-color: #222;
+  background-image: url(#{$background_image_url});
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center top;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography: Inter as Aktiv Grotesk alternative */
+html, body, button, input, select, textarea {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", Arial, "Noto Sans", sans-serif;
+}
+
+h1, h2, h3 { font-weight: 700; }
+
+/* Glass panels */
+#main-outlet {
+  flex: 1;
+  box-sizing: border-box;
+  background: rgba(22, 30, 33, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 32px auto;
+  border-radius: 4px;
+}
+.sidebar-wrapper {
+  background-color: rgba(22, 30, 33, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Header */
+.d-header { height: 48px; box-shadow: none; background-color: var(--header_background); color: var(--header_primary); }
+.d-header #site-logo { height: 31px; margin-left: 8px; }
+.d-header .title a { position: relative; }
+.d-header .title a::after {
+  content: "#{$header_label_text}";
+  position: absolute;
+  left: calc(100% + 9px);
+  top: 8px;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  border-left: 1px solid hsla(0,0%,100%,0.8);
+  padding-left: 8px;
+}
+
+/* Buttons */
+.btn { border-radius: 3px; }
+.btn.btn-primary, .btn.btn-danger { color: #fff; font-weight: 500; }
+.btn.btn-primary { background-color: var(--tertiary); }
+.btn.btn-primary:hover { background-color: var(--quaternary); }
+.btn.btn-primary .d-icon, .btn.btn-danger .d-icon { color: inherit; }
+
+/* Nav pills */
+.nav-pills > li a { border-radius: 3px; }
+.nav-pills > li a:hover { color: #fff; background-color: rgba(0, 61, 107, 0.4); }
+.nav-pills > li a.active { color: #fff; }
+
+/* Footer */
+#footer { background-color: #161616; }
+#footer * { box-sizing: border-box; }
+#footer ul { display: flex; align-items: center; width: max-content; list-style: none; margin: 0 auto; padding: 0; }
+#footer .footer-inner { max-width: 1110px; margin: 0 auto; padding: 19px 8px; }
+@media (min-width: 600px) {
+  #footer .footer-inner { display: flex; justify-content: space-between; }
+  #footer .footer-inner ul { margin: 0; }
+}
+#footer .footer-legal > li { padding: 0 8px; }
+#footer .footer-legal > li:not(:first-child) { border-left: 1px solid #8d8d8d; }
+#footer .footer-legal a { display: block; font-size: 14px; color: silver; }
+#footer .footer-social > li { margin: 0 4px; }
+#footer .footer-social a { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
+#footer .footer-social svg { height: 18px; width: 18px; fill: #fff; }
+
+/* Featured topics (theme 3) */
+/* trimmed but functionally equivalent to Freeletics for layout */
+.featured-topic-wrapper { margin-bottom: 3em; text-align: center; border-bottom: 1px solid var(--primary-low); position: relative; }
+.featured-topic-wrapper h2 { border-bottom: 1px solid var(--primary-low); padding-bottom: .5em; margin-bottom: 1.5em; }
+.featured-topic-wrapper .featured-topics-controls { display: flex; align-items: center; justify-content: space-between; }
+.featured-topic-wrapper .featured-topics-controls .featured-topics { flex: 1; display: flex; justify-content: center; align-items: flex-start; }
+.featured-topic-wrapper .featured-topics .featured-topic { flex: 1 1 30%; max-width: 500px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; }
+.featured-topic-wrapper .featured-topics .featured-topic h3 { margin: 0; font-size: var(--font-up-2); padding: .5em 1em 1em 1em; }
+.featured-topic-wrapper .featured-topics .featured-topic .featured-topic-image { height: 200px; max-width: 450px; width: 100%; background-size: cover; background-position: center; }
+
+/* Banner + layout (theme 9) */
+#main>div { display: flex; flex-direction: column; }
+#main>div #main-outlet { max-width: calc(100% - 16px); width: 1110px; }
+/* Hidden by default; shown when html has .ame-banner-visible (set via JS on homepage/categories) */
+.banner-box { display: none; width: 1110px; max-width: calc(100% - 16px); margin: 0 auto; margin-top: 20px; color: var(--banner-primary-text); position: relative; background-image: var(--banner-bg-img); background-size: cover; background-position: center center; background-repeat: no-repeat; background-color: var(--banner-bg-color); }
+html.ame-banner-visible .banner-box { display: block; }
+.banner-box .section-header .x-title { padding: 25px 65px; margin: 0; }
+.banner-box .section-header .colored-line { margin: auto; width: 165px; height: 1px; background: var(--banner-secondary-text); }
+.banner-box .cta-buttons { display: flex; gap: 12px; justify-content: center; margin: 12px 0 24px; }
+
+/* Category header/banner (theme 8) */
+body:not(.category-header) .category-title-header { display:none; }
+.category-title-contents { display:grid; grid-template-areas: "logo title" "logo description"; grid-template-columns: auto 1fr; }
+.category-title-contents .category-logo { grid-area: logo; align-self: center; margin: 0 1em 0 0; }
+.category-title-contents .category-title { grid-area: title; align-self: end; }
+.category-title-contents .category-title .badge-category__name { font-size: var(--font-up-1); }
+
+/* System avatar square */
+img.avatar[title="system"] { border-radius: 0; }
+
+/* Background helper (theme 6) */
+#background_b { min-width:100vw !important; width:auto !important; height:100vh !important; display:block; z-index:0; position:fixed; top:50%; left:50%; transform: translate3d(-50%, -50%, 0); backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+
+/* Shadows */
+:root {
+  --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 12px 40px rgba(0, 61, 107, 0.15);
+  --shadow-modal: 0 8px 60px rgba(0, 0, 0, 1);
+  --shadow-dropdown: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
