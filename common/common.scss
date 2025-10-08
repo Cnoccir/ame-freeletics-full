@@ -6,7 +6,7 @@
 /* ========== FONTS & CSS VARIABLES ========== */
 /* Set font CSS variables like Freeletics */
 :root {
-  --font-family: "Inter", Arial, sans-serif;
+  --font-family: "Inter", Arial, sans-serif; /* Aktiv Grotesk is licensed; Inter is the fallback */
   --heading-font-family: var(--font-family);
 }
 
@@ -38,6 +38,13 @@ html::before {
     radial-gradient(400px 200px at 10% -100px, rgba(0, 61, 107, 0.18), transparent 60%);
   mix-blend-mode: screen;
   z-index: 0;
+  animation: ameOverlayDrift 40s linear infinite;
+}
+
+@keyframes ameOverlayDrift {
+  0% { background-position: 0 0, 0 0, 70% -80px, 10% -100px; }
+  50% { background-position: 11px 11px, 0 0, 66% -60px, 12% -90px; }
+  100% { background-position: 0 0, 0 0, 70% -80px, 10% -100px; }
 }
 
 /* ensure page chrome sits above overlay */
@@ -49,36 +56,55 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
-/* ========== HEADER (Exact Freeletics match) ========== */
+/* ========== HEADER (Exact Freeletics match + Brand override) ========== */
 .d-header {
-  height: 48px;
+  height: 56px;
   box-shadow: none;
   background-color: var(--header_background);
   color: var(--header_primary);
 }
 
-.d-header #site-logo {
-  height: 31px;
-  margin-left: 8px;
+/* Replace default text logo with branded image/link when enabled */
+@if $enable_brand_header == true {
+  .d-header .title a#site-logo,
+  .d-header .title a#site-text-logo {
+    display: inline-block;
+    width: 140px;
+    height: 34px;
+    background-image: url(#{$brand_logo_url});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+    text-indent: -9999px; /* hide fallback text */
+    overflow: hidden;
+    margin-left: 8px;
+  }
+  /* Hide any default image/text logos that may be present */
+  .d-header .title a#site-logo img,
+  .d-header .title a#site-text-logo span,
+  .d-header .title a[href*="discourse"] { display: none !important; }
 }
 
 /* Add label after logo - EXACT Freeletics positioning */
-.d-header .title a {
+.d-header .title a#site-logo,
+.d-header .title a#site-text-logo {
   position: relative;
-  margin-top: -1px;
+  top: 6px; /* vertical align tweak */
 }
 
-.d-header .title a::after {
+.d-header .title a#site-logo::after,
+.d-header .title a#site-text-logo::after {
   content: "#{$header_label_text}";
   position: absolute;
   left: calc(100% + 9px);
-  top: 8px;
+  top: 4px;
   font-size: 18px;
   line-height: 1;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
   border-left: 1px solid hsla(0, 0%, 100%, 0.8);
   padding-left: 8px;
+  color: var(--header_primary);
 }
 
 /* Freeletics header extras */
@@ -88,12 +114,15 @@ h1, h2, h3 {
   background-color: var(--header_background);
 }
 
-.d-header .extra-info-wrapper .header-title {
+ .d-header .extra-info-wrapper .header-title {
   font-size: 1.2em;
 }
 
+.d-header a { color: var(--header_primary); }
+
 .d-header-icons .icon {
   font-size: 12px;
+  color: var(--header_primary);
 }
 
 /* ========== GLASS PANELS (Exact Freeletics) ========== */
@@ -243,21 +272,21 @@ body.categories-index .ame-quote-container {
   display: none;
   width: 1110px;
   max-width: calc(100% - 16px);
-  margin: 24px auto 18px;
+  margin: 10px auto 12px;
   text-align: center;
-  padding: 10px 20px;
+  padding: 6px 16px;
 }
 
 .ame-rotating-quote {
-  font-size: clamp(28px, 4.5vw, 44px);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #ffffff;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.45), 0 0 18px rgba(2, 119, 189, 0.55);
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
-  min-height: 70px;
+  min-height: 78px;
   display: flex;
   align-items: center;
   justify-content: center;

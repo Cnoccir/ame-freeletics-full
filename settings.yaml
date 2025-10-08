@@ -5,8 +5,21 @@ background_image_url:
   default: "/uploads/default/original/1X/Background-Lgin-Landing.png"
   description: "URL to the full-screen background image"
 
+# Header / brand controls
+enable_brand_header:
+  default: true
+  description: "If true, theme replaces the default header logo/text with your brand."
+
+brand_logo_url:
+  default: "/uploads/default/original/1X/ame-logo.png"
+  description: "URL to the brand logo shown in the header. Recommended ~120x34, transparent PNG/SVG."
+
+brand_name:
+  default: "AME TechAssist"
+  description: "Brand name label displayed after the logo in the header."
+
 header_label_text:
-  default: "TechAssist"
+  default: "AME TechAssist"
   description: "Text label displayed after the site title in the header"
 
 banner_image_url:
@@ -20,6 +33,11 @@ banner_title_text:
 banner_subtitle_text:
   default: "Everybody is smarter than anybody."
   description: "Banner subtitle tagline"
+
+# Rotating quotes
+quotes_enabled:
+  default: true
+  description: "Displays rotating quotes bar under the header on the Categories page."
 
 # HERO customizations
 hero_logo_url:

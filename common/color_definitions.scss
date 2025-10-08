@@ -3,8 +3,9 @@
   /* Dark base */
   --primary: #ECEFF1;              /* text */
   --secondary: #263238;            /* background */
-  --tertiary: #003d6b;             /* AME blue */
-  --quaternary: #0078d4;           /* AME accent */
+  /* Align accents to Freeletics blue */
+  --tertiary: #0277BD;             /* Link/CTA accent */
+  --quaternary: #0277BD;           /* Same as tertiary */
   --header_background: #263238;
   --header_primary: #ECEFF1;
   --highlight: #FFB36B;
