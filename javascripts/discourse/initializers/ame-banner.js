@@ -1,16 +1,17 @@
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer("1.8.0", (api) => {
-  // Show banner on homepage and categories
+  // Toggle visibility class on home and categories
   api.onPageChange((url) => {
     const show = url === "/" || url.startsWith("/categories");
     document.documentElement.classList.toggle("ame-banner-visible", !!show);
   });
 
-  api.decorateWidget("above-main-container:after", () => {
-    // Only render if we want the banner visible
+  // Render banner in the modern outlet API (avoids widget deprecation)
+  api.renderInOutlet("above-main-container", (helper) => {
     if (!document.documentElement.classList.contains("ame-banner-visible")) return;
 
+    const h = helper.h;
     const title = settings.banner_title_text || "AME TechAssist";
     const subtitle = settings.banner_subtitle_text || "Everybody is smarter than anybody.";
     const cta1Text = settings.banner_cta_1_text || "Search Technical Docs";
@@ -18,28 +19,22 @@ export default apiInitializer("1.8.0", (api) => {
     const cta2Text = settings.banner_cta_2_text || "Ask Technical Question";
     const cta2Url = settings.banner_cta_2_url || "/new-topic";
 
-    return [
-      this.h("div.banner-box", [
-        this.h("div.container", [
-          this.h("div.section-header", [
-            this.h("h2.x-title", title),
-            this.h("div.colored-line"),
-            this.h("p", subtitle),
+    return h("div.banner-box", [
+      h("div.container", [
+        h("div.section-header", [
+          h("h2.x-title", title),
+          h("div.colored-line"),
+          h("p", subtitle),
+        ]),
+        h("div.cta-buttons", [
+          h("a.btn.btn-primary", { attributes: { href: cta1Url } }, [
+            h("span.d-button-label", cta1Text),
           ]),
-          this.h("div.cta-buttons", [
-            this.h(
-              "a.btn btn-primary",
-              { attributes: { href: cta1Url } },
-              this.h("span.d-button-label", cta1Text)
-            ),
-            this.h(
-              "a.btn btn-primary",
-              { attributes: { href: cta2Url } },
-              this.h("span.d-button-label", cta2Text)
-            ),
+          h("a.btn.btn-primary", { attributes: { href: cta2Url } }, [
+            h("span.d-button-label", cta2Text),
           ]),
         ]),
       ]),
-    ];
+    ]);
   });
 });

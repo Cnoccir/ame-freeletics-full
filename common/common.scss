@@ -26,16 +26,17 @@ h1, h2, h3 { font-weight: 700; }
 #main-outlet {
   flex: 1;
   box-sizing: border-box;
-  background: rgba(22, 30, 33, 0.6);
+  background: rgba(22, 30, 33, 0.66);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   padding-left: 16px;
   padding-right: 16px;
   margin: 32px auto;
   border-radius: 4px;
+  box-shadow: var(--shadow-card);
 }
 .sidebar-wrapper {
-  background-color: rgba(22, 30, 33, 0.6);
+  background-color: rgba(22, 30, 33, 0.72); /* increase opacity for readability */
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -69,6 +70,9 @@ h1, h2, h3 { font-weight: 700; }
 .nav-pills > li a:hover { color: #fff; background-color: rgba(0, 61, 107, 0.4); }
 .nav-pills > li a.active { color: #fff; }
 
+/* Hide default search banner on categories to avoid conflict with our hero */
+.navigation-categories .search-banner, body.categories-index .search-banner { display: none !important; }
+
 /* Footer */
 #footer { background-color: #161616; }
 #footer * { box-sizing: border-box; }
@@ -101,6 +105,9 @@ h1, h2, h3 { font-weight: 700; }
 /* Hidden by default; shown when html has .ame-banner-visible (set via JS on homepage/categories) */
 .banner-box { display: none; width: 1110px; max-width: calc(100% - 16px); margin: 0 auto; margin-top: 20px; color: var(--banner-primary-text); position: relative; background-image: var(--banner-bg-img); background-size: cover; background-position: center center; background-repeat: no-repeat; background-color: var(--banner-bg-color); }
 html.ame-banner-visible .banner-box { display: block; }
+.banner-box .section-header .x-title { padding: 25px 65px; margin: 0; }
+.banner-box .section-header .colored-line { margin: auto; width: 165px; height: 1px; background: var(--banner-secondary-text); }
+.banner-box .cta-buttons { display: flex; gap: 12px; justify-content: center; margin: 12px 0 24px; }
 .banner-box .section-header .x-title { padding: 25px 65px; margin: 0; }
 .banner-box .section-header .colored-line { margin: auto; width: 165px; height: 1px; background: var(--banner-secondary-text); }
 .banner-box .cta-buttons { display: flex; gap: 12px; justify-content: center; margin: 12px 0 24px; }
