@@ -4,7 +4,7 @@
   "license_url": "https://opensource.org/licenses/MIT",
   "theme_version": "0.1.0",
   "minimum_discourse_version": "3.2.0",
-  "component": false,
+  "component": true,
   "assets": {
     "font_aktiv_rg": "assets/aktivgrotesk-rg.woff2",
     "font_aktiv_md": "assets/aktivgrotesk-md.woff2",
