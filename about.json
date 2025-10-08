@@ -5,7 +5,14 @@
   "theme_version": "0.1.0",
   "minimum_discourse_version": "3.2.0",
   "component": false,
-  "assets": {},
+  "assets": {
+    "font_aktiv_rg": "assets/aktivgrotesk-rg.woff2",
+    "font_aktiv_md": "assets/aktivgrotesk-md.woff2",
+    "font_aktiv_bd": "assets/aktivgrotesk-bd.woff2",
+    "font_aktiv_ex": "assets/AktivGroteskEx_Rg.woff2",
+    "tech_overlay": "assets/tech-overlay.svg",
+    "brand_header_js": "javascripts/discourse/initializers/ame-brand-header.js"
+  },
   "color_schemes": {
     "AME Dark": {
       "is_dark": true,

@@ -22,7 +22,8 @@ html {
 }
 
 /* Subtle tech overlay to add life without distracting from content */
-html::before {
+/* Subtle tech overlay to add life without distracting from content */
+body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -257,7 +258,71 @@ body.navigation-categories .category-list-item {
   visibility: hidden !important;
 }
 
-/* ========== ROTATING QUOTE SECTION ========== */
+#ame-brand-header {
+    position: relative;
+    z-index: 2;
+    margin: 8px auto 12px;
+    max-width: 1280px;
+    padding: 10px 16px;
+    background: rgba(10,22,32,.45);
+    border:1px solid rgba(120,200,255,.12);
+    border-radius:10px;
+    backdrop-filter: blur(4px);
+    color:#e0effa;
+}
+#ame-brand-header .brand-inner {
+    position: relative;
+    height: 28px;
+}
+#ame-brand-header .quote {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+#ame-brand-header .quote::before {
+    content:"▸";
+    color:#83d3ff;
+    opacity:.85;
+}
+#ame-brand-header .q1::after {
+    content: var(--brand-quote-1);
+}
+#ame-brand-header .q2::after {
+    content: var(--brand-quote-2);
+}
+#ame-brand-header .q3::after {
+    content: var(--brand-quote-3);
+}
+@keyframes fade-rotate {
+    0%{opacity:0; transform:translateY(8px);}
+    5%{opacity:1; transform:none;}
+    30%{opacity:1;}
+    35%{opacity:0; transform:translateY(-6px);}
+    100%{opacity:0;}
+}
+#ame-brand-header .q1 {
+    animation: fade-rotate 12s infinite;
+}
+#ame-brand-header .q2 {
+    animation: fade-rotate 12s infinite;
+    animation-delay: 4s;
+}
+#ame-brand-header .q3 {
+    animation: fade-rotate 12s infinite;
+    animation-delay: 8s;
+}
+@media (prefers-reduced-motion: reduce) {
+    #ame-brand-header .quote {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+    #ame-brand-header .q2, #ame-brand-header .q3 {
+        display: none;
+    }
+}
 /* Show only on categories (connector ensures route) */
 .ame-quote-container {
   display: block;
@@ -473,29 +538,29 @@ body.navigation-categories .category-list-item {
 
 /* Two‑panel hero layout when the login modal is open */
 .login-modal .modal-inner-container {
-  position: relative;
-  width: min(960px, calc(100% - 32px));
-  padding: 24px 24px 24px 520px; /* reserve left hero area */
-  background: rgba(22, 30, 33, 0.78);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+    position: relative;
+    width: min(960px, calc(100% - 32px));
+    padding: 24px 24px 24px 520px; /* reserve left hero area */
+    background: rgba(22, 30, 33, 0.78);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
 }
 
 /* Left hero panel */
 .login-modal .modal-inner-container::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 520px;
-background-image:
-    radial-gradient(500px 180px at 70% -60px, rgba(2, 119, 189, 0.35), transparent 65%),
-    linear-gradient(180deg, rgba(12, 22, 28, 0.65), rgba(12, 22, 28, 0.25)),
-    url(#{if($login_background_image_url != "", $login_background_image_url, $background_image_url)});
-  background-size: cover;
-  background-position: center;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 520px;
+    background-image:
+        radial-gradient(500px 180px at 70% -60px, rgba(2, 119, 189, 0.35), transparent 65%),
+        linear-gradient(180deg, rgba(12, 22, 28, 0.65), rgba(12, 22, 28, 0.25)),
+        url(#{$login_background_image_url});
+    background-size: cover;
+    background-position: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Form area: headings, inputs, help */
@@ -505,18 +570,20 @@ background-image:
 .login-modal .modal-inner-container .d-modal__header,
 .login-modal .modal-inner-container .d-modal__body,
 .login-modal .modal-inner-container .d-modal__footer {
-  max-width: 420px;
-  margin-left: auto;
+    max-width: 420px;
+    margin-left: auto;
 }
 
-/* Inputs */
-.login-modal input[type="text"],
-.login-modal input[type="email"],
-.login-modal input[type="password"],
-.login-modal .form-kit__control-input,
-.login-modal .form-kit__control-password-wrapper {
-  background: rgba(20, 25, 28, 0.9) !important;
-  border: 1px solid var(--primary-400) !important;
+/* Mobile: fall back to single column */
+@media (max-width: 900px) {
+    .login-modal .modal-inner-container {
+        padding: 20px;
+        width: calc(100% - 24px);
+    }
+    .login-modal .modal-inner-container::before {
+        display: none;
+    }
+}
   color: var(--primary) !important;
   box-shadow: 0 0 0 0 rgba(2, 119, 189, 0);
 }
