@@ -1,5 +1,7 @@
 /* AME Freeletics Override: safe-scoped global styles */
 
+@import "freeletics-vars";
+
 /* 1) Font faces via theme uploads (optional) */
 @if global-variable-exists(font_aktiv_rg) and $font_aktiv_rg != "" {
   @font-face { font-family:"AktivGrotesk"; src: url($font_aktiv_rg) format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
