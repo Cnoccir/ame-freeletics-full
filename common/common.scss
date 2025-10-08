@@ -102,9 +102,9 @@ h1, h2, h3 { font-weight: 700; }
 /* Banner + layout (theme 9) */
 #main>div { display: flex; flex-direction: column; }
 #main>div #main-outlet { max-width: calc(100% - 16px); width: 1110px; }
-/* Hidden by default; shown when html has .ame-banner-visible (set via JS on homepage/categories) */
+/* Hidden by default; show on homepage/categories via route classes */
 .banner-box { display: none; width: 1110px; max-width: calc(100% - 16px); margin: 0 auto; margin-top: 20px; color: var(--banner-primary-text); position: relative; background-image: var(--banner-bg-img); background-size: cover; background-position: center center; background-repeat: no-repeat; background-color: var(--banner-bg-color); }
-html.ame-banner-visible .banner-box { display: block; }
+body.navigation-categories .banner-box, body.categories-index .banner-box { display: block; }
 .banner-box .section-header .x-title { padding: 25px 65px; margin: 0; }
 .banner-box .section-header .colored-line { margin: auto; width: 165px; height: 1px; background: var(--banner-secondary-text); }
 .banner-box .cta-buttons { display: flex; gap: 12px; justify-content: center; margin: 12px 0 24px; }
