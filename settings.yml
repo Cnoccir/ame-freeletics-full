@@ -20,8 +20,8 @@ brand_logo_url:
 
 header_label_text:
   type: string
-  default: "Community"
-  description: Small label after the site logo.
+  default: "Collaborate. Document. Grow."
+  description: Small tagline after the site logo (e.g., "Collaborate. Document. Grow.").
 
 enable_header_quotes:
   type: bool
@@ -37,3 +37,8 @@ login_background_image_url:
   type: upload
   default: ""
   description: Background image for the left panel in the login modal.
+
+show_banner_on_login:
+  type: bool
+  default: true
+  description: Show the quotes banner on the login page.

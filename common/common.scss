@@ -155,12 +155,30 @@ body, #main-outlet, .d-header, .sidebar-wrapper, #footer {
   z-index: 1;
 }
 
-/* Make sure the overlay appears on all pages */
+/* Make sure the overlay appears on most pages */
 body::before,
 body::after {
   position: fixed !important;
   inset: 0 !important;
   z-index: 0 !important;
+}
+/* Turn off overlays and theme banners on the static login route */
+body.login-page::before,
+body.login-page::after,
+body.static-login::before,
+body.static-login::after { 
+  content: none !important; 
+  display: none !important; 
+}
+@if not $show_banner_on_login {
+body.login-page .ame-header-banner,
+body.static-login .ame-header-banner { 
+  display: none !important; 
+}
+}
+body.login-page .sidebar-wrapper,
+body.static-login .sidebar-wrapper { 
+  margin-top: 0 !important; 
 }
 
 /* Disable overlays and custom backgrounds on admin interface */
@@ -214,20 +232,22 @@ a {
 /* Replace default text logo with branded image/link when enabled */
 @if $enable_brand_header and $brand_logo_url != "" {
   .d-header .title a {
-    display: inline-block;
-    width: 140px;
+    display: inline-flex;
+    align-items: center;
     height: 34px;
+    padding-left: 40px; /* room for logo */
     background-image: url(#{$brand_logo_url});
-    background-size: contain;
+    background-size: 28px 28px;
     background-repeat: no-repeat;
     background-position: left center;
-    text-indent: -9999px; /* hide fallback text */
-    overflow: hidden;
+    color: var(--header_primary);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-left: 8px;
   }
-  /* Hide any default image/text logos that may be present */
-  .d-header .title a img,
-  .d-header .title a span { display: none !important; }
+  /* Keep any inner text visible; only hide duplicate images */
+  .d-header .title a img { display: none !important; }
 }
 
 /* Add label after logo - Enhanced positioning */
@@ -235,6 +255,13 @@ a {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+/* Ensure site name is always clearly visible */
+.d-header .title a {
+  color: var(--header_primary) !important;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .d-header .title a {
@@ -1132,8 +1159,8 @@ body.ame-has-banner:not(.mobile-view) .sidebar-wrapper {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Two‑panel hero layout when the login modal is open */
-.login-modal .modal-inner-container {
+/* Two‑panel hero layout when the login modal is open (not on static login page) */
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container {
     position: relative;
     width: min(960px, calc(100% - 32px));
     padding: 24px 24px 24px 520px; /* reserve left hero area */
@@ -1143,7 +1170,7 @@ body.ame-has-banner:not(.mobile-view) .sidebar-wrapper {
 }
 
 /* Left hero panel */
-.login-modal .modal-inner-container::before {
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container::before {
     content: "";
     position: absolute;
     left: 0;
@@ -1160,22 +1187,22 @@ body.ame-has-banner:not(.mobile-view) .sidebar-wrapper {
 }
 
 /* Form area: headings, inputs, help */
-.login-modal .modal-inner-container .modal-header,
-.login-modal .modal-inner-container .modal-body,
-.login-modal .modal-inner-container .modal-footer,
-.login-modal .modal-inner-container .d-modal__header,
-.login-modal .modal-inner-container .d-modal__body,
-.login-modal input[type="text"],
-.login-modal input[type="email"],
-.login-modal input[type="password"] {
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container .modal-header,
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container .modal-body,
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container .modal-footer,
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container .d-modal__header,
+body:not(.login-page):not(.static-login) .login-modal .modal-inner-container .d-modal__body,
+body:not(.login-page):not(.static-login) .login-modal input[type="text"],
+body:not(.login-page):not(.static-login) .login-modal input[type="email"],
+body:not(.login-page):not(.static-login) .login-modal input[type="password"] {
     background: rgba(20, 25, 28, 0.9) !important;
     border: 1px solid var(--primary-400) !important;
     color: var(--primary) !important;
     box-shadow: 0 0 0 0 rgba(2, 119, 189, 0);
 }
-.login-modal input:focus,
-.login-modal .form-kit__control-input:focus,
-.login-modal .form-kit__control-password-wrapper.is-focused {
+body:not(.login-page):not(.static-login) .login-modal input:focus,
+body:not(.login-page):not(.static-login) .form-kit__control-input:focus,
+body:not(.login-page):not(.static-login) .form-kit__control-password-wrapper.is-focused {
   border-color: var(--tertiary) !important;
   outline: 2px solid var(--tertiary) !important;
   outline-offset: -2px;
@@ -1183,24 +1210,24 @@ body.ame-has-banner:not(.mobile-view) .sidebar-wrapper {
 }
 
 /* Primary button */
-.login-modal .btn.btn-primary {
+body:not(.login-page):not(.static-login) .login-modal .btn.btn-primary {
   background-color: var(--tertiary);
   color: #fff;
   border: 0;
 }
-.login-modal .btn.btn-primary:hover { background-color: #1d6df3; }
+body:not(.login-page):not(.static-login) .login-modal .btn.btn-primary:hover { background-color: #1d6df3; }
 
 /* Secondary actions and tabs */
-.login-modal .nav-pills > li a { border-radius: 20px; }
-.login-modal .nav-pills > li a.active { color: #fff; background: rgba(255, 255, 255, 0.12); }
+body:not(.login-page):not(.static-login) .login-modal .nav-pills > li a { border-radius: 20px; }
+body:not(.login-page):not(.static-login) .login-modal .nav-pills > li a.active { color: #fff; background: rgba(255, 255, 255, 0.12); }
 
 /* Mobile: fall back to single column */
 @media (max-width: 900px) {
-  .login-modal .modal-inner-container {
+  body:not(.login-page):not(.static-login) .login-modal .modal-inner-container {
     padding: 20px;
     width: calc(100% - 24px);
   }
-  .login-modal .modal-inner-container::before { display: none; }
+  body:not(.login-page):not(.static-login) .login-modal .modal-inner-container::before { display: none; }
 }
 
 #footer * {

@@ -7,12 +7,14 @@ export default {
       // Initialize on page load
       setTimeout(() => {
         initializeQuotes();
+        pruneGettingStarted();
       }, 100);
 
       // Reinitialize on route changes
       api.onPageChange(() => {
         setTimeout(() => {
           initializeQuotes();
+          pruneGettingStarted();
         }, 100);
       });
     });
@@ -58,13 +60,40 @@ function initializeQuotes() {
     clearInterval(window.ameHeaderQuotesInterval);
   }
 
-  // Rotate every 5 seconds
+  // Align sidebar with banner height
+  updateBannerOffset();
+  window.addEventListener("resize", updateBannerOffset, { passive: true });
+
+  // Rotate every 10 seconds (slower)
   window.ameHeaderQuotesInterval = setInterval(() => {
     quoteElement.classList.remove('visible');
 
     setTimeout(() => {
       currentIndex = (currentIndex + 1) % quotes.length;
       displayQuote(quotes[currentIndex]);
-    }, 600);
-  }, 5000);
+    }, 1000);
+  }, 10000);
+}
+
+function updateBannerOffset() {
+  const banner = document.querySelector('.ame-header-banner');
+  const html = document.documentElement;
+  if (!banner) {
+    html.style.removeProperty('--ame-banner-height');
+    document.body.classList.remove('ame-has-banner');
+    return;
+  }
+  const h = Math.round(banner.getBoundingClientRect().height);
+  html.style.setProperty('--ame-banner-height', `${h}px`);
+  document.body.classList.add('ame-has-banner');
+}
+
+function pruneGettingStarted() {
+  const links = document.querySelectorAll('.d-header .extra-info-wrapper a');
+  links.forEach((a) => {
+    const txt = (a.textContent || '').trim().toLowerCase();
+    if (txt === 'getting started' || txt.includes('getting started')) {
+      a.style.display = 'none';
+    }
+  });
 }
