@@ -163,6 +163,22 @@ body::after {
   z-index: 0 !important;
 }
 
+/* Disable overlays and custom backgrounds on admin interface */
+body.admin-interface::before,
+body.admin-interface::after {
+  content: none !important;
+  display: none !important;
+}
+body.admin-interface #main-outlet {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
 /* ========== TYPOGRAPHY ========== */
 body {
   font-family: var(--font-family);
@@ -184,7 +200,7 @@ h2 { font-size: 22px; line-height: 1.4; font-weight: 600; }
 h3 { font-size: 18px; line-height: 1.4; font-weight: 600; }
 
 a {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* ========== HEADER (Exact Freeletics match + Brand override) ========== */
@@ -240,6 +256,7 @@ a {
   border-left: 2px solid rgba(255, 255, 255, 0.2);
   color: var(--header_primary);
   letter-spacing: 0;
+  font-weight: 400;
 }
 
 /* Freeletics header extras */
@@ -261,54 +278,32 @@ a {
 }
 
 /* ========== GLASS PANELS (Exact Freeletics) ========== */
-/* Layout: center column + optional right sidebar (stable widths) */
+/* Foundation-aligned base: full-width content; do not constrain width */
 #main {
   display: block;
 }
 
-/* Main content container */
-body[class*="navigation-"] #main-outlet,
-body.categories-index #main-outlet,
-body.latest #main-outlet,
-body.top #main-outlet {
-  flex: 1;
+#main-outlet {
   box-sizing: border-box;
-  background: rgba(22, 30, 33, .72);
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  padding: 16px;
-  margin: 32px auto;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  max-width: 1120px;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  max-width: none;
   width: 100%;
 }
 
-/* Optional sidebar box */
+/* Sidebar wrapper should not force layout; leave to components */
 .sidebar-wrapper {
-  background-color: rgba(22, 30, 33, .72);
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  margin: 32px auto;
-  padding: 16px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  max-width: 1120px;
-}
-
-/* Two-column at desktop when Discourse sidebar/component is present */
-@media (min-width: 1024px) {
-  .has-sidebar #main {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 300px;
-    column-gap: 16px;
-    align-items: start;
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  .has-sidebar #main-outlet { margin: 32px 0; }
-  .has-sidebar .sidebar-wrapper { margin: 32px 0; }
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .sidebar-wrapper {
@@ -513,9 +508,9 @@ body.navigation-categories {
 }
 
 .ame-banner-quote {
-  font-size: clamp(28px, 3.2vw, 40px);
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 300;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0;
