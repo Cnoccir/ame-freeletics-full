@@ -25,10 +25,10 @@ html {
 /* Cyberpunk-style holographic overlay with geometric grid and data lines */
 body::before {
   content: "";
-  position: fixed;
-  inset: 0;
+  position: fixed !important;
+  inset: 0 !important;
   pointer-events: none;
-  z-index: 0;
+  z-index: 0 !important;
   
   /* Multi-layered holographic HUD effect */
   background:
@@ -37,44 +37,45 @@ body::before {
       0deg,
       transparent,
       transparent 79px,
-      rgba(0, 200, 255, 0.06) 79px,
-      rgba(0, 200, 255, 0.06) 80px
+      rgba(0, 200, 255, 0.10) 79px,
+      rgba(0, 200, 255, 0.10) 80px
     ),
     /* Faint vertical dashed grid lines */
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 79px,
-      rgba(0, 200, 255, 0.06) 79px,
-      rgba(0, 200, 255, 0.06) 80px
+      rgba(0, 200, 255, 0.10) 79px,
+      rgba(0, 200, 255, 0.10) 80px
     ),
     /* Subtle tracking beams - diagonal sweeps */
     linear-gradient(
       125deg,
       transparent 30%,
-      rgba(0, 220, 255, 0.08) 48%,
+      rgba(0, 220, 255, 0.12) 48%,
       transparent 52%,
       transparent
     ),
     /* Circuit pattern fragments */
     radial-gradient(
       ellipse at 85% 15%,
-      rgba(0, 200, 255, 0.12) 0%,
+      rgba(0, 200, 255, 0.18) 0%,
       transparent 40%
     ),
     radial-gradient(
       ellipse at 15% 85%,
-      rgba(0, 170, 255, 0.1) 0%,
+      rgba(0, 170, 255, 0.15) 0%,
       transparent 35%
     ),
     /* Soft cyan glow at edges */
     radial-gradient(
       circle at top right,
-      rgba(0, 200, 255, 0.15),
+      rgba(0, 200, 255, 0.20),
       transparent 50%
     );
   
   mix-blend-mode: screen;
+  opacity: 1;
   animation: hudPulse 8s ease-in-out infinite, hudDrift 30s linear infinite;
 }
 
@@ -100,15 +101,15 @@ body::before {
 /* Additional data fragments scattered across the viewport */
 body::after {
   content: "";
-  position: fixed;
-  inset: 0;
+  position: fixed !important;
+  inset: 0 !important;
   pointer-events: none;
-  z-index: 0;
+  z-index: 0 !important;
   background:
     /* Small circuit dots */
     radial-gradient(
       circle at 1.5px 1.5px,
-      rgba(0, 220, 255, 0.08) 0,
+      rgba(0, 220, 255, 0.12) 0,
       transparent 1.5px
     ) 0 0 / 150px 150px,
     /* Microchip patterns */
@@ -116,10 +117,11 @@ body::after {
       45deg,
       transparent,
       transparent 200px,
-      rgba(0, 200, 255, 0.03) 200px,
-      rgba(0, 200, 255, 0.03) 201px
+      rgba(0, 200, 255, 0.06) 200px,
+      rgba(0, 200, 255, 0.06) 201px
     );
   mix-blend-mode: lighten;
+  opacity: 1;
   animation: dataDrift 25s linear infinite reverse;
 }
 
@@ -231,9 +233,9 @@ h1, h2, h3 {
 #main-outlet {
   flex: 1;
   box-sizing: border-box;
-  background: rgba(22, 30, 33, .70); /* slightly stronger for readability */
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(22, 30, 33, .75); /* slightly stronger for readability */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   padding-left: 16px;
   padding-right: 16px;
   margin: 32px auto;
@@ -241,12 +243,13 @@ h1, h2, h3 {
 }
 
 .sidebar-wrapper {
-  background-color: rgba(22, 30, 33, .6);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background-color: rgba(22, 30, 33, .75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   margin: 32px 0 32px 16px;
   padding: 16px 12px;
   border-radius: 4px;
+  border: 1px solid rgba(0, 170, 255, 0.08);
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -414,39 +417,62 @@ body.navigation-categories {
 /* ========== HEADER BANNER (Below Header Bar - Like Freeletics) ========== */
 .ame-header-banner {
   position: relative;
-  width: 100%;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
   background-color: var(--header_background);
-  border-bottom: 1px solid rgba(0, 170, 255, 0.2);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 170, 255, 0.25);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
   z-index: 10;
 }
 
 .ame-banner-content {
   max-width: 1110px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 36px 20px;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .ame-banner-quote {
-  font-size: clamp(22px, 3vw, 36px);
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0;
   text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.8),
-    0 0 24px rgba(0, 170, 255, 0.6);
+    0 3px 8px rgba(0, 0, 0, 0.9),
+    0 0 30px rgba(0, 170, 255, 0.7),
+    0 0 60px rgba(0, 170, 255, 0.3);
   font-style: italic;
-  line-height: 1.5;
-  font-family: var(--font-family);
+  line-height: 1.4;
+  font-family: "Inter", var(--font-family), "Arial Black", Arial, sans-serif;
+  max-width: 95%;
 }
 
 .ame-banner-quote .quote-text {
-  display: inline-block;
+  display: block;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.ame-banner-quote .quote-text.visible {
+  opacity: 1;
+}
+
+.ame-banner-quote strong {
+  font-weight: 900;
+  color: #00CCFF;
+  text-shadow:
+    0 3px 10px rgba(0, 0, 0, 1),
+    0 0 35px rgba(0, 204, 255, 0.9),
+    0 0 70px rgba(0, 204, 255, 0.5);
 }
 
 /* ========== HERO FULL SECTION ========== */
@@ -971,7 +997,7 @@ body:not(.mobile-view) {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 6px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.90);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -980,15 +1006,15 @@ body:not(.mobile-view) {
 }
 
 .sidebar-section-link:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 170, 255, 0.12);
   color: #fff;
 }
 
 .sidebar-section-link.active,
 .sidebar-section-link-wrapper .sidebar-section-link.active {
-  background: rgba(2, 119, 189, 0.2);
+  background: rgba(0, 170, 255, 0.25);
   color: #fff;
-  border-left: 3px solid #0277BD;
+  border-left: 3px solid #00AAFF;
   padding-left: 9px;
 }
 
@@ -999,12 +1025,12 @@ body:not(.mobile-view) {
   justify-content: center;
   width: 20px;
   height: 20px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 170, 255, 0.8);
 }
 
 .sidebar-section-link:hover .sidebar-section-link-prefix,
 .sidebar-section-link.active .sidebar-section-link-prefix {
-  color: #03A9F4;
+  color: #00AAFF;
 }
 
 /* Category indicators in sidebar */
