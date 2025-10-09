@@ -5,6 +5,10 @@ background_image_url:
   default: "https://i.imgur.com/sI9aCtd.jpg"
   description: "URL to the full-screen background image"
 
+banner_image_url:
+  default: "https://i.imgur.com/sI9aCtd.jpg"
+  description: "URL to the banner background image"
+
 # Header / brand controls
 enable_brand_header:
   default: true

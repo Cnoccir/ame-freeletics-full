@@ -203,60 +203,24 @@ img.avatar[title="system"] {
   margin-bottom: 24px;
 }
 
-/* ========== HIDE DEFAULT ELEMENTS (AGGRESSIVE) ========== */
-// /* Hide ALL welcome messages, search banners, and default content */
+/* ========== HIDE DEFAULT ELEMENTS (SELECTIVE) ========== */
+/* Only hide default elements when custom hero is present */
+body.categories-index,
+body.navigation-categories {
+  /* Hide default welcome banner when hero component is active */
+  .welcome-wrapper,
+  #main-outlet > .welcome,
+  #main-outlet .welcome,
+  .welcome-cta {
+    display: none !important;
+  }
 
-// /* Welcome messages - multiple selectors to ensure hiding */
-// body.categories-index .welcome-wrapper,
-// body.navigation-categories .welcome-wrapper,
-// body.categories-index #main-outlet > .welcome,
-// body.navigation-categories #main-outlet > .welcome,
-// body.categories-index #main-outlet .welcome,
-// body.navigation-categories #main-outlet .welcome,
-// .categories-index .welcome-cta,
-// .navigation-categories .welcome-cta,
-// /* generic catch‑alls for variants we may not know */
-// body.categories-index #main-outlet [class*=\"welcome\"],
-// body.navigation-categories #main-outlet [class*=\"welcome\"],
-// body.categories-index #main-outlet [id*=\"welcome\"],
-// body.navigation-categories #main-outlet [id*=\"welcome\"] {
-//   display: none !important;
-//   visibility: hidden !important;
-//   height: 0 !important;
-//   max-height: 0 !important;
-//   overflow: hidden !important;
-//   opacity: 0 !important;
-// }
-
-// /* Search banner and controls */
-// .navigation-categories .search-banner,
-// body.categories-index .search-banner,
-// .navigation-categories h1,
-// .navigation-categories .list-controls,
-// .categories-index .list-controls,
-// .navigation-categories .search-container,
-// .categories-index .search-container,
-// /* additional catch‑alls */
-// body.categories-index #main-outlet [class*=\"search-banner\"],
-// body.navigation-categories #main-outlet [class*=\"search-banner\"],
-// body.categories-index #main-outlet [id*=\"search-banner\"],
-// body.navigation-categories #main-outlet [id*=\"search-banner\"] {
-//   display: none !important;
-//   visibility: hidden !important;
-// }
-
-// /* Hide default category list */
-// body.navigation-categories .category-list,
-// body.categories-index .category-list,
-// body.navigation-categories .subcategory-list,
-// body.categories-index .subcategory-list,
-// body.navigation-categories #list-area > .contents,
-// body.categories-index #list-area > .contents,
-// body.categories-index .category-list-item,
-// body.navigation-categories .category-list-item {
-//   display: none !important;
-//   visibility: hidden !important;
-// }
+  /* Hide default search banner on categories page */
+  .search-banner,
+  h1.category-title-header {
+    display: none !important;
+  }
+}
 
 #ame-brand-header {
     position: relative;
