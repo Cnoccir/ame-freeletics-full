@@ -9,8 +9,8 @@
 :root {
   --font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --heading-font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  /* Use a safe fallback value; can be overridden by CSS custom property via admin later */
-  --ame-glass-blur: 12px;
+  /* Map theme setting when available; fall back to 12px to avoid build errors */
+  --ame-glass-blur: #{if(variable-exists(glass_blur_amount), $glass_blur_amount, 12px)};
 }
 
 /* ========== BACKGROUND & BASE ========== */
@@ -212,7 +212,7 @@ a {
 }
 
 /* Replace default text logo with branded image/link when enabled */
-@if $enable_brand_header {
+@if $enable_brand_header and $brand_logo_url != "" {
   .d-header .title a {
     display: inline-block;
     width: 140px;
@@ -279,21 +279,10 @@ a {
 
 /* ========== GLASS PANELS (Exact Freeletics) ========== */
 /* Foundation-aligned base: full-width content; do not constrain width */
-#main {
-  display: block;
-}
 
 #main-outlet {
   box-sizing: border-box;
   background: transparent;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  padding: 0;
-  margin: 0;
-  border-radius: 0;
-  border: 0;
-  max-width: none;
-  width: 100%;
 }
 
 /* Sidebar wrapper should not force layout; leave to components */
@@ -310,13 +299,10 @@ a {
   background-color: rgba(22, 30, 33, .75);
   -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  margin: 32px 0 32px 16px;
   padding: 16px 12px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
-  width: 300px;
-  max-width: 300px;
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -1000,11 +986,8 @@ body.navigation-categories {
 
 /* ========== MAIN CONTAINER STRUCTURE ========== */
 #main-outlet-wrapper {
-  display: flex;
-  flex-direction: row;
   max-width: 1400px;
   margin: 0 auto;
-  gap: 0;
   width: 100%;
 }
 
@@ -1046,24 +1029,6 @@ body.navigation-categories {
 }
 
 /* Fix sidebar-wrapper container alignment */
-body:not(.mobile-view) {
-  .sidebar-wrapper {
-    align-self: flex-start;
-  }
-  
-  /* Ensure proper layout structure */
-  #main {
-    display: flex;
-    justify-content: center;
-  }
-  
-  #main > div {
-    display: flex;
-    flex-direction: row;
-    max-width: 1400px;
-    width: 100%;
-  }
-}
 
 .sidebar-section-header {
   color: rgba(255, 255, 255, 0.5);
