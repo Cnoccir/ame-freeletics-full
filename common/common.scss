@@ -6,6 +6,10 @@
 /* ========== FONTS & CSS VARIABLES ========== */
 /* Embed Aktiv Grotesk and set as primary font with system fallbacks */
 /* Fonts are loaded via Adobe Fonts project link in head_tag.html */
+
+/* Sass defaults to avoid undefined-variable compile errors when a setting is missing */
+$show_banner_on_login: true !default;
+
 :root {
   --font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --heading-font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -175,7 +179,7 @@ body.static-login::after {
   content: none !important; 
   display: none !important; 
 }
-@if not $show_banner_on_login {
+@if (variable-exists(show_banner_on_login) and (not $show_banner_on_login)) or (not variable-exists(show_banner_on_login) and (not $show_banner_on_login)) {
 body.login-page .ame-header-banner,
 body.static-login .ame-header-banner { 
   display: none !important; 
@@ -334,6 +338,7 @@ a {
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
+  width: 280px; /* keep a stable width; avoids collapse */
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -551,7 +556,7 @@ body.navigation-categories {
 .ame-banner-quote .quote-text {
   display: block;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1.25s ease-in-out;
 }
 
 .ame-banner-quote .quote-text.visible {

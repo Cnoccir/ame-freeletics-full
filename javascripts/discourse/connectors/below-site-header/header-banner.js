@@ -64,15 +64,15 @@ function initializeQuotes() {
   updateBannerOffset();
   window.addEventListener("resize", updateBannerOffset, { passive: true });
 
-  // Rotate every 10 seconds (slower)
+  // Rotate every 15 seconds
   window.ameHeaderQuotesInterval = setInterval(() => {
     quoteElement.classList.remove('visible');
 
     setTimeout(() => {
       currentIndex = (currentIndex + 1) % quotes.length;
       displayQuote(quotes[currentIndex]);
-    }, 1000);
-  }, 10000);
+    }, 1250);
+  }, 15000);
 }
 
 function updateBannerOffset() {
