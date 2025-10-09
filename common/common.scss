@@ -311,11 +311,52 @@ body.navigation-categories {
         display: none;
     }
 }
+/* ========== HEADER BANNER (Below Header Bar - Like Freeletics) ========== */
+.ame-header-banner {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(2, 119, 189, 0.08) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 170, 255, 0.06) 100%
+  );
+  border-bottom: 1px solid rgba(0, 170, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.ame-banner-content {
+  max-width: 1110px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.ame-banner-quote {
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    0 0 15px rgba(0, 170, 255, 0.4);
+  font-style: italic;
+}
+
+.ame-banner-quote .quote-text {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
 /* ========== HERO FULL SECTION ========== */
 .ame-hero-full-section {
   position: relative;
   width: 100%;
-  margin: 0 auto 32px;
+  margin: 32px auto;
   overflow: hidden;
 }
 
@@ -415,26 +456,29 @@ body.navigation-categories {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* ========== CATEGORY CARDS / TILES ========== */
-.ame-hero__tiles {
-  position: relative;
-  z-index: 1;
+/* ========== CATEGORY CARDS SECTION ========== */
+.ame-category-cards-section {
+  width: 100%;
+  max-width: 1110px;
+  margin: 0 auto 32px;
+  padding: 0 16px;
+}
+
+.ame-cards-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  max-width: 1110px;
-  margin: 32px auto;
-  padding: 0 20px;
 }
 
 @media (min-width: 768px) {
-  .ame-hero__tiles {
+  .ame-cards-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 
-@media (min-width: 1100px) {
-  .ame-hero__tiles {
+@media (min-width: 1024px) {
+  .ame-cards-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
   }
