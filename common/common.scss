@@ -203,11 +203,11 @@ img.avatar[title="system"] {
   margin-bottom: 24px;
 }
 
-/* ========== HIDE DEFAULT ELEMENTS (SELECTIVE) ========== */
-/* Only hide default elements when custom hero is present */
+/* ========== HIDE DEFAULT ELEMENTS (AGGRESSIVE) ========== */
+/* Hide ALL default Discourse category page elements */
 body.categories-index,
 body.navigation-categories {
-  /* Hide default welcome banner when hero component is active */
+  /* Hide default welcome banner */
   .welcome-wrapper,
   #main-outlet > .welcome,
   #main-outlet .welcome,
@@ -215,9 +215,25 @@ body.navigation-categories {
     display: none !important;
   }
 
-  /* Hide default search banner on categories page */
+  /* Hide default search banner */
   .search-banner,
   h1.category-title-header {
+    display: none !important;
+  }
+
+  /* Hide default category list - we have our custom hero */
+  .category-list,
+  .category-list-item,
+  tbody.category-list-item,
+  #list-area > .contents,
+  .contents > .category-list {
+    display: none !important;
+  }
+
+  /* Hide default categories table */
+  table.category-list,
+  .category-boxes,
+  .category-boxes-with-topics {
     display: none !important;
   }
 }
@@ -570,17 +586,92 @@ body.navigation-categories {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
-/* ========== SIDEBAR ========== */
-.sidebar-wrapper .sidebar-section-link {
-  border-radius: 3px;
+/* ========== SIDEBAR (Freeletics Match) ========== */
+.sidebar-wrapper {
+  padding: 16px 12px;
 }
 
-.sidebar-wrapper .sidebar-section-link.active {
-  background: rgba(255, 255, 255, 0.06);
+/* Sidebar sections */
+.sidebar-section-wrapper {
+  margin-bottom: 20px;
 }
 
-.sidebar-wrapper .sidebar-section-link:hover {
-  background: rgba(255, 255, 255, 0.03);
+.sidebar-section-header {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 12px 6px;
+  margin: 0;
+}
+
+.sidebar-section-content {
+  padding: 0;
+}
+
+/* Sidebar links */
+.sidebar-section-link,
+.sidebar-section-link-wrapper .sidebar-section-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  margin: 2px 0;
+}
+
+.sidebar-section-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.sidebar-section-link.active,
+.sidebar-section-link-wrapper .sidebar-section-link.active {
+  background: rgba(2, 119, 189, 0.2);
+  color: #fff;
+  border-left: 3px solid #0277BD;
+  padding-left: 9px;
+}
+
+/* Sidebar icons */
+.sidebar-section-link-prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar-section-link:hover .sidebar-section-link-prefix,
+.sidebar-section-link.active .sidebar-section-link-prefix {
+  color: #03A9F4;
+}
+
+/* Category indicators in sidebar */
+.sidebar-section-link .sidebar-section-link-prefix svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Sidebar footer/bottom section */
+.sidebar-footer-wrapper {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Mobile sidebar */
+@media (max-width: 1024px) {
+  .sidebar-wrapper {
+    background: rgba(22, 30, 33, 0.95);
+  }
 }
 
 /* ========== FOOTER (Freeletics style) ========== */
