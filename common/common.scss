@@ -9,7 +9,8 @@
 :root {
   --font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --heading-font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --ame-glass-blur: #{$glass_blur_amount};
+  /* Use a safe fallback value; can be overridden by CSS custom property via admin later */
+  --ame-glass-blur: 12px;
 }
 
 /* ========== BACKGROUND & BASE ========== */
@@ -260,18 +261,54 @@ a {
 }
 
 /* ========== GLASS PANELS (Exact Freeletics) ========== */
-body[class*="navigation-"] #main-outlet {
+/* Layout: center column + optional right sidebar (stable widths) */
+#main {
+  display: block;
+}
+
+/* Main content container */
+body[class*="navigation-"] #main-outlet,
+body.categories-index #main-outlet,
+body.latest #main-outlet,
+body.top #main-outlet {
   flex: 1;
   box-sizing: border-box;
-  background: rgba(22, 30, 33, .75); /* slightly stronger for readability */
+  background: rgba(22, 30, 33, .72);
   -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 16px;
   margin: 32px auto;
-  border-radius: 4px;
-  max-width: 1110px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 1120px;
   width: 100%;
+}
+
+/* Optional sidebar box */
+.sidebar-wrapper {
+  background-color: rgba(22, 30, 33, .72);
+  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  margin: 32px auto;
+  padding: 16px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 1120px;
+}
+
+/* Two-column at desktop when Discourse sidebar/component is present */
+@media (min-width: 1024px) {
+  .has-sidebar #main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    column-gap: 16px;
+    align-items: start;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  .has-sidebar #main-outlet { margin: 32px 0; }
+  .has-sidebar .sidebar-wrapper { margin: 32px 0; }
 }
 
 .sidebar-wrapper {
@@ -349,8 +386,8 @@ img.avatar[title="system"] {
   margin-bottom: 24px;
 }
 
-/* ========== HIDE DEFAULT ELEMENTS (AGGRESSIVE) ========== */
-/* Hide ALL default Discourse category page elements */
+/* ========== HIDE DEFAULT ELEMENTS (less aggressive) ========== */
+/* Only hide duplicate hero/welcome elements on the categories listing */
 body.categories-index,
 body.navigation-categories {
   /* Hide default welcome banner */
