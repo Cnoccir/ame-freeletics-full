@@ -4,10 +4,12 @@
    ======================================== */
 
 /* ========== FONTS & CSS VARIABLES ========== */
-/* Set font CSS variables like Freeletics */
+/* Embed Aktiv Grotesk and set as primary font with system fallbacks */
+/* Fonts are loaded via Adobe Fonts project link in head_tag.html */
 :root {
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --heading-font-family: var(--font-family);
+  --font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --heading-font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ame-glass-blur: #{$glass_blur_amount};
 }
 
 /* ========== BACKGROUND & BASE ========== */
@@ -74,9 +76,9 @@ body::before {
       transparent 50%
     );
   
-  mix-blend-mode: screen;
-  opacity: 1;
-  animation: hudPulse 8s ease-in-out infinite, hudDrift 30s linear infinite;
+mix-blend-mode: screen;
+  opacity: 0.7;
+  animation: hudPulse 10s ease-in-out infinite, hudDrift 45s linear infinite;
 }
 
 /* Subtle pulsing glow effect */
@@ -121,13 +123,17 @@ body::after {
       rgba(100, 180, 230, 0.10) 201px
     );
   mix-blend-mode: lighten;
-  opacity: 1;
-  animation: dataDrift 25s linear infinite reverse;
+  opacity: 0.6;
+  animation: dataDrift 40s linear infinite reverse;
 }
 
 @keyframes dataDrift {
   0% { transform: translate(0, 0); }
   100% { transform: translate(150px, 150px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { animation: none !important; }
 }
 
 /* ensure page chrome sits above overlay */
@@ -162,8 +168,8 @@ body {
 
 h1, h2, h3 {
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.005em;
 }
 
 h1 { font-size: 28px; line-height: 1.3; }
@@ -252,8 +258,8 @@ a {
   flex: 1;
   box-sizing: border-box;
   background: rgba(22, 30, 33, .75); /* slightly stronger for readability */
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  backdrop-filter: blur(var(--ame-glass-blur, 12px));
   padding-left: 16px;
   padding-right: 16px;
   margin: 32px auto;
@@ -264,15 +270,15 @@ a {
 
 .sidebar-wrapper {
   background-color: rgba(22, 30, 33, .75);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  backdrop-filter: blur(var(--ame-glass-blur, 12px));
   margin: 32px 0 32px 16px;
   padding: 16px 12px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
-  width: 250px;
-  max-width: 250px;
+  width: 300px;
+  max-width: 300px;
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -463,18 +469,26 @@ body.navigation-categories {
 }
 
 .ame-banner-quote {
-  font-size: clamp(26px, 3.5vw, 40px);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0;
-  text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.8);
+  text-shadow: none;
   font-style: normal;
-  line-height: 1.3;
-  font-family: var(--font-family);
+  line-height: 1.15;
+  font-family: var(--heading-font-family);
   max-width: 95%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ame-banner-quote::before {
+  content: '#';
+  display: inline-block;
+  font-weight: 800;
+  opacity: 0.85;
 }
 
 .ame-banner-quote .quote-text {
@@ -489,10 +503,8 @@ body.navigation-categories {
 
 .ame-banner-quote strong {
   font-weight: 800;
-  color: #00D9FF;
-  text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.9),
-    0 0 20px rgba(0, 217, 255, 0.4);
+  color: inherit;
+  text-shadow: none;
 }
 
 /* ========== HERO FULL SECTION ========== */

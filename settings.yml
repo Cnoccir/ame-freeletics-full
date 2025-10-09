@@ -1,0 +1,39 @@
+background_image_url:
+  type: upload
+  default: null
+  description: Background image for the site chrome.
+
+banner_image_url:
+  type: upload
+  default: null
+  description: Optional background image for header/banner sections.
+
+enable_brand_header:
+  type: bool
+  default: true
+  description: Show logo label and brand overrides in the header.
+
+brand_logo_url:
+  type: upload
+  default: null
+  description: Optional brand logo image used in the header when brand header is enabled.
+
+header_label_text:
+  type: string
+  default: "Community"
+  description: Small label after the site logo.
+
+enable_header_quotes:
+  type: bool
+  default: true
+  description: Show the rotating quotes banner below the header.
+
+glass_blur_amount:
+  type: string
+  default: "12px"
+  description: CSS blur for glass panels (e.g., 8px, 12px).
+
+login_background_image_url:
+  type: upload
+  default: null
+  description: Background image for the left panel in the login modal.

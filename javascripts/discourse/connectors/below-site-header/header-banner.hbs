@@ -1,4 +1,4 @@
-{{#if this.currentUser}}
+{{#if (and this.currentUser (theme-setting "enable_header_quotes"))}}
 <div class="ame-header-banner">
   <div class="ame-banner-content">
     <h1 class="ame-banner-quote">
