@@ -28,6 +28,18 @@ quotes_enabled:
   default: true
   description: "Displays rotating quotes bar under the header on the Categories page."
 
+brand_quote_1:
+  default: "NEVER SETTLE"
+  description: "First rotating brand quote"
+
+brand_quote_2:
+  default: "PUSH YOUR LIMITS"
+  description: "Second rotating brand quote"
+
+brand_quote_3:
+  default: "CHALLENGE ACCEPTED"
+  description: "Third rotating brand quote"
+
 # Login modal hero image (optional override)
 login_background_image_url:
   default: ""
