@@ -8,25 +8,21 @@
   </div>
   <div class="ame-hero-panel">
     <div class="ame-hero-panel__inner">
-        <h1 class="ame-anthem">#NEVERSETTLE</h1>
-        <div class="ame-hero__tiles">
-            <a href="/c/knowledge-base/1" class="ame-card">
-                <span class="ame-card__title">Knowledge Base</span>
-                <span class="ame-card__sub">Vendor Manuals, Specs & Docs</span>
-            </a>
-            <a href="/c/tech-community/2" class="ame-card">
-                <span class="ame-card__title">Tech Community</span>
-                <span class="ame-card__sub">Ask Questions & Share Expertise</span>
-            </a>
-            <a href="/c/how-to-troubleshooting/3" class="ame-card">
-                <span class="ame-card__title">How-To & Troubleshooting</span>
-                <span class="ame-card__sub">Guides, Tutorials & Fixes</span>
-            </a>
-            <a href="/c/ai-assistant/4" class="ame-card">
-                <span class="ame-card__title">AI Assistant</span>
-                <span class="ame-card__sub">AME-Bot</span>
-            </a>
-        </div>
+      <h1 class="ame-anthem">{{theme-setting "hero_motto_text"}}</h1>
+      <div class="ame-hero__tiles">
+        <a href="{{theme-setting "hero_card_1_url"}}" class="ame-card">
+          <span class="ame-card__title">{{theme-setting "hero_card_1_label"}}</span>
+        </a>
+        <a href="{{theme-setting "hero_card_2_url"}}" class="ame-card">
+          <span class="ame-card__title">{{theme-setting "hero_card_2_label"}}</span>
+        </a>
+        <a href="{{theme-setting "hero_card_3_url"}}" class="ame-card">
+          <span class="ame-card__title">{{theme-setting "hero_card_3_label"}}</span>
+        </a>
+        <a href="{{theme-setting "hero_card_4_url"}}" class="ame-card">
+          <span class="ame-card__title">{{theme-setting "hero_card_4_label"}}</span>
+        </a>
+      </div>
     </div>
   </div>
 {{/if}}

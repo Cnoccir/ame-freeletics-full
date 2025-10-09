@@ -2,7 +2,7 @@
 # You can override these in the Discourse admin UI after installing the theme
 
 background_image_url:
-  default: "/uploads/default/original/1X/Background-Lgin-Landing.png"
+  default: "https://i.imgur.com/sI9aCtd.jpg"
   description: "URL to the full-screen background image"
 
 # Header / brand controls
@@ -11,28 +11,13 @@ enable_brand_header:
   description: "If true, theme replaces the default header logo/text with your brand."
 
 brand_logo_url:
-  default: "/uploads/default/original/1X/ame-logo.png"
+  default: "https://i.imgur.com/lY63t48.png"
   description: "URL to the brand logo shown in the header. Recommended ~120x34, transparent PNG/SVG."
 
-brand_name:
-  default: "AME TechAssist"
-  description: "Brand name label displayed after the logo in the header."
-
 header_label_text:
-  default: "AME TechAssist"
+  default: "Community"
   description: "Text label displayed after the site title in the header"
 
-banner_image_url:
-  default: "/uploads/default/original/1X/Background-Lgin-Landing.png"
-  description: "Background image URL for the homepage banner"
-
-banner_title_text:
-  default: "AME TechAssist"
-  description: "Banner title heading"
-
-banner_subtitle_text:
-  default: "Everybody is smarter than anybody."
-  description: "Banner subtitle tagline"
 
 # Rotating quotes
 quotes_enabled:
@@ -45,18 +30,13 @@ login_background_image_url:
   description: "Optional background image URL for the left hero panel in the login modal. If blank, uses background_image_url."
 
 # HERO customizations
-hero_logo_url:
-  default: ""
-  description: "Optional logo to show inside the hero. If blank, it’s hidden."
-
 hero_motto_text:
-  default: "#NEVER SETTLE"
+  default: "#NEVERSETTLE"
   description: "Large uppercase motto shown in the hero"
 
 hero_nav_title_text:
   default: "Training Communities"
   description: "Breadcrumb title shown in the hero nav row"
-
 # Up to 4 category cards in the hero
 hero_card_1_label:
   default: "General"
