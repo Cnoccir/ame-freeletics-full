@@ -6,7 +6,7 @@
 /* ========== FONTS & CSS VARIABLES ========== */
 /* Set font CSS variables like Freeletics */
 :root {
-  --font-family: "Inter", Arial, sans-serif; /* Aktiv Grotesk is licensed; Inter is the fallback */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --heading-font-family: var(--font-family);
 }
 
@@ -37,40 +37,40 @@ body::before {
       0deg,
       transparent,
       transparent 79px,
-      rgba(0, 200, 255, 0.10) 79px,
-      rgba(0, 200, 255, 0.10) 80px
+      rgba(100, 180, 230, 0.12) 79px,
+      rgba(100, 180, 230, 0.12) 80px
     ),
     /* Faint vertical dashed grid lines */
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 79px,
-      rgba(0, 200, 255, 0.10) 79px,
-      rgba(0, 200, 255, 0.10) 80px
+      rgba(100, 180, 230, 0.12) 79px,
+      rgba(100, 180, 230, 0.12) 80px
     ),
     /* Subtle tracking beams - diagonal sweeps */
     linear-gradient(
       125deg,
       transparent 30%,
-      rgba(0, 220, 255, 0.12) 48%,
+      rgba(100, 180, 230, 0.15) 48%,
       transparent 52%,
       transparent
     ),
     /* Circuit pattern fragments */
     radial-gradient(
       ellipse at 85% 15%,
-      rgba(0, 200, 255, 0.18) 0%,
+      rgba(100, 180, 230, 0.20) 0%,
       transparent 40%
     ),
     radial-gradient(
       ellipse at 15% 85%,
-      rgba(0, 170, 255, 0.15) 0%,
+      rgba(100, 180, 230, 0.18) 0%,
       transparent 35%
     ),
-    /* Soft cyan glow at edges */
+    /* Soft glow at edges */
     radial-gradient(
       circle at top right,
-      rgba(0, 200, 255, 0.20),
+      rgba(100, 180, 230, 0.22),
       transparent 50%
     );
   
@@ -81,8 +81,8 @@ body::before {
 
 /* Subtle pulsing glow effect */
 @keyframes hudPulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 0.9; }
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
 }
 
 /* Slow drifting movement */
@@ -109,7 +109,7 @@ body::after {
     /* Small circuit dots */
     radial-gradient(
       circle at 1.5px 1.5px,
-      rgba(0, 220, 255, 0.12) 0,
+      rgba(100, 180, 230, 0.14) 0,
       transparent 1.5px
     ) 0 0 / 150px 150px,
     /* Microchip patterns */
@@ -117,8 +117,8 @@ body::after {
       45deg,
       transparent,
       transparent 200px,
-      rgba(0, 200, 255, 0.06) 200px,
-      rgba(0, 200, 255, 0.06) 201px
+      rgba(100, 180, 230, 0.10) 200px,
+      rgba(100, 180, 230, 0.10) 201px
     );
   mix-blend-mode: lighten;
   opacity: 1;
@@ -151,9 +151,27 @@ body::after {
 }
 
 /* ========== TYPOGRAPHY ========== */
+body {
+  font-family: var(--font-family);
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 h1, h2, h3 {
   font-family: var(--heading-font-family);
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 28px; line-height: 1.3; }
+h2 { font-size: 22px; line-height: 1.4; }
+h3 { font-size: 18px; line-height: 1.4; }
+
+a {
+  font-weight: 500;
 }
 
 /* ========== HEADER (Exact Freeletics match + Brand override) ========== */
@@ -202,13 +220,13 @@ h1, h2, h3 {
   align-items: center;
   margin-left: 12px;
   padding-left: 12px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
-  border-left: 2px solid rgba(0, 170, 255, 0.5);
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
   color: var(--header_primary);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 /* Freeletics header extras */
@@ -249,7 +267,8 @@ h1, h2, h3 {
   margin: 32px 0 32px 16px;
   padding: 16px 12px;
   border-radius: 4px;
-  border: 1px solid rgba(0, 170, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -423,7 +442,7 @@ body.navigation-categories {
   margin-left: -50vw;
   margin-right: -50vw;
   background-color: var(--header_background);
-  border-bottom: 1px solid rgba(0, 170, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
   z-index: 10;
 }
@@ -440,18 +459,17 @@ body.navigation-categories {
 }
 
 .ame-banner-quote {
-  font-size: clamp(26px, 3.5vw, 40px);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0;
   text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(0, 170, 255, 0.4);
+    0 2px 6px rgba(0, 0, 0, 0.6);
   font-style: normal;
-  line-height: 1.3;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.4;
+  font-family: var(--font-family);
   max-width: 95%;
 }
 
@@ -466,11 +484,10 @@ body.navigation-categories {
 }
 
 .ame-banner-quote strong {
-  font-weight: 800;
-  color: #00AAFF;
+  font-weight: 700;
+  color: #4FC3F7;
   text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.9),
-    0 0 25px rgba(0, 170, 255, 0.6);
+    0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 /* ========== HERO FULL SECTION ========== */
@@ -618,7 +635,7 @@ body.navigation-categories {
     rgba(22, 30, 33, 0.6) 100%
   );
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 170, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -647,13 +664,13 @@ body.navigation-categories {
 
 .ame-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(0, 170, 255, 0.4);
+  border-color: rgba(100, 150, 200, 0.25);
   background: linear-gradient(
     135deg,
     rgba(22, 30, 33, 0.95) 0%,
     rgba(22, 30, 33, 0.85) 100%
   );
-  box-shadow: 0 8px 24px rgba(0, 170, 255, 0.2), 0 0 40px rgba(0, 170, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(100, 150, 200, 0.08);
 }
 
 .ame-card:hover::before {
@@ -669,22 +686,22 @@ body.navigation-categories {
   margin-bottom: 20px;
   background: linear-gradient(
     135deg,
-    rgba(0, 170, 255, 0.15),
-    rgba(2, 119, 189, 0.2)
+    rgba(100, 150, 200, 0.12),
+    rgba(80, 130, 180, 0.15)
   );
   border-radius: 16px;
-  color: #00AAFF;
+  color: #5BA3D0;
   transition: all 0.3s ease;
 }
 
 .ame-card:hover .ame-card__icon {
   background: linear-gradient(
     135deg,
-    rgba(0, 170, 255, 0.25),
-    rgba(2, 119, 189, 0.35)
+    rgba(100, 150, 200, 0.2),
+    rgba(80, 130, 180, 0.25)
   );
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(100, 150, 200, 0.2);
 }
 
 .ame-card__icon svg {
@@ -694,18 +711,18 @@ body.navigation-categories {
 
 .ame-card__title {
   display: block;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #ffffff;
   margin-bottom: 8px;
   line-height: 1.3;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .ame-card__sub {
   display: block;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.5;
   font-weight: 400;
 }
@@ -905,7 +922,7 @@ body.navigation-categories {
 }
 
 .ame-category-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #fff;
   margin: 0 0 4px 0;
@@ -928,12 +945,16 @@ body.navigation-categories {
 /* ========== MAIN CONTAINER STRUCTURE ========== */
 #main > div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
 }
 
 #main > div #main-outlet {
-  max-width: calc(100% - 16px);
-  width: 1110px;
+  flex: 1;
+  max-width: 1110px;
+  min-width: 0;
 }
 
 /* ========== TOPIC LIST ========== */
@@ -995,24 +1016,24 @@ body:not(.mobile-view) {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 6px;
-  color: rgba(255, 255, 255, 0.90);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
   transition: all 0.15s ease;
   margin: 2px 0;
 }
 
 .sidebar-section-link:hover {
-  background: rgba(0, 170, 255, 0.12);
+  background: rgba(100, 150, 200, 0.1);
   color: #fff;
 }
 
 .sidebar-section-link.active,
 .sidebar-section-link-wrapper .sidebar-section-link.active {
-  background: rgba(0, 170, 255, 0.25);
+  background: rgba(100, 150, 200, 0.15);
   color: #fff;
-  border-left: 3px solid #00AAFF;
+  border-left: 3px solid #5BA3D0;
   padding-left: 9px;
 }
 
@@ -1023,12 +1044,12 @@ body:not(.mobile-view) {
   justify-content: center;
   width: 20px;
   height: 20px;
-  color: rgba(0, 170, 255, 0.8);
+  color: rgba(100, 150, 200, 0.7);
 }
 
 .sidebar-section-link:hover .sidebar-section-link-prefix,
 .sidebar-section-link.active .sidebar-section-link-prefix {
-  color: #00AAFF;
+  color: #5BA3D0;
 }
 
 /* Category indicators in sidebar */

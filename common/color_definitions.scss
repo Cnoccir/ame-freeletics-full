@@ -1,19 +1,19 @@
 /* AME Freeletics: color variables and banner defaults */
 :root {
   /* Dark base */
-  --primary: #ECEFF1;              /* text */
+  --primary: #E8EAED;              /* text - slightly softer */
   --secondary: #263238;            /* background */
-  /* Align accents to Freeletics blue */
+  /* Align accents to professional blue */
   --tertiary: #0277BD;             /* Link/CTA accent */
-  --quaternary: #0277BD;           /* Same as tertiary */
+  --quaternary: #5BA3D0;           /* Softer accent */
   --header_background: #263238;
-  --header_primary: #ECEFF1;
-  --highlight: #FFB36B;
-  --danger: #FF3333;
-  --success: #00A1A1;
-  --love: #FF3333;
-  --d-selected: #293137;
-  --d-hover: #2d363d;
+  --header_primary: #E8EAED;
+  --highlight: #F5A962;
+  --danger: #E53935;
+  --success: #00897B;
+  --love: #E53935;
+  --d-selected: #2A3136;
+  --d-hover: #2F373D;
 
   /* Glass + elevation tokens */
   --glass-bg: rgba(22, 30, 33, 0.66);

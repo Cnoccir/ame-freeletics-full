@@ -16,16 +16,16 @@
     "AME Dark": {
       "is_dark": true,
       "colors": {
-        "primary": "ECEFF1",
+        "primary": "E8EAED",
         "secondary": "263238",
-        "tertiary": "003d6b",
-        "quaternary": "0078d4",
+        "tertiary": "0277BD",
+        "quaternary": "5BA3D0",
         "header_background": "263238",
-        "header_primary": "ECEFF1",
-        "highlight": "FFB36B",
-        "danger": "FF3333",
-        "success": "00A1A1",
-        "love": "FF3333"
+        "header_primary": "E8EAED",
+        "highlight": "F5A962",
+        "danger": "E53935",
+        "success": "00897B",
+        "love": "E53935"
       }
     }
   }
