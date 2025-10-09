@@ -21,31 +21,111 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle tech overlay to add life without distracting from content */
-/* Subtle tech overlay to add life without distracting from content */
+/* ========== HOLOGRAPHIC HUD OVERLAY ========== */
+/* Cyberpunk-style holographic overlay with geometric grid and data lines */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  /* layered grid + particles + tint */
-  background:
-    /* dotted grid */
-    radial-gradient(circle at 1px 1px, rgba(0, 120, 212, 0.14) 0 1px, transparent 1.2px) 0 0/22px 22px,
-    /* faint circuit lines */
-    linear-gradient(120deg, rgba(0, 61, 107, 0.18), rgba(0, 0, 0, 0.18)),
-    /* top glow */
-    radial-gradient(600px 220px at 70% -80px, rgba(0, 170, 255, 0.22), transparent 60%),
-    radial-gradient(400px 200px at 10% -100px, rgba(0, 61, 107, 0.18), transparent 60%);
-  mix-blend-mode: screen;
   z-index: 0;
-  animation: ameOverlayDrift 40s linear infinite;
+  
+  /* Multi-layered holographic HUD effect */
+  background:
+    /* Faint horizontal dashed grid lines */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 200, 255, 0.06) 79px,
+      rgba(0, 200, 255, 0.06) 80px
+    ),
+    /* Faint vertical dashed grid lines */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 200, 255, 0.06) 79px,
+      rgba(0, 200, 255, 0.06) 80px
+    ),
+    /* Subtle tracking beams - diagonal sweeps */
+    linear-gradient(
+      125deg,
+      transparent 30%,
+      rgba(0, 220, 255, 0.08) 48%,
+      transparent 52%,
+      transparent
+    ),
+    /* Circuit pattern fragments */
+    radial-gradient(
+      ellipse at 85% 15%,
+      rgba(0, 200, 255, 0.12) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 15% 85%,
+      rgba(0, 170, 255, 0.1) 0%,
+      transparent 35%
+    ),
+    /* Soft cyan glow at edges */
+    radial-gradient(
+      circle at top right,
+      rgba(0, 200, 255, 0.15),
+      transparent 50%
+    );
+  
+  mix-blend-mode: screen;
+  animation: hudPulse 8s ease-in-out infinite, hudDrift 30s linear infinite;
 }
 
-@keyframes ameOverlayDrift {
-  0% { background-position: 0 0, 0 0, 70% -80px, 10% -100px; }
-  50% { background-position: 11px 11px, 0 0, 66% -60px, 12% -90px; }
-  100% { background-position: 0 0, 0 0, 70% -80px, 10% -100px; }
+/* Subtle pulsing glow effect */
+@keyframes hudPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.9; }
+}
+
+/* Slow drifting movement */
+@keyframes hudDrift {
+  0% { 
+    background-position: 0 0, 0 0, 0 0, 85% 15%, 15% 85%, top right;
+  }
+  50% { 
+    background-position: 40px 40px, 40px 40px, 100px 0, 82% 18%, 18% 82%, top right;
+  }
+  100% { 
+    background-position: 0 0, 0 0, 0 0, 85% 15%, 15% 85%, top right;
+  }
+}
+
+/* Additional data fragments scattered across the viewport */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Small circuit dots */
+    radial-gradient(
+      circle at 1.5px 1.5px,
+      rgba(0, 220, 255, 0.08) 0,
+      transparent 1.5px
+    ) 0 0 / 150px 150px,
+    /* Microchip patterns */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 200px,
+      rgba(0, 200, 255, 0.03) 200px,
+      rgba(0, 200, 255, 0.03) 201px
+    );
+  mix-blend-mode: lighten;
+  animation: dataDrift 25s linear infinite reverse;
+}
+
+@keyframes dataDrift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(150px, 150px); }
 }
 
 /* ensure page chrome sits above overlay */
@@ -334,16 +414,17 @@ body.navigation-categories {
 }
 
 .ame-banner-quote {
-  font-size: clamp(24px, 4vw, 38px);
-  font-weight: 800;
-  letter-spacing: 0.25em;
+  font-size: clamp(16px, 2.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0;
   text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.6),
-    0 0 15px rgba(0, 170, 255, 0.4);
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(0, 170, 255, 0.5);
   font-style: italic;
+  line-height: 1.4;
 }
 
 .ame-banner-quote .quote-text {
@@ -1111,6 +1192,29 @@ body.navigation-categories {
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  /* Same HUD overlay as body */
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 200, 255, 0.08) 79px,
+      rgba(0, 200, 255, 0.08) 80px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 200, 255, 0.08) 79px,
+      rgba(0, 200, 255, 0.08) 80px
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(0, 200, 255, 0.15),
+      transparent 50%
+    );
+  mix-blend-mode: screen;
+  animation: hudDrift 30s linear infinite;
 }
 
 .ame-splash-content {
