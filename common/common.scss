@@ -44,56 +44,57 @@ body::before {
   
   /* Multi-layered holographic HUD effect */
   background:
-    /* Subtle dark tint so overlay is visible on bright photos */
+    /* Darker tint to guarantee contrast over bright photos */
     linear-gradient(
       0deg,
-      rgba(6, 12, 18, 0.18),
-      rgba(6, 12, 18, 0.18)
+      rgba(6, 12, 18, 0.38),
+      rgba(6, 12, 18, 0.38)
     ),
-    /* Faint horizontal dashed grid lines */
+    /* Horizontal dashed grid lines */
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 79px,
-      rgba(100, 180, 230, 0.16) 79px,
-      rgba(100, 180, 230, 0.16) 80px
+      rgba(100, 180, 230, 0.28) 79px,
+      rgba(100, 180, 230, 0.28) 80px
     ),
-    /* Faint vertical dashed grid lines */
+    /* Vertical dashed grid lines */
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 79px,
-      rgba(100, 180, 230, 0.16) 79px,
-      rgba(100, 180, 230, 0.16) 80px
+      rgba(100, 180, 230, 0.28) 79px,
+      rgba(100, 180, 230, 0.28) 80px
     ),
-    /* Subtle tracking beams - diagonal sweeps */
+    /* Tracking beams */
     linear-gradient(
       125deg,
       transparent 30%,
-      rgba(100, 180, 230, 0.18) 48%,
+      rgba(100, 180, 230, 0.28) 48%,
       transparent 52%,
       transparent
     ),
     /* Circuit pattern fragments */
     radial-gradient(
       ellipse at 85% 15%,
-      rgba(100, 180, 230, 0.22) 0%,
+      rgba(100, 180, 230, 0.32) 0%,
       transparent 40%
     ),
     radial-gradient(
       ellipse at 15% 85%,
-      rgba(100, 180, 230, 0.2) 0%,
+      rgba(100, 180, 230, 0.28) 0%,
       transparent 35%
     ),
     /* Soft glow at edges */
     radial-gradient(
       circle at top right,
-      rgba(100, 180, 230, 0.25),
+      rgba(100, 180, 230, 0.35),
       transparent 50%
     );
   
-  mix-blend-mode: screen;
-  opacity: 0.9;
+  /* Use normal blending to ensure visibility regardless of browser compositing */
+  mix-blend-mode: normal;
+  opacity: 1;
   animation: hudPulse 12s ease-in-out infinite, hudDrift 45s linear infinite;
 }
 
@@ -127,7 +128,7 @@ body::after {
     /* Small circuit dots */
     radial-gradient(
       circle at 1.5px 1.5px,
-      rgba(100, 180, 230, 0.14) 0,
+      rgba(100, 180, 230, 0.20) 0,
       transparent 1.5px
     ) 0 0 / 150px 150px,
     /* Microchip patterns */
@@ -135,11 +136,11 @@ body::after {
       45deg,
       transparent,
       transparent 200px,
-      rgba(100, 180, 230, 0.10) 200px,
-      rgba(100, 180, 230, 0.10) 201px
+      rgba(100, 180, 230, 0.16) 200px,
+      rgba(100, 180, 230, 0.16) 201px
     );
-  mix-blend-mode: lighten;
-  opacity: 0.6;
+  mix-blend-mode: normal;
+  opacity: 0.85;
   animation: dataDrift 40s linear infinite reverse;
 }
 
@@ -318,6 +319,8 @@ a {
 #main-outlet {
   box-sizing: border-box;
   background: transparent;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 /* Sidebar wrapper should not force layout; leave to components */
@@ -1023,16 +1026,17 @@ body.navigation-categories {
 
 /* ========== MAIN CONTAINER STRUCTURE ========== */
 #main-outlet-wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   width: 100%;
+  padding: 0 24px; /* breathing room when full width */
 }
 
 #main > div #main-outlet {
   flex: 1;
-  max-width: 1110px;
+  max-width: none;
   min-width: 0;
-  width: auto;
+  width: 100%;
 }
 
 /* ========== TOPIC LIST ========== */
@@ -1141,6 +1145,18 @@ body.ame-has-banner:not(.mobile-view) .sidebar-wrapper {
   margin-top: auto;
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Collapsed sidebar states - hide completely */
+html.sidebar-collapsed .sidebar-wrapper,
+body.sidebar-collapsed .sidebar-wrapper,
+.sidebar-wrapper.is-collapsed,
+.sidebar-wrapper[data-collapsed="true"] {
+  width: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Mobile sidebar */
