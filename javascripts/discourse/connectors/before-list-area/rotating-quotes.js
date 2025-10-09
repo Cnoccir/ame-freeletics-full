@@ -1,6 +1,5 @@
-// Version 1.1 - Fixed modern Ember API compatibility
+// Version 1.2 - Integrated with hero section
 import { withPluginApi } from "discourse/lib/plugin-api";
-import { getOwner } from "@ember/application";
 
 export default {
   setupComponent(args, component) {
@@ -12,25 +11,28 @@ export default {
             const quoteElement = document.querySelector(".ame-rotating-quote .q-text");
             if (!quoteElement) return;
 
-            const siteSettings = getOwner(component).lookup("service:site-settings");
             const quotes = [
-              siteSettings.brand_quote_1 || "NEVER SETTLE",
-              siteSettings.brand_quote_2 || "PUSH YOUR LIMITS",
-              siteSettings.brand_quote_3 || "CHALLENGE ACCEPTED"
+              "NEVER SETTLE",
+              "PUSH YOUR LIMITS", 
+              "CHALLENGE ACCEPTED",
+              "INNOVATE. INTEGRATE. INSPIRE.",
+              "EXCELLENCE IN EVERY CONNECTION"
             ];
 
             let currentIndex = 0;
 
-            // Initial display
+            // Initial display with fade-in
             quoteElement.textContent = quotes[currentIndex];
-            quoteElement.style.opacity = "1";
+            setTimeout(() => {
+              quoteElement.style.opacity = "1";
+            }, 100);
 
             // Clear any existing interval
             if (window.ameQuotesInterval) {
               clearInterval(window.ameQuotesInterval);
             }
 
-            // Rotate every 4 seconds
+            // Rotate every 5 seconds
             window.ameQuotesInterval = setInterval(() => {
               quoteElement.style.opacity = "0";
 
@@ -38,9 +40,9 @@ export default {
                 currentIndex = (currentIndex + 1) % quotes.length;
                 quoteElement.textContent = quotes[currentIndex];
                 quoteElement.style.opacity = "1";
-              }, 300);
-            }, 4000);
-          }, 100);
+              }, 500);
+            }, 5000);
+          }, 150);
         }
       });
     });
