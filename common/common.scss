@@ -409,6 +409,32 @@ a {
   background-color: var(--header_background);
   color: var(--header_primary);
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+/* Ensure header icons are visible */
+.d-header-icons {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* Hamburger/sidebar toggle button */
+.d-header .sidebar-toggle,
+.d-header .hamburger-dropdown,
+.d-header-icons .icon.btn-flat {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--header_primary);
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Replace default text logo with branded image/link when enabled */
@@ -485,6 +511,22 @@ a {
   color: var(--header_primary);
 }
 
+/* Ensure header content wraps properly */
+.d-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Header panel items */
+.d-header .panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 /* ========== GLASS PANELS (Exact Freeletics) ========== */
 /* Foundation-aligned base: full-width content; do not constrain width */
 
@@ -513,8 +555,8 @@ body.static-login #main-outlet {
   min-height: calc(100vh - 60px);
 }
 
-/* Only show glass sidebar on logged-in pages WITH sidebar */
-body:not(.login-page):not(.static-login).has-sidebar-page .sidebar-wrapper {
+/* Glass sidebar on logged-in pages */
+body:not(.login-page):not(.static-login) .sidebar-wrapper {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -907,6 +949,7 @@ body.navigation-categories {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   text-align: center;
   padding: 32px 24px;
   background: rgb(38, 50, 56);
@@ -916,7 +959,8 @@ body.navigation-categories {
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
-  min-height: 180px;
+  height: 100%;
+  min-height: 200px;
   box-shadow: none;
 }
 
@@ -987,6 +1031,7 @@ body.navigation-categories {
   color: rgba(236, 239, 241, 0.65);
   line-height: 1.5;
   font-weight: 400;
+  margin-top: auto;
 }
 
 /* ========== BANNER BOX (Background Image Section) ========== */
@@ -1217,7 +1262,6 @@ body.navigation-categories {
 }
 
 /* When sidebar is collapsed, adjust layout */
-body:not(.has-sidebar-page) #main-outlet-wrapper,
 html.sidebar-collapsed #main-outlet-wrapper,
 body.sidebar-collapsed #main-outlet-wrapper {
   justify-content: center;
@@ -1240,13 +1284,12 @@ body:not(.login-page):not(.static-login) #main-outlet {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* When sidebar is visible, limit main content width */
-body:not(.login-page):not(.static-login).has-sidebar-page #main-outlet {
+/* Default: sidebar is visible, so limit main content width */
+body:not(.login-page):not(.static-login) #main-outlet {
   max-width: calc(100% - 280px);
 }
 
 /* When sidebar is collapsed, expand main content */
-body:not(.login-page):not(.static-login):not(.has-sidebar-page) #main-outlet,
 html.sidebar-collapsed body:not(.login-page):not(.static-login) #main-outlet,
 body.sidebar-collapsed:not(.login-page):not(.static-login) #main-outlet {
   max-width: 1200px;
@@ -1491,13 +1534,10 @@ body:not(.login-page):not(.static-login) .topic-list .topic-list-data {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Collapsed sidebar states - COMPLETELY hide when collapsed or not on sidebar page */
+/* Collapsed sidebar states - hide when explicitly collapsed */
 html.sidebar-collapsed .sidebar-wrapper,
 body.sidebar-collapsed .sidebar-wrapper,
-.sidebar-wrapper.is-collapsed,
-.sidebar-wrapper[data-collapsed="true"],
-body:not(.has-sidebar-page) .sidebar-wrapper,
-html:not(.has-sidebar-page) .sidebar-wrapper {
+.sidebar-wrapper.is-collapsed {
   display: none !important;
   width: 0 !important;
   padding: 0 !important;
@@ -1509,6 +1549,13 @@ html:not(.has-sidebar-page) .sidebar-wrapper {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+}
+
+/* On mobile, sidebar is hidden by default (toggle to show) */
+@media (max-width: 1024px) {
+  .sidebar-wrapper:not(.visible) {
+    display: none !important;
+  }
 }
 
 /* Mobile sidebar */
