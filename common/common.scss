@@ -77,21 +77,23 @@ background:
       rgba(100, 180, 230, 0.08) 2px,
       rgba(100, 180, 230, 0.08) 3px
     ),
-    /* Horizontal grid lines - BRIGHTER */
+    /* Horizontal grid lines - ENHANCED with glow */
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 79px,
-      rgba(100, 180, 230, 0.5) 79px,
-      rgba(100, 180, 230, 0.5) 80px
+      rgba(0, 200, 255, 0.6) 79px,
+      rgba(100, 180, 230, 0.5) 79.5px,
+      rgba(0, 200, 255, 0.6) 80px
     ),
-    /* Vertical grid lines - BRIGHTER */
+    /* Vertical grid lines - ENHANCED with glow */
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 79px,
-      rgba(100, 180, 230, 0.5) 79px,
-      rgba(100, 180, 230, 0.5) 80px
+      rgba(0, 200, 255, 0.6) 79px,
+      rgba(100, 180, 230, 0.5) 79.5px,
+      rgba(0, 200, 255, 0.6) 80px
     ),
     /* PULSING tracking beam */
     linear-gradient(
@@ -211,7 +213,7 @@ background:
   }
 }
 
-/* ENHANCED data fragments with PULSING energy */
+/* ENHANCED data fragments with PULSING energy AND moving particles */
 html::after {
   content: "";
   position: fixed !important;
@@ -219,6 +221,9 @@ html::after {
   pointer-events: none;
   z-index: -1 !important;
   background:
+    /* ANIMATED particles - moving dots */
+    radial-gradient(circle at 2px 2px, rgba(0, 255, 255, 0.8) 0, rgba(0, 200, 255, 0.4) 1px, transparent 2px) 0 0 / 250px 250px,
+    radial-gradient(circle at 2px 2px, rgba(100, 180, 230, 0.6) 0, rgba(100, 180, 230, 0.3) 1px, transparent 2px) 125px 125px / 250px 250px,
     /* GLOWING circuit dots - BRIGHTER */
     radial-gradient(
       circle at 2px 2px,
@@ -226,28 +231,29 @@ html::after {
       rgba(100, 180, 230, 0.18) 1px,
       transparent 2px
     ) 0 0 / 120px 120px,
-    /* Energy pathways - diagonal */
+    /* Energy pathways - diagonal with glow */
     repeating-linear-gradient(
       45deg,
       transparent,
       transparent 180px,
-      rgba(2, 119, 189, 0.25) 180px,
-      rgba(0, 200, 255, 0.15) 181px,
+      rgba(0, 255, 255, 0.4) 180px,
+      rgba(0, 200, 255, 0.25) 181px,
       transparent 182px
     ),
-    /* Microchip patterns */
+    /* Microchip patterns with pulse */
     repeating-linear-gradient(
       -45deg,
       transparent,
       transparent 220px,
-      rgba(100, 180, 230, 0.18) 220px,
+      rgba(100, 180, 230, 0.28) 220px,
       rgba(100, 180, 230, 0.18) 221px
     );
   mix-blend-mode: screen;
-  opacity: 0.75;
+  opacity: 0.85;
   animation: 
     dataDriftEnhanced 35s linear infinite reverse,
-    dataPulse 8s ease-in-out infinite;
+    dataPulse 8s ease-in-out infinite,
+    particleFlow 40s linear infinite;
 }
 
 @keyframes dataDriftEnhanced {
@@ -256,8 +262,17 @@ html::after {
 }
 
 @keyframes dataPulse {
-  0%, 100% { opacity: 0.70; }
-  50% { opacity: 0.85; }
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 0.95; }
+}
+
+@keyframes particleFlow {
+  0% { 
+    background-position: 0 0, 125px 125px, 0 0, 0 0, 0 0;
+  }
+  100% { 
+    background-position: 250px 250px, 375px 375px, 120px 120px, 180px 180px, 220px 220px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -498,8 +513,8 @@ body.static-login #main-outlet {
   min-height: calc(100vh - 60px);
 }
 
-/* Only show glass sidebar on logged-in pages */
-body:not(.login-page):not(.static-login) .sidebar-wrapper {
+/* Only show glass sidebar on logged-in pages WITH sidebar */
+body:not(.login-page):not(.static-login).has-sidebar-page .sidebar-wrapper {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -515,6 +530,7 @@ body:not(.login-page):not(.static-login) .sidebar-wrapper {
   align-self: flex-start !important;
   position: relative;
   z-index: 10;
+  margin: 0;
 }
 
 /* Hide sidebar on login page */
@@ -1189,11 +1205,22 @@ body.navigation-categories {
 }
 
 /* ========== MAIN CONTAINER STRUCTURE ========== */
+/* Proper flexbox layout for sidebar + content */
 #main-outlet-wrapper {
-  max-width: 100%;
+  display: flex;
+  gap: 20px;
+  max-width: 1440px;
   margin: 0 auto;
-  width: 100%;
+  width: 95%;
   padding: 32px 20px;
+  align-items: flex-start;
+}
+
+/* When sidebar is collapsed, adjust layout */
+body:not(.has-sidebar-page) #main-outlet-wrapper,
+html.sidebar-collapsed #main-outlet-wrapper,
+body.sidebar-collapsed #main-outlet-wrapper {
+  justify-content: center;
 }
 
 /* Exact Freeletics main-outlet wrapper - CLEAN PADDING */
@@ -1203,13 +1230,27 @@ body:not(.login-page):not(.static-login) #main-outlet {
   background: rgba(22, 30, 33, .6) !important;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  padding: 16px;
-  margin: 32px auto;
+  padding: 20px;
+  margin: 0;
   border-radius: 4px;
-  max-width: var(--ame-max-width);
+  max-width: 100%;
+  min-width: 0;
   position: relative;
   z-index: 5;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* When sidebar is visible, limit main content width */
+body:not(.login-page):not(.static-login).has-sidebar-page #main-outlet {
+  max-width: calc(100% - 280px);
+}
+
+/* When sidebar is collapsed, expand main content */
+body:not(.login-page):not(.static-login):not(.has-sidebar-page) #main-outlet,
+html.sidebar-collapsed body:not(.login-page):not(.static-login) #main-outlet,
+body.sidebar-collapsed:not(.login-page):not(.static-login) #main-outlet {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Login page: no glass container */
@@ -1450,11 +1491,13 @@ body:not(.login-page):not(.static-login) .topic-list .topic-list-data {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Collapsed sidebar states - Only hide when explicitly collapsed */
+/* Collapsed sidebar states - COMPLETELY hide when collapsed or not on sidebar page */
 html.sidebar-collapsed .sidebar-wrapper,
 body.sidebar-collapsed .sidebar-wrapper,
 .sidebar-wrapper.is-collapsed,
-.sidebar-wrapper[data-collapsed="true"] {
+.sidebar-wrapper[data-collapsed="true"],
+body:not(.has-sidebar-page) .sidebar-wrapper,
+html:not(.has-sidebar-page) .sidebar-wrapper {
   display: none !important;
   width: 0 !important;
   padding: 0 !important;
@@ -1465,6 +1508,7 @@ body.sidebar-collapsed .sidebar-wrapper,
   background: transparent !important;
   opacity: 0 !important;
   visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* Mobile sidebar */
