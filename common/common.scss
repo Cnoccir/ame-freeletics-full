@@ -751,6 +751,10 @@ body.navigation-categories {
   z-index: 100; /* Below header but above content */
   overflow: hidden;
 }
+/* When the banner is present, push main wrapper down so content doesn’t butt against the header */
+body.ame-has-banner:not(.login-page):not(.static-login) #main-outlet-wrapper {
+  padding-top: calc(var(--ame-banner-height, 0px) + 24px);
+}
 
 .ame-banner-content {
   /* full-width band, center the text inside */
