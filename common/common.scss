@@ -18,6 +18,8 @@ $show_banner_on_login: true !default;
   /* Container widths - 85% of viewport, max 1110px */
   --ame-max-width: 1110px;
   --ame-container-width: min(var(--ame-max-width), 85vw);
+  /* default when banner script hasn't measured yet */
+  --ame-banner-height: 0px;
 }
 
 /* ========== BACKGROUND & BASE WITH LIFE ========== */
@@ -567,10 +569,12 @@ body:not(.login-page):not(.static-login) .sidebar-wrapper {
   border-radius: 4px;
   border: none;
   flex-shrink: 0;
-  width: 200px;
+  width: 220px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   align-self: flex-start !important;
-  position: relative;
+  /* Keep the sidebar visually aligned with the header/banner */
+  position: sticky;
+  top: calc(48px + var(--ame-banner-height, 0px) + 24px);
   z-index: 10;
   margin: 0;
 }
@@ -1297,10 +1301,6 @@ body:not(.login-page):not(.static-login) #main-outlet {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Default: sidebar is visible, so limit main content width */
-body:not(.login-page):not(.static-login) #main-outlet {
-  max-width: calc(100% - 220px);
-}
 
 /* When sidebar is collapsed, expand main content */
 html.sidebar-collapsed body:not(.login-page):not(.static-login) #main-outlet,
@@ -1547,28 +1547,11 @@ body:not(.login-page):not(.static-login) .topic-list .topic-list-data {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Collapsed sidebar states - COMPLETELY REMOVE from flow */
+/* Collapsed sidebar (use official collapsed classes; avoid over-aggressive selectors) */
 html.sidebar-collapsed .sidebar-wrapper,
 body.sidebar-collapsed .sidebar-wrapper,
-.sidebar-wrapper.is-collapsed,
-#main-outlet-wrapper:has(.sidebar-wrapper.is-collapsed) .sidebar-wrapper,
-#main-outlet-wrapper:has(.sidebar-wrapper:not([style*='display: block'])) .sidebar-wrapper {
+.sidebar-wrapper.is-collapsed {
   display: none !important;
-  width: 0 !important;
-  min-width: 0 !important;
-  max-width: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-  overflow: hidden !important;
-  box-shadow: none !important;
-  background: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  flex-basis: 0 !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
 }
 
 /* On mobile, sidebar is hidden by default (toggle to show) */
