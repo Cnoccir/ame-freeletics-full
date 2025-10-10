@@ -345,15 +345,15 @@ body.static-login #main-outlet {
 
 /* Only show glass sidebar on logged-in pages */
 body:not(.login-page):not(.static-login) .sidebar-wrapper {
-  background-color: rgba(22, 30, 33, .85) !important;
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  background-color: rgba(22, 30, 33, .6) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   padding: 20px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(100, 180, 230, 0.15);
+  border-radius: 4px;
+  border: none;
   flex-shrink: 0;
   width: 260px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
   align-self: flex-start !important;
 }
 
@@ -732,20 +732,15 @@ body.navigation-categories {
   align-items: center;
   text-align: center;
   padding: 32px 24px;
-  background: linear-gradient(
-    135deg,
-    rgba(22, 30, 33, 0.8) 0%,
-    rgba(22, 30, 33, 0.6) 100%
-  );
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: rgba(38, 50, 56, 1);
+  border: 1px solid rgba(0, 136, 204, 1);
+  border-radius: 4px;
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   min-height: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
 }
 
 .ame-card::before {
@@ -766,14 +761,10 @@ body.navigation-categories {
 }
 
 .ame-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(100, 150, 200, 0.25);
-  background: linear-gradient(
-    135deg,
-    rgba(22, 30, 33, 0.95) 0%,
-    rgba(22, 30, 33, 0.85) 100%
-  );
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(100, 150, 200, 0.08);
+  transform: none;
+  border-color: rgba(0, 136, 204, 1);
+  background: rgba(45, 54, 61, 1);
+  box-shadow: none;
 }
 
 .ame-card:hover::before {
@@ -1053,31 +1044,44 @@ body.navigation-categories {
   padding: 32px 20px;
 }
 
-#main > div #main-outlet {
+/* Exact Freeletics main-outlet wrapper */
+body:not(.login-page):not(.static-login) #main-outlet {
   flex: 1;
+  box-sizing: border-box;
+  background: rgba(22, 30, 33, .6) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  margin: 32px auto;
+  border-radius: 4px;
   max-width: var(--ame-max-width);
-  min-width: 0;
-  width: 100%;
+}
+
+/* Login page: no glass container */
+body.login-page #main-outlet,
+body.static-login #main-outlet {
   background: transparent !important;
-  margin: 0 auto;
+  backdrop-filter: none !important;
   padding: 0;
+  margin: 0;
 }
 
 /* Discovery pages: welcome section and category cards */
-/* ONLY apply glass styling on logged-in pages, NOT on login/homepage */
+/* Remove duplicate glass since main-outlet has it */
 body:not(.login-page):not(.static-login) {
   .full-width .welcome-wrapper,
   .full-width .above-main-container-outlet,
   .welcome-banner,
   .welcome-wrapper {
-    background: rgba(22, 30, 33, 0.85) !important;
-    -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-    backdrop-filter: blur(var(--ame-glass-blur, 12px));
-    border: 1px solid rgba(100, 180, 230, 0.15);
-    border-radius: 12px;
-    padding: 48px 40px;
-    margin: 0 0 32px 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    background: transparent !important;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0 0 24px 0;
+    box-shadow: none;
   }
 }
 
@@ -1118,12 +1122,10 @@ body:not(.login-page):not(.static-login) .topic-list {
 }
 
 body:not(.login-page):not(.static-login) .topic-list tr {
-  background: rgba(22, 30, 33, 0.85) !important;
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(100, 180, 230, 0.15);
-  border-radius: 8px;
+  background: rgba(38, 50, 56, 1) !important;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
 }
 
 body:not(.login-page):not(.static-login) .topic-list td,
@@ -1139,9 +1141,9 @@ body:not(.login-page):not(.static-login) .topic-list th {
 }
 
 body:not(.login-page):not(.static-login) .topic-list tr:hover {
-  background: rgba(22, 30, 33, 0.95) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  border-color: rgba(100, 180, 230, 0.3);
+  background: rgba(45, 54, 61, 1) !important;
+  box-shadow: none;
+  border: none;
 }
 
 /* ========== SIDEBAR (Freeletics Match) ========== */
