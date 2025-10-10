@@ -52,12 +52,13 @@ html {
 
 /* ========== ENHANCED HOLOGRAPHIC HUD OVERLAY WITH LIFE ========== */
 /* Dynamic cyberpunk HUD with scan lines, glitch effects, and pulsing energy */
-body::before {
+/* Use html::before to ensure it's behind all Discourse containers */
+html::before {
   content: "";
   position: fixed !important;
   inset: 0 !important;
   pointer-events: none;
-  z-index: 0 !important;
+  z-index: -1 !important;
   
   /* Multi-layered DYNAMIC holographic HUD effect */
 background:
@@ -211,12 +212,12 @@ background:
 }
 
 /* ENHANCED data fragments with PULSING energy */
-body::after {
+html::after {
   content: "";
   position: fixed !important;
   inset: 0 !important;
   pointer-events: none;
-  z-index: 0 !important;
+  z-index: -1 !important;
   background:
     /* GLOWING circuit dots - BRIGHTER */
     radial-gradient(
@@ -260,12 +261,17 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, body::after { animation: none !important; }
+  html::before, html::after { animation: none !important; }
 }
 
 /* Ensure page chrome sits above overlay with proper z-index layering */
+html {
+  position: relative;
+}
+
 body { 
   position: relative;
+  z-index: 0;
 }
 
 .d-header { 
@@ -297,17 +303,22 @@ body {
 }
 
 /* Make sure the overlay appears on most pages */
-body::before,
-body::after {
+html::before,
+html::after {
   position: fixed !important;
   inset: 0 !important;
-  z-index: 0 !important;
+  z-index: -1 !important;
+  display: block !important;
 }
 /* Turn off overlays and theme banners on the static login route */
-body.login-page::before,
-body.login-page::after,
-body.static-login::before,
-body.static-login::after { 
+html.login-page::before,
+html.login-page::after,
+html.static-login::before,
+html.static-login::after,
+body.login-page html::before,
+body.login-page html::after,
+body.static-login html::before,
+body.static-login html::after { 
   content: none !important; 
   display: none !important; 
 }
@@ -329,8 +340,10 @@ body.static-login .sidebar-wrapper {
 }
 
 /* Disable overlays and custom backgrounds on admin interface */
-body.admin-interface::before,
-body.admin-interface::after {
+html.admin-interface::before,
+html.admin-interface::after,
+body.admin-interface html::before,
+body.admin-interface html::after {
   content: none !important;
   display: none !important;
 }
