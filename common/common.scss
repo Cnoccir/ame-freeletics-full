@@ -327,18 +327,6 @@ html::after {
   z-index: -1 !important;
   display: block !important;
 }
-/* Turn off overlays and theme banners on the static login route */
-html.login-page::before,
-html.login-page::after,
-html.static-login::before,
-html.static-login::after,
-body.login-page html::before,
-body.login-page html::after,
-body.static-login html::before,
-body.static-login html::after { 
-  content: none !important; 
-  display: none !important; 
-}
 
 /* Remove top padding on login page */
 body.login-page,
@@ -407,7 +395,8 @@ a {
   left: 0;
   right: 0;
   height: 48px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  /* unify with banner: remove drop-shadow to avoid visual gap */
+  box-shadow: none;
   background-color: var(--header_background);
   color: var(--header_primary);
   z-index: 1000;
@@ -415,6 +404,7 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
+  border-bottom: 0;
 }
 
 /* Ensure header icons are visible */
@@ -757,18 +747,22 @@ body.navigation-categories {
   right: auto;
   margin-left: 0;
   margin-right: 0;
+  /* continuous band with header */
   background-color: var(--header_background);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  border-top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
   z-index: 100; /* Below header but above content */
   overflow: hidden;
 }
 
 .ame-banner-content {
-  max-width: var(--ame-max-width);
-  margin: 0 auto;
-  padding: 32px 20px;
-  min-height: 80px;
+  /* full-width band, center the text inside */
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 20px 16px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1386,6 +1380,23 @@ body.static-login {
   }
 }
 
+/* Login welcome card: glass + softer background like main site */
+body.login-page .login-welcome,
+body.static-login .login-welcome {
+  background: rgba(10, 22, 32, 0.45) !important;
+  border: 1px solid rgba(120, 200, 255, 0.12) !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35) !important;
+}
+
+/* Ensure overlays remain visible on login routes */
+body.login-page #main-outlet,
+body.static-login #main-outlet {
+  background: transparent !important;
+}
+
 /* Search banner on discovery pages */
 .search-banner {
   background: transparent !important;
@@ -1566,6 +1577,22 @@ body.sidebar-collapsed .sidebar-wrapper,
   .sidebar-wrapper {
     background: rgba(22, 30, 33, 0.95);
   }
+}
+
+/* Controls bar: prevent overlapping buttons and allow wrapping */
+.navigation-container,
+.list-controls,
+.discovery-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.list-controls .nav-pills,
+.discovery-nav .nav-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 /* ========== FOOTER (Freeletics style) ========== */
