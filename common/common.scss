@@ -281,6 +281,116 @@ html::after {
   html::before, html::after { animation: none !important; }
 }
 
+/* Explicitly ensure login/static login routes get the same HUD overlay as other pages */
+body.login-page::before,
+body.static-login::before {
+  content: "";
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none;
+  z-index: -1 !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 12, 18, 0.50) 0%,
+      rgba(6, 12, 18, 0.42) 50%,
+      rgba(6, 12, 18, 0.50) 100%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(100, 180, 230, 0.08) 2px,
+      rgba(100, 180, 230, 0.08) 3px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 200, 255, 0.6) 79px,
+      rgba(100, 180, 230, 0.5) 79.5px,
+      rgba(0, 200, 255, 0.6) 80px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 79px,
+      rgba(0, 200, 255, 0.6) 79px,
+      rgba(100, 180, 230, 0.5) 79.5px,
+      rgba(0, 200, 255, 0.6) 80px
+    ),
+    linear-gradient(
+      125deg,
+      transparent 30%,
+      rgba(0, 200, 255, 0.45) 47%,
+      rgba(2, 119, 189, 0.5) 50%,
+      rgba(0, 200, 255, 0.45) 53%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 600px 400px at 85% 15%,
+      rgba(0, 200, 255, 0.45) 0%,
+      rgba(100, 180, 230, 0.28) 25%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 600px 400px at 15% 85%,
+      rgba(2, 119, 189, 0.40) 0%,
+      rgba(100, 180, 230, 0.25) 25%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle 800px at top right,
+      rgba(100, 180, 230, 0.48),
+      rgba(0, 170, 255, 0.28) 35%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle 800px at bottom left,
+      rgba(2, 119, 189, 0.38),
+      rgba(0, 136, 204, 0.20) 35%,
+      transparent 60%
+    );
+  background-size:
+    100% 100%,
+    100% 6px,
+    80px 80px,
+    80px 80px,
+    200% 200%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+  mix-blend-mode: normal;
+  opacity: 1;
+  animation:
+    hudPulseLife 6s ease-in-out infinite,
+    hudDriftLife 30s linear infinite,
+    hudScanLines 4s linear infinite,
+    hudGlitch 12s ease-in-out infinite;
+}
+
+body.login-page::after,
+body.static-login::after {
+  content: "";
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none;
+  z-index: -1 !important;
+  background:
+    radial-gradient(circle at 2px 2px, rgba(0, 255, 255, 0.8) 0, rgba(0, 200, 255, 0.4) 1px, transparent 2px) 0 0 / 250px 250px,
+    radial-gradient(circle at 2px 2px, rgba(100, 180, 230, 0.6) 0, rgba(100, 180, 230, 0.3) 1px, transparent 2px) 125px 125px / 250px 250px,
+    radial-gradient(circle at 2px 2px, rgba(0, 200, 255, 0.35) 0, rgba(100, 180, 230, 0.18) 1px, transparent 2px) 0 0 / 120px 120px,
+    repeating-linear-gradient(45deg, transparent, transparent 180px, rgba(0, 255, 255, 0.4) 180px, rgba(0, 200, 255, 0.25) 181px, transparent 182px),
+    repeating-linear-gradient(-45deg, transparent, transparent 220px, rgba(100, 180, 230, 0.28) 220px, rgba(100, 180, 230, 0.18) 221px);
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  animation:
+    dataDriftEnhanced 35s linear infinite reverse,
+    dataPulse 8s ease-in-out infinite,
+    particleFlow 40s linear infinite;
+}
+
 /* Ensure page chrome sits above overlay with proper z-index layering */
 html {
   position: relative;
@@ -332,12 +442,6 @@ html::after {
 body.login-page,
 body.static-login {
   padding-top: 48px;
-}
-@if (variable-exists(show_banner_on_login) and (not $show_banner_on_login)) or (not variable-exists(show_banner_on_login) and (not $show_banner_on_login)) {
-body.login-page .ame-header-banner,
-body.static-login .ame-header-banner { 
-  display: none !important; 
-}
 }
 body.login-page .sidebar-wrapper,
 body.static-login .sidebar-wrapper { 
