@@ -332,14 +332,15 @@ a {
 }
 
 .sidebar-wrapper {
-  background-color: rgba(22, 30, 33, .75);
+  background-color: rgba(22, 30, 33, .85);
   -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
   padding: 16px 12px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(100, 180, 230, 0.15);
   flex-shrink: 0;
-  width: 280px; /* keep a stable width; avoids collapse */
+  width: 260px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -506,7 +507,8 @@ body.navigation-categories {
 }
 /* ========== HEADER BANNER (Below Header Bar - Like Freeletics) ========== */
 .ame-header-banner {
-  position: relative;
+  position: sticky;
+  top: 56px; /* sit below the fixed header */
   width: 100%;
   left: auto;
   right: auto;
@@ -515,7 +517,7 @@ body.navigation-categories {
   background-color: var(--header_background);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
-  z-index: 100; /* ensure above list controls and content */
+  z-index: 999; /* ensure above everything */
   overflow: hidden;
 }
 
@@ -1027,6 +1029,7 @@ body.navigation-categories {
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  padding: 24px 16px;
 }
 
 #main > div #main-outlet {
@@ -1034,12 +1037,38 @@ body.navigation-categories {
   max-width: 1110px;
   min-width: 0;
   width: auto;
+  background: transparent;
 }
 
-/* Ensure content clears the header banner height when present */
-body.ame-has-banner #main-outlet-wrapper {
-  margin-top: var(--ame-banner-height, 0px);
+/* Discovery pages: welcome section and category cards */
+.full-width .welcome-wrapper,
+.full-width .above-main-container-outlet,
+.welcome-banner {
+  background: rgba(22, 30, 33, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(100, 180, 230, 0.12);
+  border-radius: 12px;
+  padding: 40px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
+/* Search banner on discovery pages */
+.search-banner {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Category cards section */
+.ame-category-cards-section,
+.category-list,
+.categories-list {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
 
 /* ========== TOPIC LIST ========== */
 .topic-list {
@@ -1047,18 +1076,22 @@ body.ame-has-banner #main-outlet-wrapper {
 }
 
 .topic-list tr {
-  background: rgba(22, 30, 33, 0.5);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  background: rgba(22, 30, 33, 0.75);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(100, 180, 230, 0.1);
+  backdrop-filter: blur(8px);
 }
 
 .topic-list td,
 .topic-list th {
   border-bottom: none !important;
+  padding: 12px 8px;
 }
 
 .topic-list tr:hover {
-  background: rgba(22, 30, 33, 0.65);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  background: rgba(22, 30, 33, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-color: rgba(100, 180, 230, 0.25);
 }
 
 /* ========== SIDEBAR (Freeletics Match) ========== */
@@ -1071,10 +1104,6 @@ body.ame-has-banner #main-outlet-wrapper {
   margin-bottom: 20px;
 }
 
-/* Fix sidebar alignment when header banner is present */
-body.ame-has-banner:not(.mobile-view) .sidebar-wrapper {
-  margin-top: var(--ame-banner-height, 0px);
-}
 
 /* Fix sidebar-wrapper container alignment */
 
