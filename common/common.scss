@@ -263,10 +263,31 @@ body::after {
   body::before, body::after { animation: none !important; }
 }
 
-/* ensure page chrome sits above overlay */
-body, #main-outlet, .d-header, .sidebar-wrapper, #footer { 
+/* Ensure page chrome sits above overlay with proper z-index layering */
+body { 
+  position: relative;
+}
+
+.d-header { 
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  top: 0;
+}
+
+.sidebar-wrapper { 
   position: relative; 
-  z-index: 1; 
+  z-index: 10;
+}
+
+#main-outlet { 
+  position: relative; 
+  z-index: 5;
+}
+
+#footer { 
+  position: relative; 
+  z-index: 1;
 }
 
 /* Ensure main wrapper allows overlay to be visible */
@@ -289,6 +310,12 @@ body.static-login::before,
 body.static-login::after { 
   content: none !important; 
   display: none !important; 
+}
+
+/* Remove top padding on login page */
+body.login-page,
+body.static-login {
+  padding-top: 48px;
 }
 @if (variable-exists(show_banner_on_login) and (not $show_banner_on_login)) or (not variable-exists(show_banner_on_login) and (not $show_banner_on_login)) {
 body.login-page .ame-header-banner,
@@ -325,6 +352,8 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Add top padding to account for fixed header */
+  padding-top: 48px;
 }
 
 h1, h2, h3 {
@@ -343,10 +372,15 @@ a {
 
 /* ========== HEADER (Exact Freeletics match + Brand override) ========== */
 .d-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 48px;
-  box-shadow: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   background-color: var(--header_background);
   color: var(--header_primary);
+  z-index: 1000;
 }
 
 /* Replace default text logo with branded image/link when enabled */
@@ -431,7 +465,7 @@ a {
   background: transparent !important;
 }
 
-/* Sidebar wrapper should not force layout; leave to components */
+/* Sidebar wrapper base styles */
 .sidebar-wrapper {
   background: transparent;
   -webkit-backdrop-filter: none;
@@ -439,6 +473,7 @@ a {
   margin: 0;
   padding: 0;
   border: 0;
+  /* Don't hide by default - let specific states control visibility */
 }
 
 /* Keep login modal centered and clean */
@@ -452,6 +487,9 @@ body.static-login #main-outlet {
 
 /* Only show glass sidebar on logged-in pages */
 body:not(.login-page):not(.static-login) .sidebar-wrapper {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   background-color: rgba(22, 30, 33, .6) !important;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -460,8 +498,10 @@ body:not(.login-page):not(.static-login) .sidebar-wrapper {
   border: none;
   flex-shrink: 0;
   width: 260px;
-  box-shadow: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   align-self: flex-start !important;
+  position: relative;
+  z-index: 10;
 }
 
 /* Hide sidebar on login page */
@@ -645,7 +685,7 @@ body.navigation-categories {
   background-color: var(--header_background);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
-  z-index: 999; /* ensure above everything */
+  z-index: 100; /* Below header but above content */
   overflow: hidden;
 }
 
@@ -1154,6 +1194,9 @@ body:not(.login-page):not(.static-login) #main-outlet {
   margin: 32px auto;
   border-radius: 4px;
   max-width: var(--ame-max-width);
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Login page: no glass container */
@@ -1394,13 +1437,11 @@ body:not(.login-page):not(.static-login) .topic-list .topic-list-data {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Collapsed sidebar states - COMPLETELY HIDE WITH DISPLAY NONE */
+/* Collapsed sidebar states - Only hide when explicitly collapsed */
 html.sidebar-collapsed .sidebar-wrapper,
 body.sidebar-collapsed .sidebar-wrapper,
 .sidebar-wrapper.is-collapsed,
-.sidebar-wrapper[data-collapsed="true"],
-html:not(.has-sidebar-page) .sidebar-wrapper,
-body:not(.has-sidebar-page) .sidebar-wrapper {
+.sidebar-wrapper[data-collapsed="true"] {
   display: none !important;
   width: 0 !important;
   padding: 0 !important;
