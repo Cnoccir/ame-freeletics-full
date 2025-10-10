@@ -20,15 +20,29 @@ $show_banner_on_login: true !default;
   --ame-container-width: min(var(--ame-max-width), 85vw);
 }
 
-/* ========== BACKGROUND & BASE ========== */
+/* ========== BACKGROUND & BASE WITH LIFE ========== */
 html {
   background-color: #222;
   background-image: url(#{$background_image_url});
   background-size: cover;
   background-attachment: fixed;
-  background-position: center top;
+  background-position: center center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Subtle zoom breathing effect on background */
+  animation: backgroundBreath 45s ease-in-out infinite;
+}
+
+/* Subtle background zoom/breath effect */
+@keyframes backgroundBreath {
+  0%, 100% { 
+    background-size: 100% auto;
+    background-position: center center;
+  }
+  50% { 
+    background-size: 105% auto;
+    background-position: center 48%;
+  }
 }
 
 /* Ensure main content is transparent so HUD overlays are visible */
@@ -36,8 +50,8 @@ html {
   background: transparent !important;
 }
 
-/* ========== HOLOGRAPHIC HUD OVERLAY ========== */
-/* Cyberpunk-style holographic overlay with geometric grid and data lines */
+/* ========== ENHANCED HOLOGRAPHIC HUD OVERLAY WITH LIFE ========== */
+/* Dynamic cyberpunk HUD with scan lines, glitch effects, and pulsing energy */
 body::before {
   content: "";
   position: fixed !important;
@@ -45,82 +59,158 @@ body::before {
   pointer-events: none;
   z-index: 0 !important;
   
-  /* Multi-layered holographic HUD effect */
+  /* Multi-layered DYNAMIC holographic HUD effect */
 background:
-    /* Darker tint to guarantee contrast over bright photos */
+    /* Dynamic tint with subtle vertical gradient */
     linear-gradient(
-      0deg,
-      rgba(6, 12, 18, 0.48),
-      rgba(6, 12, 18, 0.48)
+      180deg,
+      rgba(6, 12, 18, 0.50) 0%,
+      rgba(6, 12, 18, 0.42) 50%,
+      rgba(6, 12, 18, 0.50) 100%
     ),
-    /* Horizontal dashed grid lines */
+    /* ANIMATED CRT scan lines - moving down screen */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(100, 180, 230, 0.08) 2px,
+      rgba(100, 180, 230, 0.08) 3px
+    ),
+    /* Horizontal grid lines - BRIGHTER */
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 79px,
-      rgba(100, 180, 230, 0.4) 79px,
-      rgba(100, 180, 230, 0.4) 80px
+      rgba(100, 180, 230, 0.5) 79px,
+      rgba(100, 180, 230, 0.5) 80px
     ),
-    /* Vertical dashed grid lines */
+    /* Vertical grid lines - BRIGHTER */
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 79px,
-      rgba(100, 180, 230, 0.4) 79px,
-      rgba(100, 180, 230, 0.4) 80px
+      rgba(100, 180, 230, 0.5) 79px,
+      rgba(100, 180, 230, 0.5) 80px
     ),
-    /* Tracking beams */
+    /* PULSING tracking beam */
     linear-gradient(
       125deg,
       transparent 30%,
-      rgba(100, 180, 230, 0.38) 48%,
-      transparent 52%,
-      transparent
+      rgba(0, 200, 255, 0.45) 47%,
+      rgba(2, 119, 189, 0.5) 50%,
+      rgba(0, 200, 255, 0.45) 53%,
+      transparent 60%
     ),
-    /* Circuit pattern fragments */
+    /* GLOWING circuit nodes - TOP RIGHT */
     radial-gradient(
-      ellipse at 85% 15%,
-      rgba(100, 180, 230, 0.32) 0%,
-      transparent 40%
-    ),
-    radial-gradient(
-      ellipse at 15% 85%,
-      rgba(100, 180, 230, 0.28) 0%,
-      transparent 35%
-    ),
-    /* Soft glow at edges */
-    radial-gradient(
-      circle at top right,
-      rgba(100, 180, 230, 0.35),
+      ellipse 600px 400px at 85% 15%,
+      rgba(0, 200, 255, 0.45) 0%,
+      rgba(100, 180, 230, 0.28) 25%,
       transparent 50%
+    ),
+    /* GLOWING circuit nodes - BOTTOM LEFT */
+    radial-gradient(
+      ellipse 600px 400px at 15% 85%,
+      rgba(2, 119, 189, 0.40) 0%,
+      rgba(100, 180, 230, 0.25) 25%,
+      transparent 50%
+    ),
+    /* PULSING corner glow - TOP RIGHT */
+    radial-gradient(
+      circle 800px at top right,
+      rgba(100, 180, 230, 0.48),
+      rgba(0, 170, 255, 0.28) 35%,
+      transparent 60%
+    ),
+    /* PULSING corner glow - BOTTOM LEFT */
+    radial-gradient(
+      circle 800px at bottom left,
+      rgba(2, 119, 189, 0.38),
+      rgba(0, 136, 204, 0.20) 35%,
+      transparent 60%
     );
   
-  /* Use normal blending to ensure visibility regardless of browser compositing */
+  background-size: 
+    100% 100%,
+    100% 6px,
+    80px 80px,
+    80px 80px,
+    200% 200%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+  
   mix-blend-mode: normal;
   opacity: 1;
-  animation: hudPulse 12s ease-in-out infinite, hudDrift 45s linear infinite;
+  animation: 
+    hudPulseLife 6s ease-in-out infinite, 
+    hudDriftLife 30s linear infinite,
+    hudScanLines 4s linear infinite,
+    hudGlitch 12s ease-in-out infinite;
 }
 
-/* Subtle pulsing glow effect */
-@keyframes hudPulse {
-  0%, 100% { opacity: 0.8; }
+/* ENHANCED pulsing with intensity variation and LIFE */
+@keyframes hudPulseLife {
+  0%, 100% { opacity: 0.88; }
+  25% { opacity: 0.92; }
   50% { opacity: 1; }
+  75% { opacity: 0.95; }
 }
 
-/* Slow drifting movement */
-@keyframes hudDrift {
+/* ENHANCED drifting with all layers moving */
+@keyframes hudDriftLife {
   0% { 
-    background-position: 0 0, 0 0, 0 0, 85% 15%, 15% 85%, top right;
+    background-position: 
+      0% 0%, 0 0, 0 0, 0 0,
+      0% 0%, 0% 0%, 0% 0%,
+      0% 0%, 0% 0%;
   }
   50% { 
-    background-position: 40px 40px, 40px 40px, 100px 0, 82% 18%, 18% 82%, top right;
+    background-position: 
+      0% 50%, 0 3px, 40px 40px, 40px 40px,
+      50% 50%, 5% 10%, 10% 5%,
+      3% 2%, 2% 3%;
   }
   100% { 
-    background-position: 0 0, 0 0, 0 0, 85% 15%, 15% 85%, top right;
+    background-position: 
+      0% 100%, 0 6px, 80px 80px, 80px 80px,
+      100% 100%, 10% 20%, 20% 10%,
+      5% 5%, 5% 5%;
   }
 }
 
-/* Additional data fragments scattered across the viewport */
+/* NEW: Animated scan lines effect */
+@keyframes hudScanLines {
+  0% {
+    background-position: 0% 0%, 0 0px, 0 0, 0 0, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%, 0 100%, 0 0, 0 0, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+/* NEW: Digital glitch effect for authenticity */
+@keyframes hudGlitch {
+  0%, 94%, 100% {
+    transform: translate(0, 0) scale(1);
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  95% {
+    transform: translate(1px, -1px) scale(1.001);
+    filter: hue-rotate(3deg) brightness(1.05);
+  }
+  96% {
+    transform: translate(-1px, 1px) scale(0.999);
+    filter: hue-rotate(-3deg) brightness(0.98);
+  }
+  97% {
+    transform: translate(0, 0) scale(1);
+    filter: hue-rotate(0deg) brightness(1);
+  }
+}
+
+/* ENHANCED data fragments with PULSING energy */
 body::after {
   content: "";
   position: fixed !important;
@@ -128,28 +218,45 @@ body::after {
   pointer-events: none;
   z-index: 0 !important;
   background:
-    /* Small circuit dots */
+    /* GLOWING circuit dots - BRIGHTER */
     radial-gradient(
-      circle at 1.5px 1.5px,
-      rgba(100, 180, 230, 0.20) 0,
-      transparent 1.5px
-    ) 0 0 / 150px 150px,
-    /* Microchip patterns */
+      circle at 2px 2px,
+      rgba(0, 200, 255, 0.35) 0,
+      rgba(100, 180, 230, 0.18) 1px,
+      transparent 2px
+    ) 0 0 / 120px 120px,
+    /* Energy pathways - diagonal */
     repeating-linear-gradient(
       45deg,
       transparent,
-      transparent 200px,
-      rgba(100, 180, 230, 0.16) 200px,
-      rgba(100, 180, 230, 0.16) 201px
+      transparent 180px,
+      rgba(2, 119, 189, 0.25) 180px,
+      rgba(0, 200, 255, 0.15) 181px,
+      transparent 182px
+    ),
+    /* Microchip patterns */
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 220px,
+      rgba(100, 180, 230, 0.18) 220px,
+      rgba(100, 180, 230, 0.18) 221px
     );
-  mix-blend-mode: normal;
-  opacity: 0.85;
-  animation: dataDrift 40s linear infinite reverse;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  animation: 
+    dataDriftEnhanced 35s linear infinite reverse,
+    dataPulse 8s ease-in-out infinite;
 }
 
-@keyframes dataDrift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(150px, 150px); }
+@keyframes dataDriftEnhanced {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(120px, 120px) rotate(0.5deg); }
+}
+
+@keyframes dataPulse {
+  0%, 100% { opacity: 0.70; }
+  50% { opacity: 0.85; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1036,17 +1143,14 @@ body.navigation-categories {
   padding: 32px 20px;
 }
 
-/* Exact Freeletics main-outlet wrapper */
+/* Exact Freeletics main-outlet wrapper - CLEAN PADDING */
 body:not(.login-page):not(.static-login) #main-outlet {
   flex: 1;
   box-sizing: border-box;
   background: rgba(22, 30, 33, .6) !important;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding: 16px;
   margin: 32px auto;
   border-radius: 4px;
   max-width: var(--ame-max-width);
@@ -1290,11 +1394,14 @@ body:not(.login-page):not(.static-login) .topic-list .topic-list-data {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Collapsed sidebar states - hide completely */
+/* Collapsed sidebar states - COMPLETELY HIDE WITH DISPLAY NONE */
 html.sidebar-collapsed .sidebar-wrapper,
 body.sidebar-collapsed .sidebar-wrapper,
 .sidebar-wrapper.is-collapsed,
-.sidebar-wrapper[data-collapsed="true"] {
+.sidebar-wrapper[data-collapsed="true"],
+html:not(.has-sidebar-page) .sidebar-wrapper,
+body:not(.has-sidebar-page) .sidebar-wrapper {
+  display: none !important;
   width: 0 !important;
   padding: 0 !important;
   border: 0 !important;
@@ -1302,6 +1409,8 @@ body.sidebar-collapsed .sidebar-wrapper,
   overflow: hidden !important;
   box-shadow: none !important;
   background: transparent !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 /* Mobile sidebar */
