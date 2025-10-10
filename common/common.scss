@@ -321,9 +321,7 @@ a {
 
 #main-outlet {
   box-sizing: border-box;
-  background: rgba(22, 30, 33, 0.6) !important;
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  background: transparent !important;
 }
 
 /* Sidebar wrapper should not force layout; leave to components */
@@ -340,12 +338,13 @@ a {
   background-color: rgba(22, 30, 33, .85) !important;
   -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  padding: 16px 12px;
-  border-radius: 8px;
+  padding: 20px 16px;
+  border-radius: 12px;
   border: 1px solid rgba(100, 180, 230, 0.15);
   flex-shrink: 0;
   width: 260px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  align-self: flex-start !important;
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -1032,10 +1031,10 @@ body.navigation-categories {
 
 /* ========== MAIN CONTAINER STRUCTURE ========== */
 #main-outlet-wrapper {
-  max-width: var(--ame-max-width);
+  max-width: 100%;
   margin: 0 auto;
-  width: var(--ame-container-width);
-  padding: 24px 16px;
+  width: 100%;
+  padding: 32px 20px;
 }
 
 #main > div #main-outlet {
@@ -1043,14 +1042,9 @@ body.navigation-categories {
   max-width: var(--ame-max-width);
   min-width: 0;
   width: 100%;
-  background: rgba(22, 30, 33, 0.6) !important;
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  background: transparent !important;
   margin: 0 auto;
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid rgba(100, 180, 230, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  padding: 0;
 }
 
 /* Discovery pages: welcome section and category cards */
@@ -1063,8 +1057,8 @@ body.navigation-categories {
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
   border: 1px solid rgba(100, 180, 230, 0.15);
   border-radius: 12px;
-  padding: 40px 24px;
-  margin-bottom: 24px;
+  padding: 48px 40px;
+  margin: 0 0 32px 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -1087,21 +1081,28 @@ body.navigation-categories {
 
 /* ========== TOPIC LIST ========== */
 .topic-list {
-  border-spacing: 0 6px;
+  border-spacing: 0 10px;
 }
 
 .topic-list tr {
-  background: rgba(22, 30, 33, 0.8) !important;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: rgba(22, 30, 33, 0.85) !important;
+  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
+  backdrop-filter: blur(var(--ame-glass-blur, 12px));
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(100, 180, 230, 0.12);
+  border: 1px solid rgba(100, 180, 230, 0.15);
+  border-radius: 8px;
 }
 
 .topic-list td,
 .topic-list th {
   border-bottom: none !important;
-  padding: 12px 8px;
+  padding: 18px 24px;
+  &:first-child {
+    padding-left: 24px;
+  }
+  &:last-child {
+    padding-right: 24px;
+  }
 }
 
 .topic-list tr:hover {
@@ -1112,7 +1113,7 @@ body.navigation-categories {
 
 /* ========== SIDEBAR (Freeletics Match) ========== */
 .sidebar-wrapper {
-  padding: 16px 12px;
+  padding: 20px 16px;
 }
 
 /* Sidebar sections */
