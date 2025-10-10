@@ -334,7 +334,17 @@ a {
   border: 0;
 }
 
-.sidebar-wrapper {
+/* Keep login modal centered and clean */
+body.login-page #main-outlet,
+body.static-login #main-outlet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
+}
+
+/* Only show glass sidebar on logged-in pages */
+body:not(.login-page):not(.static-login) .sidebar-wrapper {
   background-color: rgba(22, 30, 33, .85) !important;
   -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
@@ -345,6 +355,12 @@ a {
   width: 260px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   align-self: flex-start !important;
+}
+
+/* Hide sidebar on login page */
+body.login-page .sidebar-wrapper,
+body.static-login .sidebar-wrapper {
+  display: none !important;
 }
 
 /* ========== BUTTONS (Exact Freeletics) ========== */
@@ -1048,18 +1064,34 @@ body.navigation-categories {
 }
 
 /* Discovery pages: welcome section and category cards */
-.full-width .welcome-wrapper,
-.full-width .above-main-container-outlet,
-.welcome-banner,
-.welcome-wrapper {
-  background: rgba(22, 30, 33, 0.85) !important;
-  -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  backdrop-filter: blur(var(--ame-glass-blur, 12px));
-  border: 1px solid rgba(100, 180, 230, 0.15);
-  border-radius: 12px;
-  padding: 48px 40px;
-  margin: 0 0 32px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+/* ONLY apply glass styling on logged-in pages, NOT on login/homepage */
+body:not(.login-page):not(.static-login) {
+  .full-width .welcome-wrapper,
+  .full-width .above-main-container-outlet,
+  .welcome-banner,
+  .welcome-wrapper {
+    background: rgba(22, 30, 33, 0.85) !important;
+    -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
+    backdrop-filter: blur(var(--ame-glass-blur, 12px));
+    border: 1px solid rgba(100, 180, 230, 0.15);
+    border-radius: 12px;
+    padding: 48px 40px;
+    margin: 0 0 32px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* On login page, keep welcome section clean and transparent */
+body.login-page,
+body.static-login {
+  .full-width .welcome-wrapper,
+  .welcome-banner,
+  .welcome-wrapper {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
 }
 
 /* Search banner on discovery pages */
@@ -1080,11 +1112,12 @@ body.navigation-categories {
 
 
 /* ========== TOPIC LIST ========== */
-.topic-list {
+/* Only show glass styling on logged-in pages */
+body:not(.login-page):not(.static-login) .topic-list {
   border-spacing: 0 10px;
 }
 
-.topic-list tr {
+body:not(.login-page):not(.static-login) .topic-list tr {
   background: rgba(22, 30, 33, 0.85) !important;
   -webkit-backdrop-filter: blur(var(--ame-glass-blur, 12px));
   backdrop-filter: blur(var(--ame-glass-blur, 12px));
@@ -1093,8 +1126,8 @@ body.navigation-categories {
   border-radius: 8px;
 }
 
-.topic-list td,
-.topic-list th {
+body:not(.login-page):not(.static-login) .topic-list td,
+body:not(.login-page):not(.static-login) .topic-list th {
   border-bottom: none !important;
   padding: 18px 24px;
   &:first-child {
@@ -1105,7 +1138,7 @@ body.navigation-categories {
   }
 }
 
-.topic-list tr:hover {
+body:not(.login-page):not(.static-login) .topic-list tr:hover {
   background: rgba(22, 30, 33, 0.95) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   border-color: rgba(100, 180, 230, 0.3);
