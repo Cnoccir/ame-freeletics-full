@@ -15,6 +15,9 @@ $show_banner_on_login: true !default;
   --heading-font-family: "aktiv-grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   /* Map theme setting when available; fall back to 12px to avoid build errors */
   --ame-glass-blur: #{if(variable-exists(glass_blur_amount), $glass_blur_amount, 12px)};
+  /* Container widths - 85% of viewport, max 1110px */
+  --ame-max-width: 1110px;
+  --ame-container-width: min(var(--ame-max-width), 85vw);
 }
 
 /* ========== BACKGROUND & BASE ========== */
@@ -444,7 +447,8 @@ body.navigation-categories {
     position: relative;
     z-index: 2;
     margin: 8px auto 12px;
-    max-width: 1280px;
+    max-width: var(--ame-max-width);
+    width: var(--ame-container-width);
     padding: 10px 16px;
     background: rgba(10,22,32,.45);
     border:1px solid rgba(120,200,255,.12);
@@ -522,7 +526,7 @@ body.navigation-categories {
 }
 
 .ame-banner-content {
-  max-width: 1110px;
+  max-width: var(--ame-max-width);
   margin: 0 auto;
   padding: 32px 20px;
   min-height: 80px;
@@ -639,7 +643,7 @@ body.navigation-categories {
 }
 
 .ame-quote-wrapper {
-  max-width: 1110px;
+  max-width: var(--ame-max-width);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -679,7 +683,7 @@ body.navigation-categories {
 /* ========== CATEGORY CARDS SECTION ========== */
 .ame-category-cards-section {
   width: 100%;
-  max-width: 1110px;
+  max-width: var(--ame-max-width);
   margin: 0 auto 32px;
   padding: 0 16px;
 }
@@ -856,7 +860,7 @@ body.navigation-categories {
 
 /* ========== CATEGORIES WRAPPER ========== */
 .ame-categories-wrapper {
-  max-width: 1110px;
+  max-width: var(--ame-max-width);
   margin: 0 auto;
   padding: 0 16px;
 }
@@ -1026,18 +1030,19 @@ body.navigation-categories {
 
 /* ========== MAIN CONTAINER STRUCTURE ========== */
 #main-outlet-wrapper {
-  max-width: 1400px;
+  max-width: var(--ame-max-width);
   margin: 0 auto;
-  width: 100%;
+  width: var(--ame-container-width);
   padding: 24px 16px;
 }
 
 #main > div #main-outlet {
   flex: 1;
-  max-width: 1110px;
+  max-width: var(--ame-max-width);
   min-width: 0;
-  width: auto;
+  width: 100%;
   background: transparent;
+  margin: 0 auto;
 }
 
 /* Discovery pages: welcome section and category cards */
@@ -1303,7 +1308,7 @@ body:not(.login-page):not(.static-login) .login-modal .nav-pills > li a.active {
 }
 
 #footer .footer-inner {
-  max-width: 1110px;
+  max-width: var(--ame-max-width);
   margin: 0 auto;
   padding: 19px 8px;
 }
