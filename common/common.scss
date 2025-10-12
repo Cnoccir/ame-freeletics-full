@@ -1276,7 +1276,8 @@ body:not(.login-page):not(.static-login) #main-outlet {
 /* When sidebar is collapsed, adjust layout */
 html.sidebar-collapsed #main-outlet-wrapper,
 body.sidebar-collapsed #main-outlet-wrapper {
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 /* Exact Freeletics main-outlet wrapper - CLEAN PADDING */
@@ -1302,6 +1303,24 @@ html.sidebar-collapsed body:not(.login-page):not(.static-login) #main-outlet,
 body.sidebar-collapsed:not(.login-page):not(.static-login) #main-outlet {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* Safety: when sidebar is collapsed or on mobile, never hide discovery controls or topic list */
+/* Applies to discovery pages only (not categories), and keeps content visible */
+body:not(.login-page):not(.static-login):not(.navigation-categories):not(.categories-index) {
+  .list-controls,
+  .discovery-controls,
+  .navigation-container { display: flex !important; }
+  .topic-list-container,
+  .topic-list-wrapper,
+  .topic-list { display: block !important; visibility: visible !important; opacity: 1 !important; }
+}
+
+/* When sidebar is collapsed on any page, ensure main content fully expands */
+html.sidebar-collapsed body:not(.login-page):not(.static-login) #main-outlet,
+body.sidebar-collapsed:not(.login-page):not(.static-login) #main-outlet {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Login page: no glass container */
