@@ -546,10 +546,8 @@ body.static-login #main-outlet {
 
 /* Glass sidebar on logged-in pages */
 body:not(.login-page):not(.static-login) .sidebar-wrapper {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  background-color: rgba(22, 30, 33, .6) !important;
+  /* Do not force display/visibility; allow core/collapsed/mobile states to hide it */
+  background-color: rgba(22, 30, 33, .6);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   padding: 16px 12px;
@@ -558,7 +556,7 @@ body:not(.login-page):not(.static-login) .sidebar-wrapper {
   flex-shrink: 0;
   width: 220px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  align-self: flex-start !important;
+  align-self: flex-start;
   /* Keep the sidebar visually aligned with the header/banner */
   position: sticky;
   top: calc(48px + env(safe-area-inset-top, 0px) + var(--ame-banner-height, 0px) + 24px);
@@ -1599,6 +1597,13 @@ body.sidebar-collapsed .sidebar-wrapper,
     background: rgba(22, 30, 33, 0.95);
   }
 
+  /* Always hide sidebar when not explicitly visible on mobile, or when collapsed */
+  html.sidebar-collapsed .sidebar-wrapper,
+  body.sidebar-collapsed .sidebar-wrapper,
+  .sidebar-wrapper:not(.visible) {
+    display: none !important;
+  }
+
   /* Stack layout to keep everything inside container */
   #main-outlet-wrapper {
     display: flex;
@@ -1609,13 +1614,13 @@ body.sidebar-collapsed .sidebar-wrapper,
     padding: 16px 12px;
   }
 
-  /* Sidebar becomes full-width block and loses sticky offset */
+  /* Sidebar becomes full-width block and loses sticky offset when shown */
   body:not(.login-page):not(.static-login) .sidebar-wrapper {
     position: static;
     top: auto;
     width: auto;
     max-width: 100%;
-    align-self: stretch !important;
+    align-self: stretch;
   }
 
   /* Main content takes full width */
