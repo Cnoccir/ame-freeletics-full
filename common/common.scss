@@ -924,26 +924,18 @@ body.ame-has-banner:not(.login-page):not(.static-login) #main-outlet-wrapper {
 
 .ame-cards-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
   margin-bottom: 48px;
   position: relative;
   z-index: 1;
   clear: both;
+  align-items: start; /* allow each card to size to its content */
 }
 
-@media (min-width: 768px) {
-  .ame-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-}
-
+/* Optional equal-heights modifier on wide screens */
 @media (min-width: 1024px) {
-  .ame-cards-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
+  .ame-cards-grid.equal-heights { align-items: stretch; }
 }
 
 /* ========== INDIVIDUAL CATEGORY CARDS ========== */
@@ -953,16 +945,16 @@ body.ame-has-banner:not(.login-page):not(.static-login) #main-outlet-wrapper {
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  padding: 20px 16px;
+  padding: clamp(16px, 2vw, 24px) clamp(12px, 2vw, 20px);
   background: rgb(38, 50, 56);
   border: 1px solid rgba(0, 136, 204, 0.6);
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s ease;
   position: relative;
-  overflow: hidden;
-  height: 100%;
-  min-height: 150px;
+  overflow: visible;
+  height: auto;        /* let content define height */
+  min-height: 0;       /* allow shrinking when content is short */
   box-shadow: none;
 }
 
@@ -1025,6 +1017,7 @@ body.ame-has-banner:not(.login-page):not(.static-login) #main-outlet-wrapper {
   margin-bottom: 6px;
   line-height: 1.3;
   letter-spacing: 0;
+  overflow-wrap: anywhere; /* long words wrap instead of forcing width/height */
 }
 
 .ame-card__sub {
@@ -1033,7 +1026,7 @@ body.ame-has-banner:not(.login-page):not(.static-login) #main-outlet-wrapper {
   color: rgba(236, 239, 241, 0.65);
   line-height: 1.4;
   font-weight: 400;
-  margin-top: auto;
+  margin-top: 8px;
 }
 
 /* ========== BANNER BOX (Background Image Section) ========== */
@@ -1861,8 +1854,8 @@ body:not(.login-page):not(.static-login) .login-modal .nav-pills > li a.active {
   }
   
   .ame-card {
-    padding: 24px 20px;
-    min-height: 160px;
+    padding: clamp(16px, 3vw, 24px) clamp(12px, 3vw, 20px);
+    min-height: 0; /* allow content-driven height on small screens */
   }
   
   .ame-card__icon {
