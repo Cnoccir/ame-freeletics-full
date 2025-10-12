@@ -367,7 +367,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Add top padding to account for fixed header */
-  padding-top: 48px;
+  padding-top: calc(48px + env(safe-area-inset-top, 0px));
 }
 
 h1, h2, h3 {
@@ -390,7 +390,8 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  height: 48px;
+  height: calc(48px + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
   /* unify with banner: remove drop-shadow to avoid visual gap */
   box-shadow: none;
   background-color: var(--header_background);
@@ -560,7 +561,7 @@ body:not(.login-page):not(.static-login) .sidebar-wrapper {
   align-self: flex-start !important;
   /* Keep the sidebar visually aligned with the header/banner */
   position: sticky;
-  top: calc(48px + var(--ame-banner-height, 0px) + 24px);
+  top: calc(48px + env(safe-area-inset-top, 0px) + var(--ame-banner-height, 0px) + 24px);
   z-index: 10;
   margin: 0;
 }
@@ -1574,8 +1575,34 @@ body.sidebar-collapsed .sidebar-wrapper,
 
 /* Mobile sidebar */
 @media (max-width: 1024px) {
+  /* Keep sidebar overlay styling */
   .sidebar-wrapper {
     background: rgba(22, 30, 33, 0.95);
+  }
+
+  /* Stack layout to keep everything inside container */
+  #main-outlet-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    padding: 16px 12px;
+  }
+
+  /* Sidebar becomes full-width block and loses sticky offset */
+  body:not(.login-page):not(.static-login) .sidebar-wrapper {
+    position: static;
+    top: auto;
+    width: auto;
+    max-width: 100%;
+    align-self: stretch !important;
+  }
+
+  /* Main content takes full width */
+  body:not(.login-page):not(.static-login) #main-outlet {
+    max-width: 100%;
+    width: 100%;
   }
 }
 
