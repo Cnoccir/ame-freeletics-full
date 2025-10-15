@@ -11,9 +11,7 @@ export default {
       
       // If no webhook URL, hide the widget completely
       if (!webhook) {
-        const toggle = document.getElementById("ame-chat-toggle");
         const widget = document.getElementById("ame-chat-widget");
-        if (toggle) toggle.style.display = "none";
         if (widget) widget.style.display = "none";
         return;
       }
@@ -22,9 +20,7 @@ export default {
       if (!settings.enable_chat_on_mobile) {
         const isMobile = window.matchMedia("(max-width: 680px)").matches;
         if (isMobile) {
-          const toggle = document.getElementById("ame-chat-toggle");
           const widget = document.getElementById("ame-chat-widget");
-          if (toggle) toggle.style.display = "none";
           if (widget) widget.style.display = "none";
           return;
         }
@@ -37,7 +33,6 @@ export default {
       };
 
       const el = {
-        toggle: document.getElementById("ame-chat-toggle"),
         widget: document.getElementById("ame-chat-widget"),
         close:  document.getElementById("ame-chat-close"),
         area:   document.getElementById("ame-chat-textarea"),
@@ -53,15 +48,20 @@ export default {
         } catch {}
       }
 
-      // Toggle widget visibility
-      el.toggle?.addEventListener("click", () => {
-        el.widget?.classList.toggle("visible");
-        if (el.widget?.classList.contains("visible")) {
-          setTimeout(() => el.area?.focus(), 0);
-        }
-      });
-      
+      // Close button handler
       el.close?.addEventListener("click", () => el.widget?.classList.remove("visible"));
+
+      // Global helper function to open chat from anywhere
+      window.openAMEChat = function() {
+        if (el.widget) {
+          el.widget.classList.add("visible");
+          setTimeout(() => {
+            if (el.area) {
+              el.area.focus();
+            }
+          }, 100);
+        }
+      };
 
       // Handle Enter key to send message
       el.area?.addEventListener("keydown", e => {

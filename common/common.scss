@@ -1905,34 +1905,15 @@ body:not(.login-page):not(.static-login) .login-modal .nav-pills > li a.active {
 $chat_accent: #{theme-setting('chat_brand_accent')};
 
 #ame-chat-toggle {
-  position: fixed;
-  bottom: #{theme-setting('chat_position_bottom_px')}px;
-  right: #{theme-setting('chat_position_right_px')}px;
-  z-index: 1000;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--tertiary, #2c3e50);
-  color: var(--secondary, #ffffff);
-  box-shadow: 0 6px 18px rgba(0,0,0,.25);
-  transition: filter 0.2s ease;
-}
-
-#ame-chat-toggle:hover { 
-  filter: brightness(1.05);
+  /* Hidden - hero card is the only trigger */
+  display: none !important;
 }
 
 #ame-chat-widget {
   position: fixed;
-  bottom: calc(#{theme-setting('chat_position_bottom_px')}px + 60px);
+  bottom: #{theme-setting('chat_position_bottom_px')}px;
   right: #{theme-setting('chat_position_right_px')}px;
-  z-index: 1000;
+  z-index: 10000 !important; /* Above all overlays and header */
   width: #{theme-setting('chat_width_px')}px;
   max-width: 95vw;
   height: #{theme-setting('chat_height_px')}px;
@@ -1940,9 +1921,11 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   border-radius: 12px;
   overflow: hidden;
   display: none;
-  box-shadow: 0 12px 32px rgba(0,0,0,.35);
-  background: var(--secondary-very-low, #1a252f);
-  border: 1px solid var(--primary-low, rgba(255,255,255,.1));
+  box-shadow: 0 12px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(0, 170, 255, 0.2);
+  background: rgba(26, 37, 47, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 170, 255, 0.3);
 }
 
 #ame-chat-widget.visible { 

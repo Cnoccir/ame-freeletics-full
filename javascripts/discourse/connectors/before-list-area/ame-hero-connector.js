@@ -1,32 +1,37 @@
-// Version 1.2 - Hero cards with chat widget integration
+// Version 1.3 - Hero cards with improved chat widget integration
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
   setupComponent(args, component) {
     withPluginApi("1.8.0", api => {
-      api.onPageChange(() => {
-        // Add click handler to the AI Assistant hero card
+      // Initialize on page load and on each page change
+      const initChatTrigger = () => {
         setTimeout(() => {
           const chatTrigger = document.getElementById("ame-hero-chat-trigger");
-          const chatWidget = document.getElementById("ame-chat-widget");
-          const chatTextarea = document.getElementById("ame-chat-textarea");
           
-          if (chatTrigger && chatWidget) {
-            // Remove any existing listeners to prevent duplicates
-            chatTrigger.replaceWith(chatTrigger.cloneNode(true));
-            const newChatTrigger = document.getElementById("ame-hero-chat-trigger");
+          if (chatTrigger) {
+            // Remove existing listener to prevent duplicates
+            const newTrigger = chatTrigger.cloneNode(true);
+            chatTrigger.parentNode.replaceChild(newTrigger, chatTrigger);
             
-            newChatTrigger.addEventListener("click", () => {
-              chatWidget.classList.add("visible");
-              // Focus the textarea after a brief delay for smooth animation
-              setTimeout(() => {
-                if (chatTextarea) {
-                  chatTextarea.focus();
-                }
-              }, 100);
+            // Add click handler that uses global opener
+            newTrigger.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof window.openAMEChat === "function") {
+                window.openAMEChat();
+              }
             });
           }
-        }, 100);
+        }, 150);
+      };
+      
+      // Initialize immediately
+      initChatTrigger();
+      
+      // Re-initialize on page changes
+      api.onPageChange(() => {
+        initChatTrigger();
       });
     });
   }
