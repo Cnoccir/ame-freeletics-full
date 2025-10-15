@@ -112,17 +112,17 @@ hero_card_3_url:
 hero_card_4_label:
   type: string
   default: "AI Assistant (AME-Bot)"
-  description: "Title for category card 4"
+  description: "Title for category card 4 (triggers chat widget)"
 
 hero_card_4_subtitle:
   type: string
   default: "Get Instant Answers"
-  description: "Subtitle/description for category card 4"
+  description: "Subtitle/description for category card 4 (triggers chat widget)"
 
 hero_card_4_url:
   type: string
   default: "/search?q=category%3Aai-assistant"
-  description: "URL for category card 4"
+  description: "[DEPRECATED] Card 4 now opens the chat widget instead of navigating"
 
 # Rotating quotes - format: "QUOTE TEXT|word1,word2,word3" where words after | are bolded
 quote_1:

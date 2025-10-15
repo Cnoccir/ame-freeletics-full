@@ -997,6 +997,17 @@ body:not(.ame-has-banner) {
   opacity: 1;
 }
 
+/* Button variant of card (for chat trigger) */
+.ame-card.ame-card--chat {
+  border: 1px solid rgba(0, 136, 204, 0.6);
+  cursor: pointer;
+}
+
+.ame-card.ame-card--chat:focus {
+  outline: 2px solid rgba(0, 170, 255, 0.6);
+  outline-offset: 2px;
+}
+
 .ame-card__icon {
   width: 48px;
   height: 48px;
