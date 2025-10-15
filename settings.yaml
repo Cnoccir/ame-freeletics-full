@@ -55,31 +55,31 @@ hero_nav_title_text:
   description: "Breadcrumb title shown in the hero nav row"
 # Up to 4 category cards in the hero
 hero_card_1_label:
-  default: "General"
+  default: "Knowledge Base"
   description: "Card 1 label"
 hero_card_1_url:
-  default: "/c/general/1"
+  default: "/tags/knowledge-base"
   description: "Card 1 link"
 
 hero_card_2_label:
-  default: "Staff"
+  default: "Tech Community"
   description: "Card 2 label"
 hero_card_2_url:
-  default: "/c/staff/3"
+  default: "/c"
   description: "Card 2 link"
 
 hero_card_3_label:
-  default: "Site Feedback"
+  default: "How-To & Troubleshooting"
   description: "Card 3 label"
 hero_card_3_url:
-  default: "/c/site-feedback/4"
+  default: "/tags/how-to"
   description: "Card 3 link"
 
 hero_card_4_label:
-  default: "Docs"
+  default: "AI Assistant (AME-Bot)"
   description: "Card 4 label"
 hero_card_4_url:
-  default: "/tags/docs"
+  default: "/search?q=category%3Aai-assistant"
   description: "Card 4 link"
 
 banner_cta_1_text:
