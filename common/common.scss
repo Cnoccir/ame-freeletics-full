@@ -750,9 +750,20 @@ body.navigation-categories {
   z-index: 100; /* Below header but above content */
   overflow: hidden;
 }
-/* When the banner is present, push main wrapper down so content doesn’t butt against the header */
+/* When the banner is present, push main wrapper down so content doesn't butt against the header */
 body.ame-has-banner:not(.login-page):not(.static-login) #main-outlet-wrapper {
   padding-top: calc(var(--ame-banner-height, 0px) + 24px);
+}
+
+/* Hide banner on admin pages by default (unless explicitly enabled via JS) */
+html.admin-interface .ame-header-banner,
+body.admin-interface .ame-header-banner {
+  display: none;
+}
+
+/* When banner is hidden, reset banner height variable */
+body:not(.ame-has-banner) {
+  --ame-banner-height: 0px;
 }
 
 .ame-banner-content {

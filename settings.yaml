@@ -23,10 +23,26 @@ header_label_text:
   description: "Text label displayed after the site title in the header"
 
 
-# Rotating quotes
+# Rotating quotes visibility
 quotes_enabled:
   default: true
   description: "Displays rotating quotes bar under the header on the Categories page."
+
+show_banner_on_homepage:
+  default: true
+  description: "Show banner on the homepage/categories page"
+
+show_banner_on_topics:
+  default: true
+  description: "Show banner on topic list pages (latest, top, etc)"
+
+show_banner_on_topic_view:
+  default: false
+  description: "Show banner when viewing individual topics"
+
+show_banner_on_admin:
+  default: false
+  description: "Show banner on admin pages"
 
 brand_quote_1:
   default: "NEVER SETTLE"
@@ -56,31 +72,66 @@ hero_nav_title_text:
 # Up to 4 category cards in the hero
 hero_card_1_label:
   default: "Knowledge Base"
-  description: "Card 1 label"
+  description: "Card 1 title"
+hero_card_1_subtitle:
+  default: "Vendor Manuals, Specs & Docs"
+  description: "Card 1 subtitle"
 hero_card_1_url:
   default: "/tags/knowledge-base"
   description: "Card 1 link"
 
 hero_card_2_label:
   default: "Tech Community"
-  description: "Card 2 label"
+  description: "Card 2 title"
+hero_card_2_subtitle:
+  default: "Ask Questions & Share Expertise"
+  description: "Card 2 subtitle"
 hero_card_2_url:
   default: "/c"
   description: "Card 2 link"
 
 hero_card_3_label:
   default: "How-To & Troubleshooting"
-  description: "Card 3 label"
+  description: "Card 3 title"
+hero_card_3_subtitle:
+  default: "Guides, Tutorials & Fixes"
+  description: "Card 3 subtitle"
 hero_card_3_url:
   default: "/tags/how-to"
   description: "Card 3 link"
 
 hero_card_4_label:
   default: "AI Assistant (AME-Bot)"
-  description: "Card 4 label"
+  description: "Card 4 title"
+hero_card_4_subtitle:
+  default: "Get Instant Answers"
+  description: "Card 4 subtitle"
 hero_card_4_url:
   default: "/search?q=category%3Aai-assistant"
   description: "Card 4 link"
+
+# Rotating quotes - format: "QUOTE TEXT|word1,word2,word3" where words after | are bolded
+quote_1:
+  default: "ALONE WE CAN DO SO LITTLE; TOGETHER WE CAN DO MUCH.|ALONE,TOGETHER"
+  description: "Quote 1: text|words-to-bold"
+quote_2:
+  default: "KNOWLEDGE SHARED IS KNOWLEDGE SQUARED.|SHARED,SQUARED"
+  description: "Quote 2: text|words-to-bold"
+quote_3:
+  default: "RAISE THE FLOOR, THEN RAISE THE CEILING.|RAISE,FLOOR,CEILING"
+  description: "Quote 3: text|words-to-bold"
+quote_4:
+  default: "PUT KNOWLEDGE WHERE PEOPLE TRIP OVER IT.|KNOWLEDGE,TRIP"
+  description: "Quote 4: text|words-to-bold"
+quote_5:
+  default: "EVERYBODY IS SMARTER THAN ANYBODY.|EVERYBODY,SMARTER,ANYBODY"
+  description: "Quote 5: text|words-to-bold"
+quote_6:
+  default: "KNOWLEDGE IS LIKE MONEY: TO BE OF VALUE IT MUST CIRCULATE.|KNOWLEDGE,VALUE,CIRCULATE"
+  description: "Quote 6: text|words-to-bold"
+quote_7:
+  default: "THE BEST WAY TO PREDICT THE FUTURE IS TO INVENT IT.|PREDICT,FUTURE,INVENT"
+  description: "Quote 7: text|words-to-bold"
 
 banner_cta_1_text:
   default: "Search Technical Docs"

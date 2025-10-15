@@ -3,17 +3,58 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
   setupComponent(args, component) {
+    const themeSettings = settings;
+    
     withPluginApi("0.8.31", (api) => {
+      const checkAndToggleBanner = () => {
+        const banner = document.querySelector('.ame-header-banner');
+        if (!banner) return;
+
+        // Check if we should show the banner based on current page context
+        const html = document.documentElement;
+        const body = document.body;
+        
+        let shouldShow = false;
+        
+        // Check page type and corresponding setting
+        if (html.classList.contains('admin-interface') || body.classList.contains('admin-interface')) {
+          shouldShow = themeSettings.show_banner_on_admin;
+        } else if (body.classList.contains('categories-index') || body.classList.contains('navigation-categories')) {
+          shouldShow = themeSettings.show_banner_on_homepage;
+        } else if (body.classList.contains('archetype-regular')) {
+          // Individual topic view
+          shouldShow = themeSettings.show_banner_on_topic_view;
+        } else if (api.getCurrentUser()) {
+          // Logged in, on topic lists (latest, top, etc)
+          shouldShow = themeSettings.show_banner_on_topics;
+        } else {
+          // Default to homepage setting for other pages
+          shouldShow = themeSettings.show_banner_on_homepage;
+        }
+        
+        // Toggle visibility
+        if (shouldShow) {
+          banner.style.display = '';
+          initializeQuotes(themeSettings);
+        } else {
+          banner.style.display = 'none';
+          // Clear interval when hiding
+          if (window.ameHeaderQuotesInterval) {
+            clearInterval(window.ameHeaderQuotesInterval);
+          }
+        }
+      };
+      
       // Initialize on page load
       setTimeout(() => {
-        initializeQuotes();
+        checkAndToggleBanner();
         pruneGettingStarted();
       }, 100);
 
       // Reinitialize on route changes
       api.onPageChange(() => {
         setTimeout(() => {
-          initializeQuotes();
+          checkAndToggleBanner();
           pruneGettingStarted();
         }, 100);
       });
@@ -21,20 +62,35 @@ export default {
   }
 };
 
-function initializeQuotes() {
+function initializeQuotes(themeSettings) {
   const quoteElement = document.querySelector(".ame-banner-quote .quote-text");
   if (!quoteElement) return;
 
-  // Quotes with styled keywords (words to bold)
-  const quotes = [
-    { text: "ALONE WE CAN DO SO LITTLE; TOGETHER WE CAN DO MUCH.", bold: ["ALONE", "TOGETHER"] },
-    { text: "KNOWLEDGE SHARED IS KNOWLEDGE SQUARED.", bold: ["SHARED", "SQUARED"] },
-    { text: "RAISE THE FLOOR, THEN RAISE THE CEILING.", bold: ["RAISE", "FLOOR", "CEILING"] },
-    { text: "PUT KNOWLEDGE WHERE PEOPLE TRIP OVER IT.", bold: ["KNOWLEDGE", "TRIP"] },
-    { text: "EVERYBODY IS SMARTER THAN ANYBODY.", bold: ["EVERYBODY", "SMARTER", "ANYBODY"] },
-    { text: "KNOWLEDGE IS LIKE MONEY: TO BE OF VALUE IT MUST CIRCULATE.", bold: ["KNOWLEDGE", "VALUE", "CIRCULATE"] },
-    { text: "THE BEST WAY TO PREDICT THE FUTURE IS TO INVENT IT.", bold: ["PREDICT", "FUTURE", "INVENT"] }
-  ];
+  // Load quotes from theme settings
+  // Format: "QUOTE TEXT|word1,word2,word3" where words after | are bolded
+  const quotes = [];
+  
+  for (let i = 1; i <= 7; i++) {
+    const settingValue = themeSettings ? themeSettings[`quote_${i}`] : null;
+    if (settingValue && settingValue.trim()) {
+      const parts = settingValue.split('|');
+      const text = parts[0] || '';
+      const boldWords = parts[1] ? parts[1].split(',').map(w => w.trim()).filter(w => w) : [];
+      
+      if (text) {
+        quotes.push({ text, bold: boldWords });
+      }
+    }
+  }
+
+  // Fallback if no quotes configured
+  if (quotes.length === 0) {
+    quotes.push(
+      { text: "ALONE WE CAN DO SO LITTLE; TOGETHER WE CAN DO MUCH.", bold: ["ALONE", "TOGETHER"] },
+      { text: "KNOWLEDGE SHARED IS KNOWLEDGE SQUARED.", bold: ["SHARED", "SQUARED"] },
+      { text: "RAISE THE FLOOR, THEN RAISE THE CEILING.", bold: ["RAISE", "FLOOR", "CEILING"] }
+    );
+  }
 
   let currentIndex = 0;
 
