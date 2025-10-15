@@ -1931,26 +1931,28 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
+  transform: translate(-50%, -50%) scale(0.96);
   z-index: 10000 !important;
-  width: #{theme-setting('chat_width_px')}px;
-  max-width: min(90vw, 600px);
-  height: #{theme-setting('chat_height_px')}px;
-  max-height: 80vh;
-  border-radius: 16px;
+  width: 520px;
+  max-width: min(92vw, 520px);
+  height: 640px;
+  max-height: 85vh;
+  border-radius: 20px;
   overflow: hidden;
   display: none;
   flex-direction: column;
   box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(0, 170, 255, 0.2),
-    0 0 40px rgba(2, 119, 189, 0.15);
-  background: linear-gradient(180deg, rgba(22, 30, 33, 0.98) 0%, rgba(15, 23, 28, 0.98) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 170, 255, 0.25);
+    0 24px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 170, 255, 0.15),
+    0 0 60px rgba(2, 119, 189, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: 
+    linear-gradient(135deg, rgba(22, 30, 33, 0.97) 0%, rgba(15, 23, 28, 0.98) 100%);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border: 1px solid rgba(0, 170, 255, 0.2);
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #ame-chat-widget.visible { 
@@ -1960,15 +1962,22 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
 }
 
 #ame-chat-header {
-  background: rgba(0, 170, 255, 0.08);
+  background: linear-gradient(180deg, rgba(0, 170, 255, 0.12) 0%, rgba(0, 170, 255, 0.06) 100%);
   color: #ffffff;
-  padding: 16px 20px;
+  padding: 20px 24px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 17px;
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid rgba(0, 170, 255, 0.15);
+  border-bottom: 1px solid rgba(0, 170, 255, 0.2);
+  position: relative;
+}
+
+#ame-chat-header::before {
+  content: '💬';
+  font-size: 20px;
+  filter: grayscale(0.2);
 }
 
 #ame-chat-header .title { 
@@ -1976,6 +1985,7 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   overflow: hidden; 
   white-space: nowrap; 
   text-overflow: ellipsis;
+  letter-spacing: -0.01em;
 }
 
 #ame-chat-close {
@@ -2062,12 +2072,63 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   border-bottom-left-radius: 4px;
 }
 
+.ame-msg .bubble code {
+  background: rgba(0, 170, 255, 0.15);
+  color: #5ddbff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
 .ame-msg.meta { 
   text-align: center; 
   color: rgba(255, 255, 255, 0.5); 
   font-size: 13px;
   font-style: italic;
   align-items: center;
+}
+
+.ame-msg.welcome {
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ame-msg.welcome .welcome-bubble {
+  background: linear-gradient(135deg, rgba(0, 170, 255, 0.15), rgba(2, 119, 189, 0.12));
+  border: 1px solid rgba(0, 170, 255, 0.25);
+  border-radius: 16px;
+  padding: 20px 24px;
+  max-width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ame-msg.welcome .welcome-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.ame-msg.welcome .welcome-text {
+  flex: 1;
+}
+
+.ame-msg.welcome .welcome-text strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.ame-msg.welcome .welcome-text p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 #ame-chat-input {

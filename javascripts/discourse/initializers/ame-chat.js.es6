@@ -25,7 +25,8 @@ export default {
       const state = {
         sending: false,
         messages: [],
-        key: "ame_chat_session_" + window.location.pathname
+        // Persist by route + user id so multiple pages keep separate histories per user
+        key: `ame_chat_${api.getCurrentUser()?.id || 'anon'}_${window.location.pathname}`
       };
 
       const el = {
@@ -33,8 +34,14 @@ export default {
         close:  document.getElementById("ame-chat-close"),
         area:   document.getElementById("ame-chat-textarea"),
         send:   document.getElementById("ame-chat-send"),
-        feed:   document.getElementById("ame-chat-messages")
+        feed:   document.getElementById("ame-chat-messages"),
+        title:  document.getElementById("ame-chat-title")
       };
+
+      // Set title from theme settings
+      if (el.title && settings.widget_title) {
+        el.title.textContent = settings.widget_title;
+      }
 
       // Restore session if enabled
       if (settings.remember_chat_session && sessionStorage.getItem(state.key)) {
@@ -42,6 +49,11 @@ export default {
           state.messages = JSON.parse(sessionStorage.getItem(state.key));
           renderAll();
         } catch {}
+      }
+
+      // Show welcome message if no history
+      if (state.messages.length === 0) {
+        appendWelcome();
       }
 
       // Close modal function
@@ -114,6 +126,22 @@ export default {
         el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
       }
 
+      function appendWelcome() {
+        if (!el.feed) return;
+        const div = document.createElement("div");
+        div.className = "ame-msg welcome";
+        div.innerHTML = `
+          <div class="welcome-bubble">
+            <div class="welcome-icon">👋</div>
+            <div class="welcome-text">
+              <strong>Welcome to ${settings.widget_title || 'AME-Bot'}!</strong>
+              <p>Ask me anything about our knowledge base, documentation, or technical topics. I'm here to help!</p>
+            </div>
+          </div>
+        `;
+        el.feed.appendChild(div);
+      }
+
       function renderAll() {
         if (!el.feed) return;
         el.feed.innerHTML = "";
@@ -164,7 +192,7 @@ export default {
 
         if (webhookMissing) {
           removeLastMeta();
-          append("assistant", "Chat is not configured. Please set the 'webhook_url' in theme settings.");
+          appendConfig();
           state.sending = false;
           if (el.send) el.send.disabled = false;
           return;
@@ -204,6 +232,19 @@ export default {
         const metas = el.feed.querySelectorAll(".ame-msg.meta");
         const last = metas[metas.length - 1];
         last?.remove();
+      }
+
+      function appendConfig() {
+        if (!el.feed) return;
+        const wrap = document.createElement("div");
+        wrap.className = "ame-msg assistant";
+        wrap.innerHTML = `
+          <div class="bubble config">
+            Chat is not configured. Please set the <code>webhook_url</code> in theme settings.
+          </div>
+        `;
+        el.feed.appendChild(wrap);
+        el.feed.scrollTop = el.feed.scrollHeight;
       }
     });
   }
