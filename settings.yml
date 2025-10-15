@@ -119,11 +119,6 @@ hero_card_4_subtitle:
   default: "Get Instant Answers"
   description: "Subtitle/description for category card 4 (triggers chat widget)"
 
-hero_card_4_url:
-  type: string
-  default: "/search?q=category%3Aai-assistant"
-  description: "[DEPRECATED] Card 4 now opens the chat widget instead of navigating"
-
 # Rotating quotes - format: "QUOTE TEXT|word1,word2,word3" where words after | are bolded
 quote_1:
   type: string

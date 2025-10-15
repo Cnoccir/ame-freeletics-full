@@ -9,12 +9,8 @@ export default {
       const settings = settingsSvc?.themeSettings || {};
       const webhook = settings.webhook_url;
       
-      // If no webhook URL, hide the widget completely
-      if (!webhook) {
-        const widget = document.getElementById("ame-chat-widget");
-        if (widget) widget.style.display = "none";
-        return;
-      }
+      // If no webhook URL, we'll still allow the UI to open but sending will show a configuration message.
+      const webhookMissing = !webhook;
 
       // Handle mobile display based on settings
       if (!settings.enable_chat_on_mobile) {
@@ -22,7 +18,7 @@ export default {
         if (isMobile) {
           const widget = document.getElementById("ame-chat-widget");
           if (widget) widget.style.display = "none";
-          return;
+          // Still define openAMEChat so the trigger doesn't error, but it will no-op
         }
       }
 
@@ -48,18 +44,43 @@ export default {
         } catch {}
       }
 
+      // Close modal function
+      const closeChat = () => {
+        if (el.widget) {
+          el.widget.classList.remove("visible");
+          setTimeout(() => {
+            el.widget.style.display = "none";
+          }, 300); // Wait for animation
+        }
+      };
+
       // Close button handler
-      el.close?.addEventListener("click", () => el.widget?.classList.remove("visible"));
+      el.close?.addEventListener("click", closeChat);
+
+      // ESC key handler
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && el.widget?.classList.contains("visible")) {
+          closeChat();
+        }
+      });
+
+      // Click backdrop to close
+      el.widget?.addEventListener("click", (e) => {
+        if (e.target === el.widget) {
+          closeChat();
+        }
+      });
 
       // Global helper function to open chat from anywhere
       window.openAMEChat = function() {
         if (el.widget) {
+          el.widget.style.display = "flex";
           el.widget.classList.add("visible");
           setTimeout(() => {
             if (el.area) {
               el.area.focus();
             }
-          }, 100);
+          }, 50);
         }
       };
 
@@ -139,6 +160,14 @@ export default {
         const headers = { "Content-Type": "application/json" };
         if (settings.bearer_token) {
           headers["Authorization"] = `Bearer ${settings.bearer_token}`;
+        }
+
+        if (webhookMissing) {
+          removeLastMeta();
+          append("assistant", "Chat is not configured. Please set the 'webhook_url' in theme settings.");
+          state.sending = false;
+          if (el.send) el.send.disabled = false;
+          return;
         }
 
         try {
