@@ -30,3 +30,37 @@
 .subcategory-list--item > .subcategory { display: flex; margin-bottom: .5em; }
 .subcategory-list--item .badge-wrapper.bullet { margin-right: auto; }
 .category-list__category:not(:last-child) { margin-bottom: .5em; }
+
+/* CRITICAL: Force hide sidebar wrapper when collapsed */
+html.sidebar-collapsed .sidebar-wrapper,
+body.sidebar-collapsed .sidebar-wrapper,
+.sidebar-wrapper.is-collapsed,
+html.sidebar-collapsed #main-outlet-wrapper .sidebar-wrapper,
+body.sidebar-collapsed #main-outlet-wrapper .sidebar-wrapper {
+  display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  flex: 0 0 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Remove gap when sidebar is hidden */
+html.sidebar-collapsed #main-outlet-wrapper,
+body.sidebar-collapsed #main-outlet-wrapper {
+  gap: 0 !important;
+}
+
+/* Expand main content when sidebar is collapsed */
+html.sidebar-collapsed #main-outlet,
+body.sidebar-collapsed #main-outlet {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 !important;
+}
