@@ -7,3 +7,18 @@
 <!-- Preconnect to performance optimization -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="preconnect" href="https://ame-techassist-bucket.s3.us-east-1.amazonaws.com" crossorigin>
+
+<!-- AME Chat Widget -->
+<div id="ame-chat-widget" aria-live="polite" aria-label="Chat Widget" role="dialog">
+  <div id="ame-chat-header">
+    <span class="title">{{theme-setting 'widget_title'}}</span>
+    <button id="ame-chat-close" aria-label="Close chat">✕</button>
+  </div>
+  <div id="ame-chat-messages" tabindex="0"></div>
+  <div id="ame-chat-input">
+    <textarea id="ame-chat-textarea" placeholder="Ask me anything… (Shift+Enter for newline)"></textarea>
+    <button id="ame-chat-send">Send</button>
+  </div>
+</div>
+
+<button id="ame-chat-toggle" aria-label="Toggle chat" title="{{theme-setting 'widget_title'}}">💬</button>
