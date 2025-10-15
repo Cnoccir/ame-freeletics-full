@@ -20,10 +20,16 @@ export default {
         if (html.classList.contains('admin-interface') || body.classList.contains('admin-interface')) {
           shouldShow = themeSettings.show_banner_on_admin;
         } else if (body.classList.contains('categories-index') || body.classList.contains('navigation-categories')) {
+          // Main categories page
           shouldShow = themeSettings.show_banner_on_homepage;
         } else if (body.classList.contains('archetype-regular')) {
           // Individual topic view
           shouldShow = themeSettings.show_banner_on_topic_view;
+        } else if (body.classList.contains('category') || 
+                   [...body.classList].some(cls => cls.startsWith('category-')) ||
+                   window.location.pathname.match(/^\/c\//)) {
+          // Individual category pages (e.g., /c/knowledge-base/5)
+          shouldShow = themeSettings.show_banner_on_topics;
         } else if (api.getCurrentUser()) {
           // Logged in, on topic lists (latest, top, etc)
           shouldShow = themeSettings.show_banner_on_topics;

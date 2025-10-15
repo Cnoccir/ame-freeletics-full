@@ -1280,6 +1280,7 @@ html.sidebar-collapsed #main-outlet-wrapper,
 body.sidebar-collapsed #main-outlet-wrapper {
   justify-content: flex-start;
   align-items: stretch;
+  gap: 0 !important; /* Remove gap when sidebar is hidden */
 }
 
 /* Exact Freeletics main-outlet wrapper - CLEAN PADDING */
@@ -1585,6 +1586,15 @@ html.sidebar-collapsed .sidebar-wrapper,
 body.sidebar-collapsed .sidebar-wrapper,
 .sidebar-wrapper.is-collapsed {
   display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  overflow: hidden !important;
 }
 
 /* On mobile, sidebar is hidden by default (toggle to show) */

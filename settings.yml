@@ -76,7 +76,7 @@ hero_card_1_subtitle:
 
 hero_card_1_url:
   type: string
-  default: "/tags/knowledge-base"
+  default: "/c/knowledge-base/5"
   description: "URL for category card 1"
 
 hero_card_2_label:
@@ -91,7 +91,7 @@ hero_card_2_subtitle:
 
 hero_card_2_url:
   type: string
-  default: "/c"
+  default: "/c/tech-community/4"
   description: "URL for category card 2"
 
 hero_card_3_label:
@@ -106,7 +106,7 @@ hero_card_3_subtitle:
 
 hero_card_3_url:
   type: string
-  default: "/tags/how-to"
+  default: "/c/how-to/6"
   description: "URL for category card 3"
 
 hero_card_4_label:
