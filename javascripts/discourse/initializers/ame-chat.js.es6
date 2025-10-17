@@ -9,8 +9,17 @@ export default {
       const settings = settingsSvc?.themeSettings || {};
       const widgetEl = document.getElementById("ame-chat-widget");
       const ds = widgetEl?.dataset || {};
-      const webhook = ds.webhook || settings.webhook_url;
-      const bearerFromSettings = ds.bearer || settings.bearer_token;
+
+      // Prefer absolute URLs and ignore unresolved template strings
+      const pickUrl = (v) => {
+        if (!v) return null;
+        const s = String(v).trim();
+        if (!s || s.includes("{{")) return null;
+        return /^https?:\/\//i.test(s) ? s : null;
+      };
+
+      const webhook = pickUrl(ds.webhook) || pickUrl(settings.webhook_url);
+      const bearerFromSettings = ds.bearer && !String(ds.bearer).includes("{{") ? ds.bearer : settings.bearer_token;
       
       // If no webhook URL, we'll still allow the UI to open but sending will show a configuration message.
       const webhookMissing = !webhook;
@@ -206,7 +215,9 @@ export default {
           const res = await fetch(webhook, {
             method: "POST",
             headers,
-            body: JSON.stringify({ query: msg, context })
+            body: JSON.stringify({ query: msg, context }),
+            mode: "cors",
+            credentials: "omit"
           });
 
           removeLastMeta();
