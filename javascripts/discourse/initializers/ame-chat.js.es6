@@ -7,7 +7,10 @@ export default {
     withPluginApi("1.8.0", api => {
       const settingsSvc = api.container.lookup("service:theme-settings");
       const settings = settingsSvc?.themeSettings || {};
-      const webhook = settings.webhook_url;
+      const widgetEl = document.getElementById("ame-chat-widget");
+      const ds = widgetEl?.dataset || {};
+      const webhook = ds.webhook || settings.webhook_url;
+      const bearerFromSettings = ds.bearer || settings.bearer_token;
       
       // If no webhook URL, we'll still allow the UI to open but sending will show a configuration message.
       const webhookMissing = !webhook;
@@ -38,9 +41,10 @@ export default {
         title:  document.getElementById("ame-chat-title")
       };
 
-      // Set title from theme settings
-      if (el.title && settings.widget_title) {
-        el.title.textContent = settings.widget_title;
+      // Set title from theme settings (prefer data attribute)
+      if (el.title) {
+        const title = ds.title || settings.widget_title;
+        if (title) el.title.textContent = title;
       }
 
       // Restore session if enabled
@@ -186,8 +190,8 @@ export default {
         };
 
         const headers = { "Content-Type": "application/json" };
-        if (settings.bearer_token) {
-          headers["Authorization"] = `Bearer ${settings.bearer_token}`;
+        if (bearerFromSettings) {
+          headers["Authorization"] = `Bearer ${bearerFromSettings}`;
         }
 
         if (webhookMissing) {
