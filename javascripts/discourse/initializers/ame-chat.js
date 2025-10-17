@@ -138,15 +138,43 @@ export default {
             body: JSON.stringify(payload)
           });
 
-          // some runs failed to return JSON; guard both
-          let data, text;
-          const ct = res.headers.get("content-type") || "";
-          if (ct.includes("application/json")) data = await res.json();
-          else text = await res.text();
-
           messages.removeChild(typing);
 
-          const answer = data?.reply || data?.response || data?.text || data?.message || text || "(No response)";
+          // Check HTTP status
+          if (!res.ok) {
+            const errText = await res.text().catch(() => "(no response body)");
+            let msg = `Server error (${res.status})`;
+            if (res.status === 429) msg = "Rate limit exceeded. Please try again later.";
+            else if (errText && errText.length < 200) msg += `: ${errText}`;
+            messages.appendChild(renderMessage("assistant", msg));
+            return;
+          }
+
+          // Parse response
+          const ct = res.headers.get("content-type") || "";
+          let data, text;
+          
+          if (ct.includes("application/json")) {
+            const rawText = await res.text();
+            if (!rawText || rawText.trim() === "") {
+              messages.appendChild(renderMessage("assistant", "⚠️ Server returned empty response. n8n workflow may have failed - check logs."));
+              return;
+            }
+            try {
+              data = JSON.parse(rawText);
+            } catch (parseErr) {
+              messages.appendChild(renderMessage("assistant", `⚠️ Invalid JSON from server: ${rawText.slice(0, 100)}`));
+              return;
+            }
+          } else {
+            text = await res.text();
+            if (!text || text.trim() === "") {
+              messages.appendChild(renderMessage("assistant", "⚠️ Server returned empty response. n8n workflow may have failed - check logs."));
+              return;
+            }
+          }
+
+          const answer = data?.reply || data?.response || data?.text || data?.message || data?.output || text || "(No response)";
           const botNode = renderMessage("assistant", String(answer));
           messages.appendChild(botNode);
 
@@ -157,7 +185,7 @@ export default {
           saveHistory(hist);
         } catch (err) {
           messages.removeChild(typing);
-          messages.appendChild(renderMessage("assistant", `Network error: ${err?.message || err}`));
+          messages.appendChild(renderMessage("assistant", `❌ Network error: ${err?.message || err}. Check that n8n workflow is running.`));
         } finally {
           sendBtn.disabled = false;
           scrollToBottom(messages);
