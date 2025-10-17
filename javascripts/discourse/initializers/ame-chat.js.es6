@@ -10,6 +10,8 @@ export default {
       const widgetEl = document.getElementById("ame-chat-widget");
       const ds = widgetEl?.dataset || {};
 
+      const DEFAULT_WEBHOOK = "https://rnocciolo.app.n8n.cloud/webhook/rag-chat";
+
       // Prefer absolute URLs and ignore unresolved template strings
       const pickUrl = (v) => {
         if (!v) return null;
@@ -18,8 +20,8 @@ export default {
         return /^https?:\/\//i.test(s) ? s : null;
       };
 
-      const webhook = pickUrl(ds.webhook) || pickUrl(settings.webhook_url);
-      const bearerFromSettings = ds.bearer && !String(ds.bearer).includes("{{") ? ds.bearer : settings.bearer_token;
+      const webhook = pickUrl(settings.webhook_url) || pickUrl(ds.webhook) || DEFAULT_WEBHOOK;
+      const bearerFromSettings = settings.bearer_token;
       
       // If no webhook URL, we'll still allow the UI to open but sending will show a configuration message.
       const webhookMissing = !webhook;
@@ -44,6 +46,7 @@ export default {
       const el = {
         widget: document.getElementById("ame-chat-widget"),
         close:  document.getElementById("ame-chat-close"),
+        clear:  document.getElementById("ame-chat-clear"),
         area:   document.getElementById("ame-chat-textarea"),
         send:   document.getElementById("ame-chat-send"),
         feed:   document.getElementById("ame-chat-messages"),
@@ -81,6 +84,15 @@ export default {
 
       // Close button handler
       el.close?.addEventListener("click", closeChat);
+
+      // Clear chat handler
+      el.clear?.addEventListener("click", () => {
+        state.messages = [];
+        sessionStorage.removeItem(state.key);
+        if (el.feed) el.feed.innerHTML = "";
+        appendMeta("Chat cleared.");
+        appendWelcome();
+      });
 
       // ESC key handler
       document.addEventListener("keydown", (e) => {

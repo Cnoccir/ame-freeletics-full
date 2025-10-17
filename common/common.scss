@@ -1988,12 +1988,15 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   letter-spacing: -0.01em;
 }
 
-#ame-chat-close {
+#ame-chat-header .actions { display: flex; gap: 6px; }
+
+#ame-chat-close,
+#ame-chat-clear {
   background: transparent;
   color: rgba(255, 255, 255, 0.7);
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   width: 32px;
   height: 32px;
   display: flex;
@@ -2003,7 +2006,8 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   transition: all 0.2s ease;
 }
 
-#ame-chat-close:hover {
+#ame-chat-close:hover,
+#ame-chat-clear:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
