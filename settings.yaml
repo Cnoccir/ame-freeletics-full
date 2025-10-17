@@ -133,6 +133,47 @@ quote_7:
   default: "THE BEST WAY TO PREDICT THE FUTURE IS TO INVENT IT.|PREDICT,FUTURE,INVENT"
   description: "Quote 7: text|words-to-bold"
 
+# ========== Chat Widget Settings ==========
+webhook_url:
+  default: ""
+  description: "n8n Webhook URL that receives chat messages and returns JSON { response: string }."
+
+bearer_token:
+  default: ""
+  description: "Optional Bearer token to include in requests to n8n (leave blank to omit)."
+
+widget_title:
+  default: "AME-Bot Assistant"
+  description: "Header title for the chat widget."
+
+enable_chat_on_mobile:
+  default: true
+  description: "Show the chat widget on mobile devices."
+
+chat_position_right_px:
+  default: 20
+  description: "Distance from right edge in pixels."
+
+chat_position_bottom_px:
+  default: 20
+  description: "Distance from bottom edge in pixels."
+
+chat_width_px:
+  default: 360
+  description: "Chat widget width (px)."
+
+chat_height_px:
+  default: 480
+  description: "Chat widget height (px)."
+
+chat_brand_accent:
+  default: "#0277BD"
+  description: "Accent color for chat buttons and toggle."
+
+remember_chat_session:
+  default: true
+  description: "Persist chat messages in sessionStorage per tab."
+
 banner_cta_1_text:
   default: "Search Technical Docs"
   description: "Text for primary CTA button"
