@@ -1,4 +1,4 @@
-// Initializes after Discourse boot, uses theme settings for config.
+// Initializes after Discourse boot, uses theme settings for config, and renders a richer chat UI.
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
@@ -22,7 +22,7 @@ export default {
 
       const webhook = pickUrl(settings.webhook_url) || pickUrl(ds.webhook) || DEFAULT_WEBHOOK;
       const bearerFromSettings = settings.bearer_token;
-      
+
       // If no webhook URL, we'll still allow the UI to open but sending will show a configuration message.
       const webhookMissing = !webhook;
 
@@ -39,6 +39,7 @@ export default {
       const state = {
         sending: false,
         messages: [],
+        abort: null,
         // Persist by route + user id so multiple pages keep separate histories per user
         key: `ame_chat_${api.getCurrentUser()?.id || 'anon'}_${window.location.pathname}`
       };
@@ -52,6 +53,9 @@ export default {
         feed:   document.getElementById("ame-chat-messages"),
         title:  document.getElementById("ame-chat-title")
       };
+
+      // Accessibility improvements
+      el.feed?.setAttribute("aria-live", "polite");
 
       // Set title from theme settings (prefer data attribute)
       if (el.title) {
@@ -125,30 +129,42 @@ export default {
       el.area?.addEventListener("keydown", e => {
         if (e.key === "Enter" && !e.shiftKey) {
           e.preventDefault();
-          sendMessage();
+          onSendClick();
         }
       });
-      
-      el.send?.addEventListener("click", sendMessage);
 
-      function append(type, text) {
-        state.messages.push({ type, text });
+      el.send?.addEventListener("click", onSendClick);
+
+      function persist() {
         if (settings.remember_chat_session) {
           sessionStorage.setItem(state.key, JSON.stringify(state.messages));
         }
-        const div = document.createElement("div");
-        div.className = `ame-msg ${type}`;
-        div.innerHTML = `<span class="bubble">${escapeHtml(text)}</span>`;
-        el.feed?.appendChild(div);
+      }
+
+      function append(msg) {
+        // msg: { type, text?, html?, images?, citations? }
+        state.messages.push(msg);
+        persist();
+        const node = renderNodeFromMessage(msg);
+        el.feed?.appendChild(node);
         el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
       }
 
       function appendMeta(text) {
         const div = document.createElement("div");
         div.className = "ame-msg meta";
-        div.textContent = text;
+        div.innerHTML = `<span class="bubble"><span class="spinner" aria-hidden="true"></span> ${escapeHtml(text)}</span>`;
         el.feed?.appendChild(div);
         el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
+      }
+
+      function appendTyping() {
+        const div = document.createElement("div");
+        div.className = "ame-msg meta typing";
+        div.innerHTML = `<span class="bubble"><span class="dots"><span></span><span></span><span></span></span> Assistant is typing…</span>`;
+        el.feed?.appendChild(div);
+        el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
+        return div;
       }
 
       function appendWelcome() {
@@ -171,12 +187,57 @@ export default {
         if (!el.feed) return;
         el.feed.innerHTML = "";
         state.messages.forEach(m => {
-          const div = document.createElement("div");
-          div.className = `ame-msg ${m.type}`;
-          div.innerHTML = `<span class="bubble">${escapeHtml(m.text)}</span>`;
-          el.feed.appendChild(div);
+          el.feed.appendChild(renderNodeFromMessage(m));
         });
         el.feed.scrollTop = el.feed.scrollHeight;
+      }
+
+      function renderNodeFromMessage(m) {
+        const wrap = document.createElement("div");
+        wrap.className = `ame-msg ${m.type}`;
+        if (m.type === "assistant") {
+          const bubble = document.createElement("div");
+          bubble.className = "bubble";
+          bubble.innerHTML = m.html || `<span>${escapeHtml(m.text || "")}</span>`;
+          wrap.appendChild(bubble);
+          if (m.images?.length) {
+            const grid = document.createElement("div");
+            grid.className = "images-grid";
+            m.images.forEach(src => {
+              if (!isSafeUrl(src)) return;
+              const img = document.createElement("img");
+              img.src = src;
+              img.loading = "lazy";
+              img.referrerPolicy = "no-referrer";
+              grid.appendChild(img);
+            });
+            wrap.appendChild(grid);
+          }
+          if (m.citations?.length) {
+            const refs = document.createElement("div");
+            refs.className = "citations";
+            refs.innerHTML = `<div class="citations-title">References</div>`;
+            const list = document.createElement("ol");
+            m.citations.forEach(c => {
+              const li = document.createElement("li");
+              const a = document.createElement("a");
+              a.textContent = c.title || c.url || "source";
+              if (isSafeUrl(c.url)) a.href = c.url;
+              a.target = "_blank";
+              a.rel = "noopener noreferrer";
+              li.appendChild(a);
+              list.appendChild(li);
+            });
+            refs.appendChild(list);
+            wrap.appendChild(refs);
+          }
+        } else {
+          const bubble = document.createElement("span");
+          bubble.className = "bubble";
+          bubble.textContent = m.text || "";
+          wrap.appendChild(bubble);
+        }
+        return wrap;
       }
 
       function escapeHtml(s = "") {
@@ -185,17 +246,48 @@ export default {
         }[c]));
       }
 
+      function isSafeUrl(u) {
+        try {
+          const url = new URL(u, window.location.origin);
+          return url.protocol === "http:" || url.protocol === "https:";
+        } catch { return false; }
+      }
+
+      function toRichHtml(text = "") {
+        // Escape first, then add simple markdown/links/code
+        let html = escapeHtml(text);
+        // code blocks ```lang\n...```
+        html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (m, lang, code) => `<pre><code class="lang-${lang || 'text'}">${code}</code></pre>`);
+        // inline code `code`
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // links [text](url)
+        html = html.replace(/\[([^\]]+)\]\((https?:[^\s)]+)\)/g, (m, t, u) => isSafeUrl(u) ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${t}</a>` : t);
+        // autolink bare urls
+        html = html.replace(/(https?:\/\/[^\s<]+[^<.,;:'"\]\s])/g, (u) => isSafeUrl(u) ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>` : u);
+        // paragraphs
+        html = html.replace(/\n\n+/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>').replace(/\n/g, '<br/>' );
+        return html;
+      }
+
+      function onSendClick() {
+        if (state.sending) {
+          state.abort?.abort();
+          return;
+        }
+        sendMessage();
+      }
+
       async function sendMessage() {
         if (state.sending) return;
         const msg = (el.area?.value || "").trim();
         if (!msg) return;
 
-        append("user", msg);
+        append({ type: "user", text: msg });
         if (el.area) el.area.value = "";
         state.sending = true;
-        if (el.send) el.send.disabled = true;
+        if (el.send) { el.send.disabled = false; el.send.textContent = "Stop"; }
 
-        appendMeta("Assistant is typing…");
+        const typingNode = appendTyping();
 
         const currentUser = api.getCurrentUser();
         const context = {
@@ -205,8 +297,7 @@ export default {
           user: currentUser ? {
             id: currentUser.id,
             username: currentUser.username,
-            name: currentUser.name,
-            email: currentUser?.email
+            name: currentUser.name
           } : null
         };
 
@@ -216,12 +307,15 @@ export default {
         }
 
         if (webhookMissing) {
-          removeLastMeta();
+          typingNode?.remove();
           appendConfig();
           state.sending = false;
-          if (el.send) el.send.disabled = false;
+          if (el.send) { el.send.disabled = false; el.send.textContent = "Send"; }
           return;
         }
+
+        const controller = new AbortController();
+        state.abort = controller;
 
         try {
           const res = await fetch(webhook, {
@@ -229,27 +323,105 @@ export default {
             headers,
             body: JSON.stringify({ query: msg, context }),
             mode: "cors",
-            credentials: "omit"
+            credentials: "omit",
+            signal: controller.signal
           });
 
-          removeLastMeta();
+          typingNode?.remove();
 
           if (!res.ok) {
-            const t = await res.text();
-            append("assistant", `Error ${res.status}: ${t || 'Request failed'}`);
+            const bodyText = await res.text().catch(() => "");
+            let message = `Server error (${res.status})`;
+            if (res.status === 429) message = "Rate limit exceeded. Please try again in a bit.";
+            else if (bodyText && bodyText.length < 200) message += `: ${bodyText}`;
+            append({ type: "assistant", text: message });
+            return;
+          }
+
+          const ct = res.headers.get("content-type") || "";
+
+          if (/text\/event-stream|ndjson|stream|text\//i.test(ct)) {
+            // Streamed response (SSE/NDJSON/plain text): progressively render
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let acc = "";
+            const partial = { type: "assistant", html: toRichHtml("") };
+            const node = renderNodeFromMessage(partial);
+            el.feed?.appendChild(node);
+            el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              acc += decoder.decode(value, { stream: true });
+              // try to parse SSE lines: data: {"delta":"..."}
+              const chunks = acc.split(/\n\n|\r\n\r\n/);
+              if (chunks.length > 1) {
+                // render everything except last (possibly partial)
+                for (let i = 0; i < chunks.length - 1; i++) {
+                  const seg = chunks[i];
+                  const m = seg.match(/data:\s*(.*)/);
+                  const payload = m ? m[1] : seg;
+                  try {
+                    const j = JSON.parse(payload);
+                    if (typeof j.delta === "string") {
+                      partial.html = toRichHtml((partial.plain || "") + j.delta);
+                      partial.plain = (partial.plain || "") + j.delta;
+                      node.querySelector('.bubble').innerHTML = partial.html;
+                    } else if (typeof j.text === "string") {
+                      partial.html = toRichHtml((partial.plain || "") + j.text);
+                      partial.plain = (partial.plain || "") + j.text;
+                      node.querySelector('.bubble').innerHTML = partial.html;
+                    }
+                  } catch {
+                    // treat as plain text
+                    partial.html = toRichHtml((partial.plain || "") + payload);
+                    partial.plain = (partial.plain || "") + payload;
+                    node.querySelector('.bubble').innerHTML = partial.html;
+                  }
+                }
+                acc = chunks[chunks.length - 1];
+              }
+            }
+            if (acc) {
+              partial.html = toRichHtml((partial.plain || "") + acc);
+              node.querySelector('.bubble').innerHTML = partial.html;
+            }
+            state.messages.push({ type: "assistant", html: node.querySelector('.bubble').innerHTML });
+            persist();
+          } else if (ct.includes("application/json")) {
+            const rawText = await res.text();
+            if (!rawText || rawText.trim() === "") {
+              append({ type: "assistant", text: "⚠️ Server returned empty response. Workflow may have failed." });
+              return;
+            }
+            let data;
+            try { data = JSON.parse(rawText); } catch {
+              append({ type: "assistant", text: `⚠️ Invalid JSON from server: ${rawText.slice(0,100)}` });
+              return;
+            }
+            const text = data?.reply || data?.response || data?.text || data?.message || data?.output || "(No response)";
+            const images = (data?.images || data?.image_urls || []).filter(isSafeUrl);
+            const citations = (data?.citations || data?.sources || data?.references || []).map(x => ({ title: x.title || x.name || x.url, url: x.url || x.href })).filter(c => c.url && isSafeUrl(c.url));
+            append({ type: "assistant", html: toRichHtml(String(text)), images, citations });
           } else {
-            const data = await res.json();
-            const output = typeof data?.response === "string"
-              ? data.response
-              : JSON.stringify(data);
-            append("assistant", output);
+            const text = await res.text();
+            if (!text || text.trim() === "") {
+              append({ type: "assistant", text: "⚠️ Server returned empty response. Workflow may have failed." });
+              return;
+            }
+            append({ type: "assistant", html: toRichHtml(text) });
           }
         } catch (err) {
-          removeLastMeta();
-          append("assistant", `Network error: ${err?.message || err}`);
+          if (err?.name === 'AbortError') {
+            // Show canceled indicator
+            append({ type: "assistant", text: "✋ Request canceled." });
+          } else {
+            append({ type: "assistant", text: `❌ Network error: ${err?.message || err}` });
+          }
         } finally {
           state.sending = false;
-          if (el.send) el.send.disabled = false;
+          state.abort = null;
+          if (el.send) { el.send.disabled = false; el.send.textContent = "Send"; }
           el.area?.focus();
         }
       }
