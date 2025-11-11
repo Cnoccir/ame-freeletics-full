@@ -1922,11 +1922,21 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Typing dots ... */
-.dots { display: inline-flex; gap: 3px; margin-right: 6px; }
+.dots { 
+  display: inline-flex !important; 
+  gap: 3px; 
+  margin-right: 6px; 
+  visibility: visible !important;
+}
 .dots > span {
-  width: 6px; height: 6px; border-radius: 50%;
+  display: block !important;
+  width: 6px; 
+  height: 6px; 
+  border-radius: 50%;
   background: rgba(255,255,255,.8);
-  opacity: .4; animation: blink 1.2s infinite;
+  opacity: .4; 
+  animation: blink 1.2s infinite;
+  visibility: visible !important;
 }
 .dots > span:nth-child(2){ animation-delay:.2s }
 .dots > span:nth-child(3){ animation-delay:.4s }
@@ -2468,11 +2478,33 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
 }
 
 .ame-msg.meta { 
+  display: flex !important;
   text-align: center; 
-  color: rgba(255, 255, 255, 0.5); 
+  color: rgba(255, 255, 255, 0.7); 
   font-size: 13px;
   font-style: italic;
   align-items: center;
+  margin-bottom: 16px;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.ame-msg.meta .bubble {
+  display: inline-flex !important;
+  align-items: center;
+  background: rgba(0, 170, 255, 0.08);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 170, 255, 0.15);
+}
+
+.ame-msg.typing {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .ame-msg.welcome {
