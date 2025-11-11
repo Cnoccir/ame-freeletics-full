@@ -483,9 +483,10 @@ export default {
             signal: controller.signal
           });
 
-          typingNode?.remove();
+          // Keep typing indicator visible while processing response
 
           if (!res.ok) {
+            typingNode?.remove();
             const bodyText = await res.text().catch(() => "");
             let message = `Server error (${res.status})`;
             if (res.status === 429) message = "Rate limit exceeded. Please try again in a bit.";
@@ -498,6 +499,7 @@ export default {
 
           if (/text\/event-stream|ndjson|stream|text\//i.test(ct)) {
             // Streamed response (SSE/NDJSON/plain text): progressively render
+            typingNode?.remove(); // Remove before starting to stream
             const reader = res.body.getReader();
             const decoder = new TextDecoder();
             let acc = "";
@@ -547,11 +549,13 @@ export default {
           } else if (ct.includes("application/json")) {
             const rawText = await res.text();
             if (!rawText || rawText.trim() === "") {
+              typingNode?.remove();
               append({ type: "assistant", text: "⚠️ Server returned empty response. Workflow may have failed." });
               return;
             }
             let parsedJson;
             try { parsedJson = JSON.parse(rawText); } catch {
+              typingNode?.remove();
               append({ type: "assistant", text: `⚠️ Invalid JSON from server: ${rawText.slice(0,100)}` });
               return;
             }
@@ -568,6 +572,7 @@ export default {
             // Validate we got actual content
             if (!text || text.trim() === "") {
               console.error("Empty response received:", data);
+              typingNode?.remove();
               append({ type: "assistant", text: "⚠️ Received empty response from server. Workflow may have failed." });
               return;
             }
@@ -599,16 +604,22 @@ export default {
               console.log("Chat response metadata:", data.metadata);
             }
             
+            // Remove typing indicator right before displaying response
+            typingNode?.remove();
+            
             append({ type: "assistant", html: toRichHtml(String(text)), images, citations, tables });
           } else {
             const text = await res.text();
             if (!text || text.trim() === "") {
+              typingNode?.remove();
               append({ type: "assistant", text: "⚠️ Server returned empty response. Workflow may have failed." });
               return;
             }
+            typingNode?.remove();
             append({ type: "assistant", html: toRichHtml(text) });
           }
         } catch (err) {
+          typingNode?.remove();
           if (err?.name === 'AbortError') {
             // Show canceled indicator
             append({ type: "assistant", text: "✋ Request canceled." });
