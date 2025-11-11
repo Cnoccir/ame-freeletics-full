@@ -160,18 +160,31 @@ export default {
 
       function appendTyping() {
         console.log("[AME Chat] Creating typing indicator");
+        
+        // Double-check feed element exists
+        const feedElement = el.feed || document.getElementById("ame-chat-messages");
+        
+        if (!feedElement) {
+          console.error("[AME Chat] ERROR: Feed element #ame-chat-messages not found!", {
+            el_feed: el.feed,
+            getElementById: document.getElementById("ame-chat-messages"),
+            widget: document.getElementById("ame-chat-widget")
+          });
+          return null;
+        }
+        
+        console.log("[AME Chat] Feed element found:", feedElement);
+        
         const div = document.createElement("div");
         div.className = "ame-msg meta typing";
         div.innerHTML = `<span class="bubble"><span class="dots"><span></span><span></span><span></span></span> Assistant is typing…</span>`;
         
-        if (!el.feed) {
-          console.error("[AME Chat] Feed element not found!");
-          return div;
-        }
+        feedElement.appendChild(div);
+        console.log("[AME Chat] Typing indicator appended. Parent:", div.parentElement?.id);
         
-        el.feed.appendChild(div);
-        console.log("[AME Chat] Typing indicator added to DOM", div);
-        el.feed.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
+        // Scroll to bottom
+        feedElement.scrollTo({ top: feedElement.scrollHeight, behavior: "smooth" });
+        
         return div;
       }
 

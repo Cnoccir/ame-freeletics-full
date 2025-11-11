@@ -2479,23 +2479,31 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
 
 .ame-msg.meta { 
   display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
   text-align: center; 
   color: rgba(255, 255, 255, 0.7); 
   font-size: 13px;
   font-style: italic;
   align-items: center;
-  margin-bottom: 16px;
+  justify-content: center;
+  margin: 0 0 16px 0;
   visibility: visible !important;
   opacity: 1 !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ame-msg.meta .bubble {
   display: inline-flex !important;
   align-items: center;
+  justify-content: center;
   background: rgba(0, 170, 255, 0.08);
   padding: 10px 16px;
   border-radius: 12px;
   border: 1px solid rgba(0, 170, 255, 0.15);
+  max-width: 85%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .ame-msg.typing {
