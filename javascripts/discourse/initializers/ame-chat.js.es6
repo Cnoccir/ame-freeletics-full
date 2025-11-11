@@ -94,7 +94,6 @@ export default {
         state.messages = [];
         sessionStorage.removeItem(state.key);
         if (el.feed) el.feed.innerHTML = "";
-        appendMeta("Chat cleared.");
         appendWelcome();
       });
 
@@ -150,39 +149,28 @@ export default {
         el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
       }
 
-      function appendMeta(text) {
-        const div = document.createElement("div");
-        div.className = "ame-msg meta";
-        div.innerHTML = `<span class="bubble"><span class="spinner" aria-hidden="true"></span> ${escapeHtml(text)}</span>`;
-        el.feed?.appendChild(div);
-        el.feed?.scrollTo({ top: el.feed.scrollHeight, behavior: "smooth" });
-      }
 
       function appendTyping() {
-        console.log("[AME Chat] Creating typing indicator");
-        
-        // Double-check feed element exists
         const feedElement = el.feed || document.getElementById("ame-chat-messages");
-        
-        if (!feedElement) {
-          console.error("[AME Chat] ERROR: Feed element #ame-chat-messages not found!", {
-            el_feed: el.feed,
-            getElementById: document.getElementById("ame-chat-messages"),
-            widget: document.getElementById("ame-chat-widget")
-          });
-          return null;
-        }
-        
-        console.log("[AME Chat] Feed element found:", feedElement);
+        if (!feedElement) return null;
         
         const div = document.createElement("div");
-        div.className = "ame-msg meta typing";
-        div.innerHTML = `<span class="bubble"><span class="dots"><span></span><span></span><span></span></span> Assistant is typing…</span>`;
+        div.className = "ame-msg typing";
+        
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        
+        const dots = document.createElement("span");
+        dots.className = "dots";
+        dots.innerHTML = "<span></span><span></span><span></span>";
+        
+        const text = document.createTextNode(" Assistant is typing…");
+        
+        bubble.appendChild(dots);
+        bubble.appendChild(text);
+        div.appendChild(bubble);
         
         feedElement.appendChild(div);
-        console.log("[AME Chat] Typing indicator appended. Parent:", div.parentElement?.id);
-        
-        // Scroll to bottom
         feedElement.scrollTo({ top: feedElement.scrollHeight, behavior: "smooth" });
         
         return div;
