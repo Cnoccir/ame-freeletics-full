@@ -195,41 +195,91 @@ export default {
       function renderNodeFromMessage(m) {
         const wrap = document.createElement("div");
         wrap.className = `ame-msg ${m.type}`;
+        
         if (m.type === "assistant") {
           const bubble = document.createElement("div");
           bubble.className = "bubble";
           bubble.innerHTML = m.html || `<span>${escapeHtml(m.text || "")}</span>`;
           wrap.appendChild(bubble);
+          
+          // Render images in grid with lightbox
           if (m.images?.length) {
             const grid = document.createElement("div");
             grid.className = "images-grid";
             m.images.forEach(src => {
               if (!isSafeUrl(src)) return;
+              const imgWrap = document.createElement("div");
+              imgWrap.className = "image-item";
+              imgWrap.onclick = () => openImageLightbox(src);
+              
               const img = document.createElement("img");
               img.src = src;
               img.loading = "lazy";
               img.referrerPolicy = "no-referrer";
-              grid.appendChild(img);
+              img.alt = "Document image";
+              img.onerror = () => {
+                imgWrap.innerHTML = '<div class="image-error">❌ Failed to load</div>';
+              };
+              
+              imgWrap.appendChild(img);
+              grid.appendChild(imgWrap);
             });
             wrap.appendChild(grid);
           }
+          
+          // Render citations
           if (m.citations?.length) {
             const refs = document.createElement("div");
             refs.className = "citations";
-            refs.innerHTML = `<div class="citations-title">References</div>`;
+            refs.innerHTML = `<div class="citations-title">📚 Sources</div>`;
             const list = document.createElement("ol");
             m.citations.forEach(c => {
               const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.textContent = c.title || c.url || "source";
-              if (isSafeUrl(c.url)) a.href = c.url;
-              a.target = "_blank";
-              a.rel = "noopener noreferrer";
-              li.appendChild(a);
+              const text = c.title || c.doc_id || "Document";
+              if (c.url && isSafeUrl(c.url)) {
+                const a = document.createElement("a");
+                a.textContent = text;
+                a.href = c.url;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                li.appendChild(a);
+              } else {
+                li.textContent = text;
+              }
               list.appendChild(li);
             });
             refs.appendChild(list);
             wrap.appendChild(refs);
+          }
+          
+          // Render tables if present
+          if (m.tables?.length) {
+            const tablesDiv = document.createElement("div");
+            tablesDiv.className = "ame-response-tables";
+            
+            m.tables.forEach((tableMarkdown, index) => {
+              const tableHtml = renderMarkdownTable(tableMarkdown);
+              if (tableHtml) {
+                const tableWrapper = document.createElement("div");
+                tableWrapper.className = "table-wrapper";
+                
+                const tableHeader = document.createElement("div");
+                tableHeader.className = "table-header";
+                tableHeader.innerHTML = `<span class="table-icon">📊</span> Table ${index + 1}`;
+                tableWrapper.appendChild(tableHeader);
+                
+                const tableContent = document.createElement("div");
+                tableContent.className = "table-content";
+                tableContent.innerHTML = tableHtml;
+                tableWrapper.appendChild(tableContent);
+                
+                tablesDiv.appendChild(tableWrapper);
+              }
+            });
+            
+            if (tablesDiv.children.length > 0) {
+              wrap.appendChild(tablesDiv);
+            }
           }
         } else {
           const bubble = document.createElement("span");
@@ -237,8 +287,41 @@ export default {
           bubble.textContent = m.text || "";
           wrap.appendChild(bubble);
         }
+        
         return wrap;
       }
+
+      function openImageLightbox(src) {
+        // Create lightbox overlay
+        const lightbox = document.createElement("div");
+        lightbox.className = "ame-image-lightbox";
+        lightbox.onclick = (e) => {
+          if (e.target === lightbox) lightbox.remove();
+        };
+        
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Full size image";
+        
+        const closeBtn = document.createElement("button");
+        closeBtn.className = "lightbox-close";
+        closeBtn.innerHTML = "✕";
+        closeBtn.onclick = () => lightbox.remove();
+        
+        lightbox.appendChild(closeBtn);
+        lightbox.appendChild(img);
+        document.body.appendChild(lightbox);
+        
+        // ESC key closes lightbox
+        const escHandler = (e) => {
+          if (e.key === "Escape") {
+            lightbox.remove();
+            document.removeEventListener("keydown", escHandler);
+          }
+        };
+        document.addEventListener("keydown", escHandler);
+      }
+
 
       function escapeHtml(s = "") {
         return s.replace(/[&<>"']/g, c => ({
@@ -253,19 +336,92 @@ export default {
         } catch { return false; }
       }
 
+      function renderMarkdownTable(markdown) {
+        if (!markdown || typeof markdown !== 'string') return '';
+        
+        const lines = markdown.trim().split('\n').filter(line => line.trim());
+        if (lines.length < 3) return ''; // Need header + separator + at least one row
+        
+        // Parse header row
+        const headerCells = lines[0].split('|')
+          .map(cell => cell.trim())
+          .filter(cell => cell);
+        
+        if (headerCells.length === 0) return '';
+        
+        // Skip separator line (line 1 with |---|---|)
+        // Parse data rows starting from line 2
+        const dataRows = lines.slice(2).map(line => 
+          line.split('|')
+            .map(cell => cell.trim())
+            .filter(cell => cell)
+        ).filter(row => row.length > 0);
+        
+        // Build HTML table
+        let html = '<table class="markdown-table">';
+        html += '<thead><tr>';
+        headerCells.forEach(header => {
+          html += `<th>${escapeHtml(header)}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+        
+        dataRows.forEach(row => {
+          html += '<tr>';
+          row.forEach(cell => {
+            html += `<td>${escapeHtml(cell)}</td>`;
+          });
+          html += '</tr>';
+        });
+        
+        html += '</tbody></table>';
+        return html;
+      }
+
       function toRichHtml(text = "") {
-        // Escape first, then add simple markdown/links/code
+        // Escape first, then add enhanced markdown support
         let html = escapeHtml(text);
-        // code blocks ```lang\n...```
-        html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (m, lang, code) => `<pre><code class="lang-${lang || 'text'}">${code}</code></pre>`);
-        // inline code `code`
+        
+        // Headers: ### H3, ## H2, # H1
+        html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+        html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+        html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+        
+        // Bold: **text** or __text__
+        html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+        
+        // Italic: *text* or _text_
+        html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+        
+        // Code blocks: ```lang\ncode```
+        html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (m, lang, code) => 
+          `<pre><code class="lang-${lang || 'text'}">${code.trim()}</code></pre>`);
+        
+        // Inline code: `code`
         html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-        // links [text](url)
-        html = html.replace(/\[([^\]]+)\]\((https?:[^\s)]+)\)/g, (m, t, u) => isSafeUrl(u) ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${t}</a>` : t);
-        // autolink bare urls
-        html = html.replace(/(https?:\/\/[^\s<]+[^<.,;:'"\]\s])/g, (u) => isSafeUrl(u) ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>` : u);
-        // paragraphs
-        html = html.replace(/\n\n+/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>').replace(/\n/g, '<br/>' );
+        
+        // Lists: - item or * item
+        html = html.replace(/^[\-\*] (.+)$/gm, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+        
+        // Numbered lists: 1. item
+        html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+        
+        // Links: [text](url)
+        html = html.replace(/\[([^\]]+)\]\((https?:[^\s)]+)\)/g, 
+          (m, t, u) => isSafeUrl(u) ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${t}</a>` : t);
+        
+        // Autolink bare URLs
+        html = html.replace(/(https?:\/\/[^\s<]+[^<.,;:'"\]\s])/g, 
+          (u) => isSafeUrl(u) ? `<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>` : u);
+        
+        // Paragraphs
+        html = html.replace(/\n\n+/g, '</p><p>')
+          .replace(/^(?!<[h\/uop])/gm, '<p>')
+          .replace(/$/,'</p>')
+          .replace(/\n/g, '<br/>');
+        
         return html;
       }
 
@@ -394,15 +550,56 @@ export default {
               append({ type: "assistant", text: "⚠️ Server returned empty response. Workflow may have failed." });
               return;
             }
-            let data;
-            try { data = JSON.parse(rawText); } catch {
+            let parsedJson;
+            try { parsedJson = JSON.parse(rawText); } catch {
               append({ type: "assistant", text: `⚠️ Invalid JSON from server: ${rawText.slice(0,100)}` });
               return;
             }
-            const text = data?.reply || data?.response || data?.text || data?.message || data?.output || "(No response)";
-            const images = (data?.images || data?.image_urls || []).filter(isSafeUrl);
-            const citations = (data?.citations || data?.sources || data?.references || []).map(x => ({ title: x.title || x.name || x.url, url: x.url || x.href })).filter(c => c.url && isSafeUrl(c.url));
-            append({ type: "assistant", html: toRichHtml(String(text)), images, citations });
+            
+            // Handle array wrapper from n8n (returns [{answer, ...}] format)
+            let data = parsedJson;
+            if (Array.isArray(parsedJson) && parsedJson.length > 0) {
+              data = parsedJson[0];
+            }
+            
+            // Extract answer field (n8n format) - check 'answer' before 'reply'
+            const text = data?.answer || data?.reply || data?.response || data?.text || data?.message || data?.output || "";
+            
+            // Validate we got actual content
+            if (!text || text.trim() === "") {
+              console.error("Empty response received:", data);
+              append({ type: "assistant", text: "⚠️ Received empty response from server. Workflow may have failed." });
+              return;
+            }
+            
+            // Extract images - handle both string arrays and object arrays {url, caption, page}
+            const images = (data?.images || data?.image_urls || [])
+              .map(img => {
+                if (typeof img === 'string') return img;
+                if (typeof img === 'object' && img?.url) return img.url;
+                return null;
+              })
+              .filter(url => url && isSafeUrl(url));
+            
+            // Extract tables from response
+            const tables = (data?.tables || [])
+              .filter(table => table && (table.markdown || typeof table === 'string'))
+              .map(table => typeof table === 'object' ? table.markdown : table);
+            
+            // Extract citations
+            const citations = (data?.citations || data?.sources || data?.references || []).map(x => ({
+              title: x.section_path || x.title || x.name || (x.page_start ? `Page ${x.page_start}` : "Document"),
+              url: x.url || x.href,
+              doc_id: x.doc_id,
+              chunk_id: x.chunk_id
+            })).filter(c => c.title || c.doc_id);
+            
+            // Log metadata for debugging
+            if (data?.metadata) {
+              console.log("Chat response metadata:", data.metadata);
+            }
+            
+            append({ type: "assistant", html: toRichHtml(String(text)), images, citations, tables });
           } else {
             const text = await res.text();
             if (!text || text.trim() === "") {
