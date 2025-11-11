@@ -1933,14 +1933,14 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   width: 6px; 
   height: 6px; 
   border-radius: 50%;
-  background: rgba(255,255,255,.8);
-  opacity: .4; 
+  background: #00AAFF;
+  opacity: 1; 
   animation: blink 1.2s infinite;
   visibility: visible !important;
 }
 .dots > span:nth-child(2){ animation-delay:.2s }
 .dots > span:nth-child(3){ animation-delay:.4s }
-@keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+@keyframes blink { 0%,80%,100%{opacity:.35} 40%{opacity:1} }
 
 /* Modal backdrop */
 #ame-chat-widget::before {
@@ -2498,12 +2498,13 @@ $chat_accent: #{theme-setting('chat_brand_accent')};
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 170, 255, 0.08);
+  background: rgba(0, 136, 204, 0.15);
   padding: 10px 16px;
   border-radius: 12px;
-  border: 1px solid rgba(0, 170, 255, 0.15);
+  border: 1px solid rgba(0, 170, 255, 0.25);
   max-width: 85%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .ame-msg.typing {
