@@ -4,16 +4,16 @@ This forum is our internal hub for sharing knowledge, solving problems, and docu
 
 Everything here rolls up into four main areas:
 
-## 0. Assistance
+## Assistance
 When you're stuck right now, this is where you ask for help. Post your screenshots, error codes, field notes, and what you've tried so far. Once we confirm a solution, we'll move the thread into **Insights** so others can benefit.
 
-## 1. Insights
+## Insights
 This is our library of field-proven fixes and lessons learned. If you solved something interesting or found a clever workaround, document it here so the next tech doesn't have to re-solve the same problem.
 
-## 2. Guides
+## Guides
 This is where we keep step-by-step walkthroughs and standard procedures. Think "playbooks" for common tasks and setups — written so anyone on the team can follow them start to finish.
 
-## 3. Resources
+## Resources
 A read-only shelf for official documentation: manufacturer manuals, spec sheets, code references, and firmware downloads. If you need a data sheet or official guidance, look here first.
 
 ---
