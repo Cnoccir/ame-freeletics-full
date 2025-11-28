@@ -1,0 +1,30 @@
+[
+  {
+    "key": "assistance",
+    "title": "0. Assistance",
+    "topic_id": null,
+    "instructions_file": "content/topics/assistance.md",
+    "hero_card_slot": 1
+  },
+  {
+    "key": "insights",
+    "title": "1. Insights",
+    "topic_id": null,
+    "instructions_file": "content/topics/insights.md",
+    "hero_card_slot": 2
+  },
+  {
+    "key": "guides",
+    "title": "2. Guides",
+    "topic_id": null,
+    "instructions_file": "content/topics/guides.md",
+    "hero_card_slot": 3
+  },
+  {
+    "key": "resources",
+    "title": "3. Resources",
+    "topic_id": null,
+    "instructions_file": "content/topics/resources.md",
+    "hero_card_slot": 4
+  }
+]

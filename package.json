@@ -1,0 +1,21 @@
+{
+  "name": "ame-freeletics-full",
+  "version": "0.1.0",
+  "description": "AME TechAssist Discourse theme with forum structure management",
+  "type": "module",
+  "scripts": {
+    "sync-forum": "node scripts/sync_forum_structure.mjs",
+    "sync-forum-with-welcome": "node scripts/sync_forum_structure.mjs --with-welcome"
+  },
+  "keywords": [
+    "discourse",
+    "theme",
+    "ame",
+    "techassist"
+  ],
+  "author": "AME TechAssist",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

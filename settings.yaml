@@ -69,46 +69,57 @@ hero_motto_text:
 hero_nav_title_text:
   default: "Training Communities"
   description: "Breadcrumb title shown in the hero nav row"
-# Up to 4 category cards in the hero
+# Hero cards - 5 cards total for the 4-pillar structure + AI Assistant
+# After creating topics in Discourse, update the URLs with the topic IDs: /t/{topic-id}
 hero_card_1_label:
-  default: "Knowledge Base"
-  description: "Card 1 title"
+  default: "0. Assistance"
+  description: "Card 1 - Troubleshooting hub"
 hero_card_1_subtitle:
-  default: "Vendor Manuals, Specs & Docs"
+  default: "Get live help on real issues"
   description: "Card 1 subtitle"
 hero_card_1_url:
-  default: "/tags/knowledge-base"
-  description: "Card 1 link"
+  default: "/latest"
+  description: "Card 1 link - Update to /t/{assistance-topic-id} after creating the Assistance topic"
 
 hero_card_2_label:
-  default: "Tech Community"
-  description: "Card 2 title"
+  default: "1. Insights"
+  description: "Card 2 - Field lessons"
 hero_card_2_subtitle:
-  default: "Ask Questions & Share Expertise"
+  default: "Field lessons & clever fixes"
   description: "Card 2 subtitle"
 hero_card_2_url:
-  default: "/c"
-  description: "Card 2 link"
+  default: "/latest"
+  description: "Card 2 link - Update to /t/{insights-topic-id} after creating the Insights topic"
 
 hero_card_3_label:
-  default: "How-To & Troubleshooting"
-  description: "Card 3 title"
+  default: "2. Guides"
+  description: "Card 3 - Step-by-step procedures"
 hero_card_3_subtitle:
-  default: "Guides, Tutorials & Fixes"
+  default: "Step-by-step procedures"
   description: "Card 3 subtitle"
 hero_card_3_url:
-  default: "/tags/how-to"
-  description: "Card 3 link"
+  default: "/latest"
+  description: "Card 3 link - Update to /t/{guides-topic-id} after creating the Guides topic"
 
 hero_card_4_label:
-  default: "AI Assistant (AME-Bot)"
-  description: "Card 4 title"
+  default: "3. Resources"
+  description: "Card 4 - Official documentation library"
 hero_card_4_subtitle:
-  default: "Get Instant Answers"
+  default: "Manuals, specs & data sheets"
   description: "Card 4 subtitle"
 hero_card_4_url:
+  default: "/latest"
+  description: "Card 4 link - Update to /t/{resources-topic-id} after creating the Resources topic"
+
+hero_card_5_label:
+  default: "AI Assistant (AME-Bot)"
+  description: "Card 5 - AI chat assistant"
+hero_card_5_subtitle:
+  default: "Chat with our knowledge base"
+  description: "Card 5 subtitle"
+hero_card_5_url:
   default: "/search?q=category%3Aai-assistant"
-  description: "Card 4 link"
+  description: "Card 5 link - Update to your n8n webhook URL when ready"
 
 # Rotating quotes - format: "QUOTE TEXT|word1,word2,word3" where words after | are bolded
 quote_1:

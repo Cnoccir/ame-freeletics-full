@@ -2,7 +2,7 @@
   "name": "AME Freeletics Full",
   "about_url": "https://example.com/ame-techassist",
   "license_url": "https://opensource.org/licenses/MIT",
-  "theme_version": "0.1.0",
+  "theme_version": "0.2.0",
   "minimum_discourse_version": "3.2.0",
   "component": true,
   "assets": {

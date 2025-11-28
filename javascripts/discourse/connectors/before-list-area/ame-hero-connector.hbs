@@ -1,44 +1,59 @@
-{{! Professional Category Cards Section }}
+{{! Professional Category Cards Section - 5 Cards for 4 Pillars + AI }}
 <div class="ame-category-cards-section">
   <div class="ame-cards-grid">
+    {{! Card 1: Assistance }}
     <a class="ame-card" role="listitem" href="{{theme-setting 'hero_card_1_url'}}">
       <div class="ame-card__icon">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
         </svg>
       </div>
       <span class="ame-card__title">{{theme-setting 'hero_card_1_label'}}</span>
       <span class="ame-card__sub">{{theme-setting 'hero_card_1_subtitle'}}</span>
     </a>
 
+    {{! Card 2: Insights }}
     <a class="ame-card" role="listitem" href="{{theme-setting 'hero_card_2_url'}}">
       <div class="ame-card__icon">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+          <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/>
         </svg>
       </div>
       <span class="ame-card__title">{{theme-setting 'hero_card_2_label'}}</span>
       <span class="ame-card__sub">{{theme-setting 'hero_card_2_subtitle'}}</span>
     </a>
 
+    {{! Card 3: Guides }}
     <a class="ame-card" role="listitem" href="{{theme-setting 'hero_card_3_url'}}">
       <div class="ame-card__icon">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
         </svg>
       </div>
       <span class="ame-card__title">{{theme-setting 'hero_card_3_label'}}</span>
       <span class="ame-card__sub">{{theme-setting 'hero_card_3_subtitle'}}</span>
     </a>
 
+    {{! Card 4: Resources }}
+    <a class="ame-card" role="listitem" href="{{theme-setting 'hero_card_4_url'}}">
+      <div class="ame-card__icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/>
+        </svg>
+      </div>
+      <span class="ame-card__title">{{theme-setting 'hero_card_4_label'}}</span>
+      <span class="ame-card__sub">{{theme-setting 'hero_card_4_subtitle'}}</span>
+    </a>
+
+    {{! Card 5: AI Assistant }}
     <button class="ame-card ame-card--chat" role="listitem" id="ame-hero-chat-trigger" type="button">
       <div class="ame-card__icon">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
           <path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zm-2 10H6V7h12v12zm-9-6c-.83 0-1.5-.67-1.5-1.5S8.17 10 9 10s1.5.67 1.5 1.5S9.83 13 9 13zm7.5-1.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5 1.5.67 1.5 1.5zM8 15h8v2H8v-2z"/>
         </svg>
       </div>
-      <span class="ame-card__title">{{theme-setting 'hero_card_4_label'}}</span>
-      <span class="ame-card__sub">{{theme-setting 'hero_card_4_subtitle'}}</span>
+      <span class="ame-card__title">{{theme-setting 'hero_card_5_label'}}</span>
+      <span class="ame-card__sub">{{theme-setting 'hero_card_5_subtitle'}}</span>
     </button>
   </div>
 </div>
